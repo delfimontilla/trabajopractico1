@@ -1,0 +1,18 @@
++1009 ; LEER en la posición de memoria 09
++1010 ; LEER en la posición de memoria 10
++2009 ; CARGAR la posición de memoria 09 al acumulador
++3110 ; RESTAR al acumulador la posición de memoria 10
++4107 ; JMPNEG salta a la pos. 07 si el acumulador es negativo
++1109 ; ESCRIBIR por pantalla el contenido de la memoria 09
++4008 ; JMP salta a la posiciÃ³n de memoria 08
++1110 ; ESCRIBIR por pantalla el contenido de la memoria 10
++4500 ; HALT 
++0000 ; Variable A(09)
++0000 ; Variable B (10)
++0000 ; Vacio
+
+
+/**En ningun momento guarda la resta**/
+
+/** RESTA si es negativa la resta imprime la posiicon 10, si no imprime la posicion 9. 
+Parece ser mas que nada ver cual numero es mas grande**/
