@@ -1,5 +1,10 @@
+#include <stdio.h>
 
 int main()
 {
-	size_t cant_palabras=50;
+	int acumulador, contador_programa;
+    int *palabras = calloc(cant_palabras, sizeof (int));
+
+    entrada_pantalla();
+
 }
