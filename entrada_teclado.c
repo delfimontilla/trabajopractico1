@@ -7,7 +7,11 @@
 #define FIN -99999
 #define MIN_PALABRA -9999
 #define MAX_PALABRA 9999
+#define MSJ_CARGA_COMPLETA "*** Carga del programa completa ***"
+#define MSJ_COMIENZO_EJECUCION "*** Comienza la ejecución del programa ***"
 
+/* Procedimiento que,por stdin, cargará las instrucciones una a una en el vector palabras,
+validando que sean un número entero de cuatro dígitos con signo.*/
 
 status_t entrada_pantalla(int palabras[cant_palabras]){
  
@@ -31,6 +35,9 @@ status_t entrada_pantalla(int palabras[cant_palabras]){
  	palabras[i]=instruccion;
  	
  }
+  
+ printf("%s\n",MSJ_CARGA_COMPLETA);
+ printf("%s\n",MSJ_COMIENZO_EJECUCION);
  
 }
 
