@@ -4,6 +4,37 @@
 #ifndef LANG_ENGLISH__H
 #define lang_english__H 1
 
+#define ARGC_MAX 6
+#define ARGC2_MAX 2
+#define CANT_PALABRAS_DEFAULT 100
+#define ARG_POS_CANT_PALABRAS 1
+#define ARG_POS_FENTRADA1 2
+#define ARG_POS_FENTRADA2 3 
+#define ARG_POS_FSALIDA1 4
+#define ARG_POS_FSALIDA2 5
+#define ARG_POS_H 2
+
+#define LEER 10
+#define ESCRIBIR 11
+#define CARGAR 20
+#define GUARDAR 21
+#define PCARGAR 22
+#define PGUARDAR 23
+#define SUMAR 30
+#define RESTAR 31
+#define DIVIDIR 32
+#define MULTIPLICAR 33
+#define JMP 40
+#define JMPNEG 41
+#define JMPZERO 42
+#define JNZ 43
+#define DJNZ 44
+#define HALT 45
+#define MSJ_IMPRIMIR_PALABRA "Content of the position"
+#define MAX_LARGO_PALABRA 5 /*maxima cantidad caracteres en una palabra*/
+#define MSJ_INGRESO_PALABRA "Enter a word:"
+
+
 typedef struct parametros
 {
 	char m;
