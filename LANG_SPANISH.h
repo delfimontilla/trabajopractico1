@@ -14,6 +14,26 @@
 #define ARG_POS_FSALIDA2 5
 #define ARG_POS_H 2
 
+#define LEER 10
+#define ESCRIBIR 11
+#define CARGAR 20
+#define GUARDAR 21
+#define PCARGAR 22
+#define PGUARDAR 23
+#define SUMAR 30
+#define RESTAR 31
+#define DIVIDIR 32
+#define MULTIPLICAR 33
+#define JMP 40
+#define JMPNEG 41
+#define JMPZERO 42
+#define JNZ 43
+#define DJNZ 44
+#define HALT 45
+#define MSJ_IMPRIMIR_PALABRA "Contenido de la posicion"
+#define MAX_LARGO_PALABRA 5 /*maxima cantidad caracteres en una palabra*/
+#define MSJ_INGRESO_PALABRA "Ingrese una palabra:"
+
 typedef struct parametros
 {
 	char cant_palabras;
