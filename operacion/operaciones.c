@@ -43,45 +43,64 @@ int * contador_programa /*cuenta el numero de paso y de memoria que se encuentra
 		switch (opcode){
 			case (LEER):
 				leer(operando, palabras[cant_palabras] );
+				*contador_programa++;
 				break;
 			case (ESCRIBIR):
 				escribir(operando, palabras[cant_palabras] );
+				*contador_programa++;
 				break;
 			case (CARGAR):
 				cargar(&acumulador, palabras[cant_palabras], operando );
+				*contador_programa++;
 				break;
 			case (GUARDAR):
 				guardar(&acumulador, palabras[cant_palabras],operando );
+				*contador_programa++;
 				break;
 			case (PCARGAR):
 				pcargar(operando);/*falta hacer, como se hace?*/
+				*contador_programa++;
 				break;
 			case(PGUARDAR):
 				pguardar(operando);/*falta hacer, como se hace?*/
+				*contador_programa++;
 				break;
 			case(SUMAR):
 				sumar(&acumulador, palabras[cant_palabras],operando );
+				*contador_programa++;
 				break;
 			case(RESTAR):
 				restar(&acumulador, palabras[cant_palabras],operando );
+				*contador_programa++;
 				break;
 			case(DIVIDIR):
 				dividir(&acumulador, palabras[cant_palabras],operando );
+				*contador_programa++;
 				break;
 			case(MULTIPLICAR):
 				multiplicar(&acumulador, palabras[cant_palabras],operando );
+				*contador_programa++;
 				break;
 			case(JMP):
 				jmp(acumulador,&contador_programa, operando);
 				break;
 			case(JMPNEG):
-				jmpneg(&acumulador,&contador_programa, operando);
+				if(acumulador<0)
+					jmp(&acumulador,&contador_programa, operando);
+				else
+					contador_programa++;
 				break;
 			case(JMPZERO):
-				jmpzero(&acumulador,&contador_programa,operando);
+				if(acumulador=0)
+					jmp(&acumulador,&contador_programa, operando);
+				else
+					contador_programa++;
 				break;
 			case(JNZ):
-				jnz(&acumulador,&contador_programa, operando);
+				if(acumulador!=0)
+					jmp(&acumulador,&contador_programa, operando);
+				else
+					contador_programa++;
 				break;
 			case(DJNZ):
 				djnz(&acumulador,&contador_programa, operando);
@@ -97,7 +116,6 @@ int * contador_programa /*cuenta el numero de paso y de memoria que se encuentra
 		return ST_SALIR;
 	}
 	else{
-		*contador_programa++;
 		return ST_OK;
 	}
 }
