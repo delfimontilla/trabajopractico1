@@ -1,21 +1,4 @@
 
-#define LEER 10
-#define ESCRIBIR 11
-#define CARGAR 20
-#define GUARDAR 21
-#define PCARGAR 22
-#define PGUARDAR 23
-#define SUMAR 30
-#define RESTAR 31
-#define DIVIDIR 32
-#define MULTIPLICAR 33
-#define JMP 40
-#define JMPNEG 41
-#define JMPZERO 42
-#define JNZ 43
-#define DJNZ 44
-#define HALT 45
-
 /*COMO DEBERIA IMPLMENTARSE EN EL MAIN
 int main (lo que sea){
 	status_t st;

@@ -174,5 +174,17 @@ typedef enum
 status_t ayuda(int argc, char *argv[]);
 status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE ** FENTRADA, FILE **FSALIDA, int *palabras);
 status_t entrada_pantalla(int palabras[cant_palabras]);
+status_t entrada_archivo(int palabras[cant_palabras],FILE f_entrada);
+
+status_t leer (int operando, int palabras[cant_palabras]);
+status_t escribir(int operando, int palabras[cant_palabras]);
+status_t cargar (int acumulador, int palabras[cant_palabras], int operando);
+status_t guardar (int acumulador, int palabras[cant_palabras], int operando);
+status_t restar (int acumulador, int palabras[cant_palabras], int operando);
+status_t dividir (int acumulador, int palabras[cant_palabras], int operando);
+status_t multiplicar (int acumulador, int palabras[cant_palabras], int operando);
+status_t sumar (int acumulador, int palabras[cant_palabras] , int operando);
+status_t jmp (int acumulador, int * contador_programa, int operando);
+status_t djnz (int acumulador, int * contador_programa, int operando);
 
 #endif
