@@ -1,8 +1,5 @@
 #include <stdio.h>
 
-#define MIN_PALABRA -9999
-#define MAX_PALABRA 9999
-
 /* Procedimiento que cargará las instrucciones leídas de un archivo una a una en el vector palabras,
 validando que sean un número entero de cuatro dígitos con signo.*/
 
