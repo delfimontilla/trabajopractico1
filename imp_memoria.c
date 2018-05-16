@@ -1,5 +1,5 @@
 
-status_t imp_memoria (int  palabras[cant_palabras] /*vector donde estan guardadas las palabras*/){
+status_t imp_memoria (parametros_t *params, int palabras[params->cant_palabras]){/*vector donde estan guardadas las palabras*/
 	int i,j,k,l;
 	k=0;
 	for (int l = 0; l < 10; l++){
