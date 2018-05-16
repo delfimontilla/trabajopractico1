@@ -34,6 +34,12 @@
 #define MAX_LARGO_PALABRA 5 /*maximum number of characters in a word*/
 #define MSJ_INGRESO_PALABRA "Enter a word:"
 
+#define MSJ_ACUM "acumulador"
+#define MSJ_CONT_PROG "program counter"
+#define MSJ_INST "instruction"
+#define MSJ_OPCODE "opcode"
+#define MSJ_OPERANDO "operating"/*COMO TRADUZCO OPERANDO_ Y ACUMULADOR*/
+
 
 #define MSJ_BIENVENIDA "Welcome to Simpletron! Please enter your program one instruction (or data word) at a time. I will type the location number and a question mark (?). You then type the word for that location. Type the sentinel -99999 to stop entering your program."
 #define FIN -99999
