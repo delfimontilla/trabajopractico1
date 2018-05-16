@@ -1,7 +1,7 @@
 
 status_t registro ( 
 int * acumulador /*posicion de memoria del acumulador*/,
-int  palabras[parametros_t->cant_palabras] /*vector donde estan guardadas las palabras*/
+parametros_t *params, int palabras[params->cant_palabras] /*vector donde estan guardadas las palabras*/
 int * contador_programa /*cuenta el numero de paso y de memoria que se encuentra el programa*/){
 	int opcode, operando;
 	/*printf("%s: %i\n", MSJ_ACUM, acumulador );*/
