@@ -34,6 +34,13 @@
 #define MAX_LARGO_PALABRA 5 /*maxima cantidad caracteres en una palabra*/
 #define MSJ_INGRESO_PALABRA "Ingrese una palabra:"
 
+#define MSJ_ACUM "acumulador"
+#define MSJ_CONT_PROG "contador del programa"
+#define MSJ_INST "instruccion"
+#define MSJ_OPCODE "opcode"
+#define MSJ_OPERANDO "operando"
+
+
 #define MSJ_BIENVENIDA "Bienvenide a le Simpletron! Por favor, ingrese su programa una instrucción (o dato) a la vez. Yo escribiré la ubicación y un signo de pregunta (?).Luego usted ingrese la palabra para esa ubicación. Ingrese -99999 para finalizar."
 #define FIN -99999
 #define MIN_PALABRA -9999
