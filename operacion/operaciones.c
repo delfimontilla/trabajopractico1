@@ -41,11 +41,11 @@ int * contador_programa /*cuenta el numero de paso y de memoria que se encuentra
 				*contador_programa++;
 				break;
 			case (PCARGAR):
-				pcargar(operando);/*falta hacer, como se hace?*/
+				pcargar(&acumulador,params, palabras[params->cant_palabras],operando );
 				*contador_programa++;
 				break;
 			case(PGUARDAR):
-				pguardar(operando);/*falta hacer, como se hace?*/
+				pguardar(&acumulador,params, palabras[params->cant_palabras],operando );
 				*contador_programa++;
 				break;
 			case(SUMAR):
