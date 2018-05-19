@@ -13,6 +13,7 @@
 #define ARG_POS_FSALIDA1 4
 #define ARG_POS_FSALIDA2 5
 #define ARG_POS_H 2
+#define OPCION_TXT "txt"
 
 
 #define MSJ_ERROR "ERROR"
@@ -20,7 +21,6 @@
 #define MSJ_ERROR_PTR_NULO "puntero nulo"
 #define MSJ_ERROR_CANT_ARG "cantidad de argumentos"
 #define MSJ_ERROR_CANT_PALABRAS "cantidad de palabras"
-#define MSJ_ERROR_NO_MEM "no hay memoria"
 
 
 #define LEER 10

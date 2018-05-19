@@ -1,3 +1,10 @@
+#include <stdio.h>
+
+
+#ifndef ESTRUCTURAS__H
+#define estructuras__H 1
+
+
 typedef struct parametros
 {
 	int cant_palabras;
@@ -21,8 +28,8 @@ typedef enum
 	ST_SALIR
 }status_t;
 
-status_t ayuda(int argc, char *argv[]);
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE ** FENTRADA, FILE **FSALIDA, int *palabras);
+status_t ayuda1(int argc, char *argv[]);
+status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
 status_t entrada_archivo_txt(parametros_t *params, int palabras[params->cant_palabras],FILE *FENTRADA);
 status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_palabras], FILE *FENTRADA);
 status_t entrada_pantalla(parametros_t *params, int palabras[params->cant_palabras]);
@@ -40,3 +47,5 @@ status_t multiplicar (int acumulador, parametros_t *params, int palabras[params-
 status_t sumar (int acumulador, parametros_t *params, int palabras[params->cant_palabras] , int operando);
 status_t jmp (int acumulador, int * contador_programa, int operando);
 status_t djnz (int acumulador, int * contador_programa, int operando);
+
+#endif
