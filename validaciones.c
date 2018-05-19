@@ -39,7 +39,7 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 			}
 			entrada_archivo_txt(params, palabras, FENTRADA);
 		}
-		else{
+		else if (argv[ARG_POS_FENTRADA2]==OPCION_BIN){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rb"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
