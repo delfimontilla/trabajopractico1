@@ -3,16 +3,24 @@
 
 #include "LANG_SPANISH.h"
 #include "LANG_ENGLISH.h"
+#include "estructuras.h"
 
 
 int main(int argc, char *argv[])
 {
-	int acumulador, contador_programa;
-    int *palabras = calloc(cant_palabras, sizeof (int));
+	int *acumulador, *contador_programa;
+    int *palabras;
+    FILE *FENTRADA, *FSALIDA;
+    status_t st;
+	
+
+    procesar_argumentos(argc,*argv,*params,**FENTRADA,**FSALIDA, &palabras);
+
+    *palabras= = calloc(cant_palabras, sizeof (cant_palabras));
 
 
 
-
+    while(st!=ST_SALIR) st=operaciones(&acumulador, palabras[cant_palabras],&contador_programa);
 
 
 
@@ -233,21 +241,5 @@ status_t registro ( int * acumulador,parametros_t *params ,int  palabras[params-
 }
 
 status_t imp_memoria (parametros_t *params ,int  palabras[params->cant_palabras]){
-	int i,j,k,l;
-	k=0;
-	for (int l = 0; l < 10; l++){
-		printf(" %i ",l );
-	}
-	printf("\n");
-	for ( i = 0; i < cant_palabras; i++){
-		for ( j = 0; j < 10; j++){
-			if(palabras[i]<0)
-				printf("-%4i ",palabras[i] );
-			else 
-				printf("+%4i ",palabras[i] );
-		}
-	printf("\n");
-	printf("%i\n",0 );
-	k+=10;
-	}
+	/*COPIAR LA NUEVA VERSION*/
 }

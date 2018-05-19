@@ -12,6 +12,7 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 	}
 
 	if(argc!=ARGC_MAX){
+		fprintf(stderr, "%s:\n", );
 		return ST_ERROR_CANT_ARG;
 	}
 

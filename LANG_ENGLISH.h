@@ -34,11 +34,11 @@
 #define MAX_LARGO_PALABRA 5 /*maximum number of characters in a word*/
 #define MSJ_INGRESO_PALABRA "Enter a word:"
 
-#define MSJ_ACUM "acumulador"
+#define MSJ_ACUM "accumulator"
 #define MSJ_CONT_PROG "program counter"
 #define MSJ_INST "instruction"
 #define MSJ_OPCODE "opcode"
-#define MSJ_OPERANDO "operating"/*COMO TRADUZCO OPERANDO_ Y ACUMULADOR*/
+#define MSJ_OPERANDO "operand"
 
 
 #define MSJ_BIENVENIDA "Welcome to Simpletron! Please enter your program one instruction (or data word) at a time. I will type the location number and a question mark (?). You then type the word for that location. Type the sentinel -99999 to stop entering your program."
@@ -151,44 +151,5 @@
 #define TAB_FIN_OP "HALT" 
 #define TAB_FIN_CODE "45" 
 #define TAB_FIN_DESC "Finishes the program"
-
-typedef struct parametros
-{
-	char m;
-	char i;
-	char ia;
-	char o;
-	char of;
-}parametros_t;
-
-typedef enum 
-{
-	ST_OK,
-	ST_ERROR_PTR_NULO,
-	ST_ERROR_CANT_ARG,
-	ST_ERROR_PALABRA_VACIA,
-	ST_ERROR_FUERA_RANGO,
-	ST_OK_NEG,
-	ST_ERROR_APERTURA_ARCHIVO,
-	ST_ERROR_CANT_PALABRAS,
-	ST_SALIR
-}status_t;
-
-status_t ayuda(int argc, char *argv[]);
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE ** FENTRADA, FILE **FSALIDA, int *palabras);
-status_t entrada_pantalla(int palabras[cant_palabras]);
-status_t entrada_archivo(int palabras[cant_palabras],FILE f_entrada);
-
-status_t leer (int operando, int palabras[cant_palabras]);
-status_t escribir(int operando, int palabras[cant_palabras]);
-status_t cargar (int acumulador, int palabras[cant_palabras], int operando);
-status_t guardar (int acumulador, int palabras[cant_palabras], int operando);
-status_t restar (int acumulador, int palabras[cant_palabras], int operando);
-status_t dividir (int acumulador, int palabras[cant_palabras], int operando);
-status_t multiplicar (int acumulador, int palabras[cant_palabras], int operando);
-status_t sumar (int acumulador, int palabras[cant_palabras] , int operando);
-status_t jmp (int acumulador, int * contador_programa, int operando);
-status_t djnz (int acumulador, int * contador_programa, int operando);
-
 
 #endif
