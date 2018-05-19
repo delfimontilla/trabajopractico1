@@ -5,6 +5,16 @@
 #define estructuras__H 1
 
 
+typedef struct estado
+{
+	int *acumulador;/*posicion de memoria del acumulador*/
+	int *contador_programa;/*cuenta el numero de paso y de memoria que se encuentra el programa*/
+    estado_t * estado;/*vector donde estan guardadas las palabras*/
+    int opcode;
+    int operando;
+
+}estado_t;
+
 typedef struct parametros
 {
 	int cant_palabras;
@@ -28,33 +38,32 @@ typedef enum
 	ST_SALIR
 }status_t;
 
+
 status_t validar_ayuda(int argc, char *argv[]);
 status_t imprimir_ayuda();
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
-status_t leer_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA);
-status_t leer_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA);
-status_t leer_teclado(parametros_t *params, int *palabras);
-status_t imprimir_pantalla(parametros_t *params, int * palabras, int *acumulador, int *contador_programa);
-status_t imprimir_registro_pantalla (int *acumulador,parametros_t *params, int *palabras, int *contador_programa);
-status_t imprimir_memoria_pantalla (parametros_t *params, int palabras);
-status_t imprimir_archivos_txt(parametros_t *params, int * palabras, FILE *FSALIDA);
-status_t imprimir_registro_archivo_txt (parametros_t *params, int *palabras, int * acumulador, int * contador_programa, FILE *FSALIDA);
-status_t imprimir_memoria_archivo_txt (parametros_t *params, int palabras, FILE *FSALIDA);
-status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA);
-status_t liberar_memoria(int *palabras);
-status_t imprimir_archivo_bin (parametros_t *params, int *palabras, int * acumulador,int * contador_programa, FILE *FSALIDA);
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE *FSALIDA);
 
-status_t leer (int operando,parametros_t *params, int *palabras);
-status_t escribir(int operando, parametros_t *params, int *palabras);
-status_t cargar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t pcargar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t guardar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t pguardar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t restar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t dividir (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t multiplicar (int acumulador, parametros_t *params, int *palabras, int operando);
-status_t sumar (int acumulador, parametros_t *params, int *palabras , int operando);
-status_t jmp (int acumulador, int * contador_programa, int operando);
-status_t djnz (int acumulador, int * contador_programa, int operando);
+status_t leer_archivo_txt(parametros_t *params, estado_t * estado,FILE *FENTRADA, FILE *FSALIDA);
+status_t leer_archivo_bin(parametros_t *params, estado_t * estado, FILE *FENTRADA, FILE *FSALIDA);
+status_t leer_teclado(parametros_t *params, estado_t * estado);
+
+status_t imprimir_pantalla(parametros_t *params, estado_t *estado);
+status_t imprimir_archivo_bin (parametros_t *params, estado_t * estado, FILE *FSALIDA);
+status_t imprimir_archivo_txt(parametros_t *params, FILE *FSALIDA);
+status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA);
+status_t liberar_memoria(estado_t * estado);
+
+status_t op_leer (parametros_t *params, estado_t * estado);
+status_t op_escribir( parametros_t *params, estado_t * estado);
+status_t op_cargar (parametros_t *params, estado_t * estado,);
+status_t op_pcargar (parametros_t *params, estado_t * estado);
+status_t op_guardar (parametros_t *params, estado_t * estado);
+status_t op_pguardar (parametros_t *params, estado_t * estado);
+status_t op_restar (parametros_t *params, estado_t * estado);
+status_t op_dividir (parametros_t *params, estado_t * estado);
+status_t op_multiplicar (parametros_t *params, estado_t * estado);
+status_t op_sumar (parametros_t *params, estado_t * estado);
+status_t op_jmp (parametros_t *params, estado_t * estado);
+status_t op_djnz (parametros_t *params, estado_t * estado);
 
 #endif
