@@ -6,13 +6,21 @@
 
 #define ARGC_MAX 6
 #define ARGC2_MAX 2
-#define CANT_PALABRAS_DEFAULT 100
+#define CANT_PALABRAS_DEFAULT 0
 #define ARG_POS_CANT_PALABRAS 1
 #define ARG_POS_FENTRADA1 2
 #define ARG_POS_FENTRADA2 3 
 #define ARG_POS_FSALIDA1 4
 #define ARG_POS_FSALIDA2 5
 #define ARG_POS_H 2
+
+
+#define MSJ_ERROR "ERROR"
+#define MSJ_ERROR_APERTURA_ARCHIVO "apertura de archivo"
+#define MSJ_ERROR_PTR_NULO "puntero nulo"
+#define MSJ_ERROR_CANT_ARG "cantidad de argumentos"
+#define MSJ_ERROR_CANT_PALABRAS "cantidad de palabras"
+
 
 #define LEER 10
 #define ESCRIBIR 11

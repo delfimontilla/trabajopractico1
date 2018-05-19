@@ -4,27 +4,35 @@
 #include "LANG_SPANISH.h"
 /*  procesar_argumentos es la funcion que valida los argumentos pasados por lineas de comando en la terminal, 
 los parametros que se le pasan a esta funcion son los archivos de entrada y salida*/
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE *FENTRADA, FILE *FSALIDA, int *palabras){
+
+
+
+status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE * FSALIDA, int *palabras){
 	
 	char *pc;
 	if(!argv || !params){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
 
 	if(argc!=ARGC_MAX){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_ARG );
 		return ST_ERROR_CANT_ARG;
 	}
 
 	if(argv[ARG_POS_FENTRADA2]!=NULL){/*Falta preguntar si es un archivo de texto o binario*/
 		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA2],"rt"))==NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA2],"rb"))==NULL){/*Puedo usar el mismo nombre para los archivos si decido si es binario o texto?*/
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 	}
 	else if(argv[ARG_POS_FENTRADA1]!=NULL){
 		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 	}
@@ -37,21 +45,25 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 	else {
 		params->cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(params->cant_palabras<0 || (*pc!='\0' && *pc!='\n') || params->cant_palabras>100){
-		return ST_ERROR_CANT_PALABRAS;
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_PALABRAS );
+			return ST_ERROR_CANT_PALABRAS;
 		}
 	}
 	
 	
 	if(argv[ARG_POS_FENTRADA2]!=NULL){/*Falta preguntar si es un archivo de texto o binario*/
 		if((*FSALIDA=fopen(argv[ARG_POS_FSALIDA2],"rt"))==NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 		if((*FENTRADA=fopen(argv[ARG_POS_FSALIDA2],"rb"))==NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 	}
 	else if(argv[ARG_POS_FENTRADA1]!=NULL){
 		if((*FENTRADA=fopen(argv[ARG_POS_FSALIDA1],"rt"))==NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 	}
@@ -65,9 +77,11 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 status_t ayuda1(int argc, char *argv[]){
 
 	if(!argv){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
 	if(argc!=ARGC2_MAX){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_ARG );
 		return ST_ERROR_CANT_ARG;
 	}
 	if(argv[ARG_POS_H]!=NULL){
