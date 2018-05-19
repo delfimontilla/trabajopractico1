@@ -8,8 +8,9 @@
 
 int main(int argc, char *argv[])
 {
-	int *acumulador, *contador_programa;
-    int *palabras;
+	int *acumulador;/*posicion de memoria del acumulador*/
+	int *contador_programa;/*cuenta el numero de paso y de memoria que se encuentra el programa*/
+    int *palabras;/*vector donde estan guardadas las palabras*/
     FILE *FENTRADA, *FSALIDA;
     status_t st;
 	
