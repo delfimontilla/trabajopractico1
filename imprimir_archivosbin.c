@@ -1,5 +1,5 @@
 
-status_t registro_archivo_txt (int * acumulador, parametros_t *params, int *palabras[params->cant_palabras],int * contador_programa, FILE *FSALIDA){
+status_t imprimir_archivo_bin (int * acumulador, parametros_t *params, int *palabras[params->cant_palabras],int * contador_programa, FILE *FSALIDA){
 	
 	int opcode, operando;
 	
