@@ -14,21 +14,27 @@ int main(int argc, char *argv[])
     FILE *FENTRADA, *FSALIDA;
     status_t st;
 	
+	if(argc==ARGC2_MAX}){
+		if((st=validacion_ayuda(argc, argv))!=ST_OK){
+			return EXIT_FAILURE;
+		}
+	}
 
-    procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras);
+    else {
+    	if(palabras = calloc(params->cant_palabras, sizeof (palabras))==NULL){
+    		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
+    		return EXIT_FAILURE;
+    	}
 
-    if(palabras = calloc(params->cant_palabras, sizeof (palabras))==NULL){
-    	fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
-    	return EXIT_FAILURE;
-    }	
+    	if((st=procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras))!=ST_OK){
+    		return EXIT_FAILURE;
+    	}
 
+    	while(st!=ST_SALIR) st=operaciones(&acumulador, palabras[cant_palabras],&contador_programa);
 
-
-    while(st!=ST_SALIR) st=operaciones(&acumulador, palabras[cant_palabras],&contador_programa);
-
-    liberar_memoria(palabras);
-    cerrar_archivos(FENTRADA,FSALIDA);
-
+    	liberar_memoria(palabras);
+    	cerrar_archivos(FENTRADA,FSALIDA);
+    }
     return EXIT_SUCCESS;
 }
 
@@ -37,12 +43,12 @@ status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_pal
 	int i;
 	int instruccion=0;
 
- 	printf("%s\n",MSJ_BIENVENIDA);
- 
 
  	for(i=0; i<params->cant_palabras;i++){
- 		printf("%2.i ? \n", i);
+
     	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,FENTRADA)!=MAX_LARGO_PALABRA){
+    		liberar_memoria(palabras);
+    		cerrar_archivos(FENTRADA,FSALIDA);
     		return ST_ERROR_FUERA_RANGO;
     	}
     
@@ -73,8 +79,11 @@ status_t entrada_pantalla(parametros_t *params, int palabras[params->cant_palabr
 
  for(i=0; i<params->cant_palabras;i++){
  	printf("%2.i ? \n", i);
-    if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL)
+    if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
+    	liberar_memoria(palabras);
+    	cerrar_archivos(FENTRADA,FSALIDA);
     	return ST_ERROR_FUERA_RANGO;
+    }
     instruccion= strtol(aux,&pc,10);
     if(*pc!='\0'&& *pc!='\n')
     return ST_ERROR_NO_NUMERICO;
@@ -102,8 +111,11 @@ status_t entrada_archivo_txt(parametros_t *params, int palabras[params->cant_pal
  char *pc;
 
  for(i=0; i<params->cant_palabras;i++){
-    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL)
+    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL){
+    	liberar_memoria(palabras);
+    	cerrar_archivos(FENTRADA,FSALIDA);
     	return ST_ERROR_FUERA_RANGO;
+    }
     instruccion= strtol(aux,&pc,10); 
     if(*pc!='\0'&& *pc!='\n')
     	return ST_ERROR_NO_NUMERICO;
@@ -122,75 +134,80 @@ status_t entrada_archivo_txt(parametros_t *params, int palabras[params->cant_pal
  return ST_OK;
 }
 
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE ** FENTRADA, FILE **FSALIDA, int *palabras){
+status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE * FSALIDA, int *palabras){
 	
 	char *pc;
 	if(!argv || !params){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
 
 	if(argc!=ARGC_MAX){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_ARG );
 		return ST_ERROR_CANT_ARG;
 	}
-
-	if(argv[ARG_POS_FENTRADA2]!=NULL){/*Falta preguntar si es un archivo de texto o binario*/
-		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA2],"rt"))==NULL){
-			return ST_ERROR_APERTURA_ARCHIVO;
-		}
-		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA2],"rb"))==NULL){/*Puedo usar el mismo nombre para los archivos si decido si es binario o texto?*/
-			return ST_ERROR_APERTURA_ARCHIVO;
-		}
-	}
-	else if(argv[ARG_POS_FENTRADA1]!=NULL){
-		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
-			return ST_ERROR_APERTURA_ARCHIVO;
-		}
-	}
-
-	else 
-		entrada_teclado(&palabras);
 
 	if(argv[ARG_POS_CANT_PALABRAS]==NULL){
 		params->cant_palabras=CANT_PALABRAS_DEFAULT;}
 	else {
 		params->cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(params->cant_palabras<0 || (*pc!='\0' && *pc!='\n') || params->cant_palabras>100){
-		return ST_ERROR_CANT_PALABRAS;
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_PALABRAS );
+			return ST_ERROR_CANT_PALABRAS;
+		}
+	}
+
+	if(argv[ARG_POS_FENTRADA2]!=NULL){
+		if(argv[ARG_POS_FENTRADA2]==OPCION_TXT){
+			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
+				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+				return ST_ERROR_APERTURA_ARCHIVO;
+			}
+			entrada_archivo_txt(params, palabras, FENTRADA);
+		}
+		else if (argv[ARG_POS_FENTRADA2]==OPCION_BIN){
+			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rb"))==NULL){
+				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+				return ST_ERROR_APERTURA_ARCHIVO;
+			}
+			entrada_archivo_bin(params, palabras, FENTRADA);
 		}
 	}
 	
+	else if(argv[ARG_POS_FENTRADA2]==NULL && argv[ARG_POS_FENTRADA1]!=NULL){
+		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
+		return ST_ERROR_APERTURA_ARCHIVO;
+	}
+
+	else
+		entrada_teclado(palabras);
+
 	
-	if(argv[ARG_POS_FENTRADA2]!=NULL){/*Falta preguntar si es un archivo de texto o binario*/
-		if((*FSALIDA=fopen(argv[ARG_POS_FSALIDA2],"rt"))==NULL){
-			return ST_ERROR_APERTURA_ARCHIVO;
+	
+	if(argv[ARG_POS_FSALIDA2]!=NULL){
+		if(argv[ARG_POS_FSALIDA2]==OPCION_TXT){
+			
+			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1],"rt"))==NULL){
+				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+				return ST_ERROR_APERTURA_ARCHIVO;
+			}
 		}
-		if((*FENTRADA=fopen(argv[ARG_POS_FSALIDA2],"rb"))==NULL){
-			return ST_ERROR_APERTURA_ARCHIVO;
+		else {
+			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1],"rb"))==NULL){
+				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+				return ST_ERROR_APERTURA_ARCHIVO;
+			}
 		}
 	}
-	else if(argv[ARG_POS_FENTRADA1]!=NULL){
-		if((*FENTRADA=fopen(argv[ARG_POS_FSALIDA1],"rt"))==NULL){
+	else if(argv[ARG_POS_FSALIDA2]==NULL && argv[ARG_POS_FSALIDA1]!=NULL){
+			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
-	}
 
 	else 
 		salida_teclado(palabras);
 
 	return ST_OK;
-}
-
-status_t ayuda1(int argc, char *argv[]){
-
-	if(!argv){
-		return ST_ERROR_PTR_NULO;
-	}
-	if(argc!=ARGC2_MAX){
-		return ST_ERROR_CANT_ARG;
-	}
-	if(argv[ARG_POS_H]!=NULL){
-		ayuda();
-	}	
 }
 
 status_t ayuda(){
@@ -228,6 +245,19 @@ status_t ayuda(){
 	printf("%s   %s   %s\n",TAB_FIN_OP,TAB_FIN_CODE,TAB_FIN_DESC);
 
 	return ST_OK;
+}
+
+status_t validacion_ayuda(int argc, char *argv[]){
+
+	if(!argv){
+		return ST_ERROR_PTR_NULO;
+	}
+	if(argc!=ARGC2_MAX){
+		return ST_ERROR_CANT_ARG;
+	}
+	if(argv[ARG_POS_H]!=NULL){
+		ayuda();
+	}	
 }
 
 status_t registro ( int * acumulador,parametros_t *params ,int  palabras[params->cant_palabras], int * contador_programa){
