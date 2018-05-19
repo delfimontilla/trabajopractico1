@@ -28,7 +28,7 @@ typedef enum
 	ST_SALIR
 }status_t;
 
-status_t ayuda1(int argc, char *argv[]);
+status_t validar_ayuda(int argc, char *argv[]);
 status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
 status_t entrada_archivo_txt(parametros_t *params, int palabras[params->cant_palabras],FILE *FENTRADA);
 status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_palabras], FILE *FENTRADA);
