@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 status_t imprimir_archivo_bin (int * acumulador, parametros_t *params, int *palabras[params->cant_palabras],int * contador_programa, FILE *FSALIDA){
 	

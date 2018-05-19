@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 status_t imp_memoria_archivo_txt (parametros_t *params, int palabras[params->cant_palabras], FILE *FSALIDA)/*Imprime la matriz con todas las instrucciones */{
 
