@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     	}
 
     	if((st=procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras))!=ST_OK){
+    		liberar_memoria(palabras);
     		return EXIT_FAILURE;
     	}
 
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_palabras], FILE *FENTRADA){
+status_t entrada_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA){
  
 	int i;
 	int instruccion=0;
@@ -67,7 +68,7 @@ status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_pal
  	return ST_OK;
 }
 
-status_t entrada_pantalla(parametros_t *params, int palabras[params->cant_palabras]){
+status_t entrada_pantalla(parametros_t *params, int *palabras){
  
  size_t i;
  char aux[MAX_LARGO_PALABRA];
@@ -104,7 +105,7 @@ status_t entrada_pantalla(parametros_t *params, int palabras[params->cant_palabr
  return ST_OK;
 }
 
-status_t entrada_archivo_txt(parametros_t *params, int palabras[params->cant_palabras],FILE *FENTRADA){
+status_t entrada_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA){
  size_t i;
  char aux[MAX_LARGO_PALABRA];
  long instruccion=0;
