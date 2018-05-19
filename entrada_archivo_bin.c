@@ -4,17 +4,16 @@
 /* Procedimiento que,por un archivo binario, cargará las instrucciones una a una en el vector palabras,
 validando que sean un número entero de cuatro dígitos con signo.*/
 #include "LANG_SPANISH.h"
+
 status_t entrada_archivo_bin(parametros_t *params, int palabras[params->cant_palabras], FILE *FENTRADA)
 {
  
 	int i;
 	int instruccion=0;
 
- 	printf("%s\n",MSJ_BIENVENIDA);
- 
 
  	for(i=0; i<params->cant_palabras;i++){
- 		printf("%2.i ? \n", i);
+
     	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,FENTRADA)!=MAX_LARGO_PALABRA){
     		return ST_ERROR_FUERA_RANGO;
     	}

@@ -4,7 +4,7 @@
 #include "LANG_SPANISH.h"
 /*  procesar_argumentos es la funcion que valida los argumentos pasados por lineas de comando en la terminal, 
 los parametros que se le pasan a esta funcion son los archivos de entrada y salida*/
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE ** FENTRADA, FILE **FSALIDA, int *palabras){
+status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE *FENTRADA, FILE *FSALIDA, int *palabras){
 	
 	char *pc;
 	if(!argv || !params){
@@ -12,7 +12,6 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 	}
 
 	if(argc!=ARGC_MAX){
-		fprintf(stderr, "%s:\n", );
 		return ST_ERROR_CANT_ARG;
 	}
 
