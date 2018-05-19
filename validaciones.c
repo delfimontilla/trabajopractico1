@@ -33,8 +33,8 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 	else if(argv[ARG_POS_FENTRADA1]!=NULL){
 		if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
 			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
-			return ST_ERROR_APERTURA_ARCHIVO;
-		}
+			return ST_ERROR_APERTURA_ARCHIVO
+;		}
 	}
 
 	else 

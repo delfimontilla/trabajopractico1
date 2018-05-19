@@ -16,13 +16,16 @@ int main(int argc, char *argv[])
 
     procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras);
 
-    palabras = calloc(params->cant_palabras, sizeof (palabras));
+    if(palabras = calloc(params->cant_palabras, sizeof (palabras))==NULL){
+    	fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
+    	return EXIT_FAILURE;
+    }	
 
 
 
     while(st!=ST_SALIR) st=operaciones(&acumulador, palabras[cant_palabras],&contador_programa);
 
-
+    liberar_memoria(palabras);
 
     return EXIT_SUCCESS;
 }

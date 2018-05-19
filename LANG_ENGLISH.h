@@ -19,6 +19,7 @@
 #define MSJ_ERROR_PTR_NULO "null pointer"
 #define MSJ_ERROR_CANT_ARG "number of arguments"
 #define MSJ_ERROR_CANT_PALABRAS "number of word"
+#define MSJ_ERROR_NO_MEM "out of memory"
 
 #define LEER 10
 #define ESCRIBIR 11
