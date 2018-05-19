@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras);
 
-    *palabras= = calloc(cant_palabras, sizeof (cant_palabras));
+    palabras = calloc(params->cant_palabras, sizeof (palabras));
 
 
 
