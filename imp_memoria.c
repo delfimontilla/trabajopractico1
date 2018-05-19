@@ -1,5 +1,5 @@
-/*Imprime por  */
-status_t imp_memoria (parametros_t *params, int palabras[params->cant_palabras]){
+
+status_t imp_memoria (parametros_t *params, int palabras[params->cant_palabras])/*Imprime la matriz con todas las instrucciones */{
 
 	int i,k,l;
 	k=0;

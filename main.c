@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     while(st!=ST_SALIR) st=operaciones(&acumulador, palabras[cant_palabras],&contador_programa);
 
     liberar_memoria(palabras);
+    cerrar_archivos(FENTRADA,FSALIDA);
 
     return EXIT_SUCCESS;
 }
