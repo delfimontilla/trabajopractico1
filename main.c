@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     status_t st;
 	
 	if(argc==ARGC2_MAX}){
-		if((st=validacion_ayuda(argc, argv))!=ST_OK){
+		if((st=validar_ayuda(argc, argv))!=ST_OK){
 			return EXIT_FAILURE;
 		}
 	}
@@ -181,7 +181,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE
 	}
 
 	else
-		leer_teclado(palabras);
+		leer_teclado(params,palabras);
 
 	
 	
@@ -206,12 +206,12 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE
 		}
 
 	else 
-		imprimir_pantalla(palabras);
+		imprimir_pantalla(params, palabras,acumulador,contador_programa);
 
 	return ST_OK;
 }
 
-status_t ayuda(){
+status_t imprimir_ayuda(){
 
 	printf("%s   %s   %s\n",MSJ_TITULO_ARG, MSJ_TITULO_OPC, MSJ_TITULO_DESC);
 	printf("%s   %s   %s\n",MSJ_AYUDA_ARG, MSJ_AYUDA_OPC, MSJ_AYUDA_DESC);
@@ -248,7 +248,7 @@ status_t ayuda(){
 	return ST_OK;
 }
 
-status_t validacion_ayuda(int argc, char *argv[]){
+status_t validar_ayuda(int argc, char *argv[]){
 
 	if(!argv){
 		return ST_ERROR_PTR_NULO;
@@ -259,13 +259,35 @@ status_t validacion_ayuda(int argc, char *argv[]){
 	if(argv[ARG_POS_H]!=NULL){
 		ayuda();
 	}	
+
+	return ST_OK;
 }
 
 status_t imprimir_pantalla(parametros_t *params, int * palabras, int *acumulador, int *contador_programa){
 	
-	imprimir_registro_pantalla(acumulador,params,palabras[params->cant_palabras],contador_programa);
-	imprimir_memoria_pantalla(params, palabras[params->cant_palabras]);
+	imprimir_registro_pantalla(params,palabras,acumulador,contador_programa);
+	imprimir_memoria_pantalla(params, palabras);
+	return ST_OK;
 	
+}
+
+status_t imprimir_registro_pantalla (parametros_t *params, int *palabras,int *acumulador, int *contador_programa) /*Recibe el puntero al acumulador,  al contador del programa, 
+para imprimir los datos guardados en el acumulador, en el contador del programa, la ultima instruccion ejecutada, el ultimo opcode y el ultimo operando*/{
+	
+	int opcode, operando;
+	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
+
+    printf("%s\n", MSJ_REGISTRO);
+	printf("%-s: %-i\n",MSJ_ACUM, *acumulador );
+	printf("%-s: %-i\n",MSJ_CONT_PROG, *contador_programa );
+	printf("%-s: %-i\n",MSJ_INST, palabras[contador_programa] );
+	
+	opcode = palabras[contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+	operando = palabras[contador_programa] - (opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+	
+	printf("%-s: %-i\n",MSJ_OPCODE, opcode );
+	printf("%-s: %-i\n",MSJ_OPERANDO, operando );
+	return ST_OK;
 }
 
 status_t imprimir_memoria_pantalla (parametros_t *params, int palabras)/*Imprime la matriz con todas las instrucciones que se encuentran en palabras */{
@@ -292,6 +314,92 @@ status_t imprimir_memoria_pantalla (parametros_t *params, int palabras)/*Imprime
 
 	}
     printf("\n");
+    
+    return ST_OK;
+}
 
+status_t imprimir_archivos_txt(parametros_t *params, int * palabras, FILE *FSALIDA){
+	
+	imprimir_registro_archivo_txt (params, palabras, acumulador, contador_programa, FSALIDA);
+    imprimir_memoria_archivo_txt(params, palabras, FSALIDA)
 
+	return ST_OK;
+}
+
+status_t imprimir_registro_archivo_txt (parametros_t *params, int *palabras,int * acumulador, int * contador_programa, FILE *FSALIDA){
+	
+	int opcode, operando;
+	
+	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
+	
+    fprintf(FSALIDA,"%s\n", MSJ_REGISTRO);
+	fprintf(FSALIDA, "%-s: %-i\n",MSJ_ACUM, *acumulador );
+	fprintf(FSALIDA, "%-s: %-i\n",MSJ_CONT_PROG, *contador_programa );
+	fprintf(FSALIDA, "%-s: %-i\n",MSJ_INST, palabras[contador_programa] );
+	
+	opcode = palabras[contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+	operando = palabras[contador_programa] - (opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+	
+	fprintf(FSALIDA, "%-s: %-i\n",MSJ_OPCODE, opcode );
+	fprintf(FSALIDA, "%-s: %-i\n",MSJ_OPERANDO, operando );
+	
+	return ST_OK;
+}
+
+status_t imprimir_memoria_archivo_txt (parametros_t *params, int *palabras, FILE *FSALIDA)/*Imprime la matriz con todas las instrucciones */{
+
+	int i,k,l;
+	k=0;
+
+	fprintf(FSALIDA,"    ");
+	for (l = 0; l < 10; l++)
+		fprintf(FSALIDA,"  %i   ",l) ;
+
+	for ( i = 0; i < params->cant_palabras ; i++){ 
+      if ((i%10)==0){
+	  fprintf(FSALIDA,"\n%02i  ",k);
+	  k+=10;
+	  }
+		  
+      if(palabras[i]<0)
+		fprintf(FSALIDA,"%05i ",palabras[i] );
+	  else 
+		fprintf(FSALIDA,"+%04i ",palabras[i] );
+	}
+    
+    fprintf(FSALIDA,"\n");
+    
+    return ST_OK;
+}
+
+status_t imprimir_archivo_bin (parametros_t *params, int *palabras, int * acumulador,int * contador_programa, FILE *FSALIDA){
+	
+	int opcode, operando;
+	
+	fwrite(&acumulador, sizeof(int),1, FSALIDA);
+	fwrite(&contador_programa, sizeof(int),1, FSALIDA );
+	fwrite(&palabras[contador_programa], sizeof(int),1, FSALIDA);
+	
+	opcode = palabras[contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+	operando = palabras[contador_programa] - (opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+	
+	fwrite(&opcode, sizeof(int),1, FSALIDA);
+	fwrite(&operando, sizeof(int),1, FSALIDA);	
+
+	fwrite(&palabras[params->cant_palabras], sizeof(int), params->cant_palabras, FSALIDA);
+	
+	return ST_OK;
+}
+
+status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA)/*Recibe los punteros a los archivos de entrada y salida para cerrarlos*/{
+
+	fclose(FENTRADA);
+	fclose(FSALIDA);
+	return ST_OK;
+}
+
+status_t liberar_memoria(int *palabras)/*Recibe el puntero a las instrucciones para liberar la memoria pedida*/{
+	
+	free(palabras);
+	return ST_OK;
 }

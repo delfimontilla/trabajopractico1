@@ -29,11 +29,20 @@ typedef enum
 }status_t;
 
 status_t validar_ayuda(int argc, char *argv[]);
+status_t imprimir_ayuda();
 status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
 status_t leer_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA);
 status_t leer_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA);
 status_t leer_teclado(parametros_t *params, int *palabras);
-status_t vector_memoria(parametros_t *params, int *palabras);
+status_t imprimir_pantalla(parametros_t *params, int * palabras, int *acumulador, int *contador_programa);
+status_t imprimir_registro_pantalla (int *acumulador,parametros_t *params, int *palabras, int *contador_programa);
+status_t imprimir_memoria_pantalla (parametros_t *params, int palabras);
+status_t imprimir_archivos_txt(parametros_t *params, int * palabras, FILE *FSALIDA);
+status_t imprimir_registro_archivo_txt (parametros_t *params, int *palabras, int * acumulador, int * contador_programa, FILE *FSALIDA);
+status_t imprimir_memoria_archivo_txt (parametros_t *params, int palabras, FILE *FSALIDA);
+status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA);
+status_t liberar_memoria(int *palabras);
+status_t imprimir_archivo_bin (parametros_t *params, int *palabras, int * acumulador,int * contador_programa, FILE *FSALIDA);
 
 status_t leer (int operando,parametros_t *params, int *palabras);
 status_t escribir(int operando, parametros_t *params, int *palabras);

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-status_t imp_memoria_pantalla (parametros_t *params, int palabras[params->cant_palabras])/*Imprime la matriz con todas las instrucciones que se encuentran en palabras */{
+status_t imprimir_memoria_pantalla (parametros_t *params, int palabras[params->cant_palabras])/*Imprime la matriz con todas las instrucciones que se encuentran en palabras */{
 
 	int i,k,l;
 	k=0;
