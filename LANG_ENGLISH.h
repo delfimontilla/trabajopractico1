@@ -14,6 +14,7 @@
 #define ARG_POS_FSALIDA2 5
 #define ARG_POS_H 2
 #define OPCION_TXT "txt"
+#define OPCION_BIN "bin"
 
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "open of file"
@@ -54,6 +55,8 @@
 #define MAX_PALABRA 9999
 #define MSJ_CARGA_COMPLETA "*** Program upload complete ***"
 #define MSJ_COMIENZO_EJECUCION "*** Program execution starts ***"
+
+#define MSJ_ARG_POSICIONALES "The arguments are positional"
 
 #define MSJ_TITULO_ARG "Arg."
 #define MSJ_TITULO_OPC "Option"
@@ -158,5 +161,7 @@
 #define TAB_FIN_OP "HALT" 
 #define TAB_FIN_CODE "45" 
 #define TAB_FIN_DESC "Finishes the program"
+
+#define MSJ_REGISTRO "Registers:"
 
 #endif

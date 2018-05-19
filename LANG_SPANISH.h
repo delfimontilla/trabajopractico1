@@ -14,6 +14,7 @@
 #define ARG_POS_FSALIDA2 5
 #define ARG_POS_H 2
 #define OPCION_TXT "txt"
+#define OPCION_BIN "bin"
 
 
 #define MSJ_ERROR "ERROR"
@@ -57,6 +58,8 @@
 #define MSJ_CARGA_COMPLETA "*** Carga del programa completa ***"
 #define MSJ_COMIENZO_EJECUCION "*** Comienza la ejecución del programa ***"
 
+
+#define MSJ_ARG_POSICIONALES "Los argumentos son posicionales."
 
 #define MSJ_TITULO_ARG "Arg."
 #define MSJ_TITULO_OPC "Opción"
@@ -164,5 +167,8 @@
 #define TAB_FIN_OP "HALT" 
 #define TAB_FIN_CODE "45" 
 #define TAB_FIN_DESC "Finaliza el programa"
+
+
+#define MSJ_REGISTRO "Registros:"
 
 #endif

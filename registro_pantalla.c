@@ -1,8 +1,11 @@
 
-status_t registro_pantalla (int *acumulador,parametros_t *params, int *palabras[params->cant_palabras], int *contador_programa) /**/{
+status_t registro_pantalla (int *acumulador,parametros_t *params, int *palabras[params->cant_palabras], int *contador_programa) /*Recibe el puntero al acumulador,  al contador del programa, 
+para imprimir los datos guardados en el acumulador, en el contador del programa, la ultima instruccion ejecutada, el ultimo opcode y el ultimo operando*/{
 	
 	int opcode, operando;
 	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
+
+    printf("%s\n", MSJ_REGISTRO);
 	printf("%-s: %-i\n",MSJ_ACUM, *acumulador );
 	printf("%-s: %-i\n",MSJ_CONT_PROG, *contador_programa );
 	printf("%-s: %-i\n",MSJ_INST, palabras[contador_programa] );
