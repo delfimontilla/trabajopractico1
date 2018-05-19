@@ -3,7 +3,7 @@
 
 #include "LANG_SPANISH.h"
 #include "LANG_ENGLISH.h"
-#include "estructuras.h"
+#include "estructuras_prototipos.h"
 
 
 int main(int argc, char *argv[])
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     		return EXIT_FAILURE;
     	}
 
-    	if((st=procesar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras))!=ST_OK){
+    	if((st=validar_argumentos(argc, argv, params, FENTRADA, FSALIDA, palabras))!=ST_OK){
     		liberar_memoria(palabras);
     		return EXIT_FAILURE;
     	}
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-status_t entrada_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA){
+status_t leer_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA){
  
 	int i;
 	int instruccion=0;
@@ -68,7 +68,7 @@ status_t entrada_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA
  	return ST_OK;
 }
 
-status_t entrada_pantalla(parametros_t *params, int *palabras){
+status_t leer_teclado(parametros_t *params, int *palabras){
  
  size_t i;
  char aux[MAX_LARGO_PALABRA];
@@ -105,7 +105,7 @@ status_t entrada_pantalla(parametros_t *params, int *palabras){
  return ST_OK;
 }
 
-status_t entrada_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA){
+status_t leer_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA){
  size_t i;
  char aux[MAX_LARGO_PALABRA];
  long instruccion=0;
@@ -135,7 +135,7 @@ status_t entrada_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA)
  return ST_OK;
 }
 
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE * FSALIDA, int *palabras){
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE * FSALIDA, int *palabras){
 	
 	char *pc;
 	if(!argv || !params){
@@ -164,14 +164,14 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			entrada_archivo_txt(params, palabras, FENTRADA);
+			leer_archivo_txt(params, palabras, FENTRADA);
 		}
 		else if (argv[ARG_POS_FENTRADA2]==OPCION_BIN){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rb"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			entrada_archivo_bin(params, palabras, FENTRADA);
+			leer_archivo_bin(params, palabras, FENTRADA);
 		}
 	}
 	
@@ -181,7 +181,7 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 	}
 
 	else
-		entrada_teclado(palabras);
+		leer_teclado(palabras);
 
 	
 	
@@ -206,7 +206,7 @@ status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FIL
 		}
 
 	else 
-		salida_teclado(palabras);
+		imprimir_pantalla(palabras);
 
 	return ST_OK;
 }
@@ -261,21 +261,37 @@ status_t validacion_ayuda(int argc, char *argv[]){
 	}	
 }
 
-status_t registro ( int * acumulador,parametros_t *params ,int  palabras[params->cant_palabras], int * contador_programa){
-	int opcode, operando;
-	/*printf("%s: %i\n", MSJ_ACUM, acumulador );*/
-	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
-	fprintf(stdin, "%-s: %-i\n",MSJ_ACUM, *acumulador );
-	fprintf(stdin, "%-s: %-i\n",MSJ_CONT_PROG, *contador_programa );
-	fprintf(stdin, "%-s: %-i\n",MSJ_INST, palabras[contador_programa] );
-	opcode = palabras[contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
-	operando = palabras[contado
-	r_programa] - (opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	fprintf(stdin, "%-s: %-i\n",MSJ_OPCODE, opcode );
-	fprintf(stdin, "%-s: %-i\n",MSJ_OPERANDO, operando );
-	return ST_OK;
+status_t imprimir_pantalla(parametros_t *params, int * palabras, int *acumulador, int *contador_programa){
+	
+	imprimir_registro_pantalla(acumulador,params,palabras[params->cant_palabras],contador_programa);
+	imprimir_memoria_pantalla(params, palabras[params->cant_palabras]);
+	
 }
 
-status_t imp_memoria (parametros_t *params ,int  palabras[params->cant_palabras]){
-	/*COPIAR LA NUEVA VERSION*/
+status_t imprimir_memoria_pantalla (parametros_t *params, int palabras)/*Imprime la matriz con todas las instrucciones que se encuentran en palabras */{
+
+	int i,k,l;
+	k=0;
+
+	printf("    ");
+	for (l = 0; l < 10; l++)
+		printf("  %i   ",l) ;
+
+
+	for ( i = 0; i < params->cant_palabras ; i++){
+      
+      if ((i%10)==0){
+	  printf("\n%02i  ",k);
+	  k+=10;
+	  }
+		  
+      if(palabras[i]<0)
+		printf("%05i ",palabras[i] );
+	  else 
+		printf("+%04i ",palabras[i] );
+
+	}
+    printf("\n");
+
+
 }

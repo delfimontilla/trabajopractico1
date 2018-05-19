@@ -29,10 +29,10 @@ typedef enum
 }status_t;
 
 status_t validar_ayuda(int argc, char *argv[]);
-status_t procesar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
-status_t entrada_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA);
-status_t entrada_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA);
-status_t entrada_pantalla(parametros_t *params, int *palabras);
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, FILE * FENTRADA, FILE *FSALIDA, int *palabras);
+status_t leer_archivo_txt(parametros_t *params, int *palabras,FILE *FENTRADA);
+status_t leer_archivo_bin(parametros_t *params, int *palabras, FILE *FENTRADA);
+status_t leer_teclado(parametros_t *params, int *palabras);
 status_t vector_memoria(parametros_t *params, int *palabras);
 
 status_t leer (int operando,parametros_t *params, int *palabras);
