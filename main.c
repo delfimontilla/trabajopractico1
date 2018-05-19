@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #include "LANG_SPANISH.h"
-#include "LANG_ENGLISH.h"
 #include "estructuras_prototipos.h"
 
 
@@ -13,19 +12,19 @@ int main(int argc, char *argv[])
     status_t st;
     FILE *FENTRADA, *FSALIDA;
 	
-	if(argc==ARGC2_MAX}){
+	if(argc==ARGC2_MAX){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
 			return EXIT_FAILURE;
 		}
 	}
 
     else {
-    	if(palabras = calloc(params->cant_palabras, sizeof (estado->palabras))==NULL){
+    	if(estado->palabras = calloc(params->cant_palabras, sizeof (estado->palabras))==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
 
-    	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA,))!=ST_OK){
+    	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
     		liberar_memoria(estado);
     		return EXIT_FAILURE;
     	}
@@ -346,7 +345,7 @@ status_t imprimir_archivos_txt(parametros_t *params, estado_t *estado, FILE *FSA
     return ST_OK;
 }
 
-status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado FILE *FSALIDA){
+status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSALIDA){
 	
 	
 	fwrite(&estado->acumulador, sizeof(int),1, FSALIDA);
@@ -371,7 +370,7 @@ status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA)/*Recibe los punteros a l
 	return ST_OK;
 }
 
-status_t liberar_memoria(estado_t *estado))/*Recibe el puntero a las instrucciones para liberar la memoria pedida*/{
+status_t liberar_memoria(estado_t *estado)/*Recibe el puntero a las instrucciones para liberar la memoria pedida*/{
 	
 	free(estado->palabras);
 	return ST_OK;

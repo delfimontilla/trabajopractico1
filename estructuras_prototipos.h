@@ -9,7 +9,7 @@ typedef struct estado
 {
 	int *acumulador;/*posicion de memoria del acumulador*/
 	int *contador_programa;/*cuenta el numero de paso y de memoria que se encuentra el programa*/
-    estado_t * estado;/*vector donde estan guardadas las palabras*/
+    int *palabras;/*vector donde estan guardadas las palabras*/
     int opcode;
     int operando;
 
@@ -41,13 +41,13 @@ typedef enum
 
 status_t validar_ayuda(int argc, char *argv[]);
 status_t imprimir_ayuda();
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE *FSALIDA);
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t * estado, FILE * FENTRADA, FILE *FSALIDA);
 
 status_t leer_archivo_txt(parametros_t *params, estado_t * estado,FILE *FENTRADA, FILE *FSALIDA);
 status_t leer_archivo_bin(parametros_t *params, estado_t * estado, FILE *FENTRADA, FILE *FSALIDA);
 status_t leer_teclado(parametros_t *params, estado_t * estado);
 
-status_t imprimir_pantalla(parametros_t *params, estado_t *estado);
+status_t imprimir_pantalla(parametros_t *params, estado_t * estado);
 status_t imprimir_archivo_bin (parametros_t *params, estado_t * estado, FILE *FSALIDA);
 status_t imprimir_archivo_txt(parametros_t *params, FILE *FSALIDA);
 status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA);
@@ -55,7 +55,7 @@ status_t liberar_memoria(estado_t * estado);
 
 status_t op_leer (parametros_t *params, estado_t * estado);
 status_t op_escribir( parametros_t *params, estado_t * estado);
-status_t op_cargar (parametros_t *params, estado_t * estado,);
+status_t op_cargar (parametros_t *params, estado_t * estado);
 status_t op_pcargar (parametros_t *params, estado_t * estado);
 status_t op_guardar (parametros_t *params, estado_t * estado);
 status_t op_pguardar (parametros_t *params, estado_t * estado);
