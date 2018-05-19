@@ -250,4 +250,4 @@ status_t imp_memoria (parametros_t *params ,int  palabras[params->cant_palabras]
 	printf("%i\n",0 );
 	k+=10;
 	}
-}/*vector donde estan guardadas las palabras*/
+}

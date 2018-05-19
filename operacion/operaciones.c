@@ -9,7 +9,8 @@ int main (lo que sea){
 */
 status_t operaciones ( 
 int * acumulador /*posicion de memoria del acumulador*/,
-parametros_t *params, int palabras[params->cant_palabras]/*vector donde estan guardadas las palabras*/
+parametros_t *params, 
+int palabras[params->cant_palabras],/*vector donde estan guardadas las palabras*/
 int * contador_programa /*cuenta el numero de paso y de memoria que se encuentra el programa*/)
 /*Funcion que recibe las dos primeras posiciones de la posicion y decide que operacion correr*/
 {
