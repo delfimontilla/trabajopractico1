@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-	estado_t *estado2;
+	estado_t *estado;
 	parametros_t *params;
     status_t st;
     FILE *FENTRADA, *FSALIDA;
@@ -20,19 +20,19 @@ int main(int argc, char *argv[])
 	}
 
     else {
-    	if((estado2= calloc(params->cant_palabras, sizeof (estado2)))==NULL){
+    	if((estado= calloc(params->cant_palabras, sizeof (estado)))==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
 
-    	if((st=validar_argumentos(argc, argv, params, estado2, FENTRADA, FSALIDA))!=ST_OK){
-    		liberar_memoria(estado2);
+    	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
+    		liberar_memoria(estado);
     		return EXIT_FAILURE;
     	}
 
-    	while(st!=ST_SALIR) st=operaciones(estado2);
+    	while(st!=ST_SALIR) st=operaciones(estado);
 
-    	liberar_memoria(estado2);
+    	liberar_memoria(estado);
     	cerrar_archivos(FENTRADA,FSALIDA);
     }
     return EXIT_SUCCESS;
