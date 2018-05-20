@@ -4,8 +4,6 @@
 #ifndef ESTRUCTURAS_PROTOTIPOS__H
 #define estructuras_prototipos__H 1
 
-#include "LANG_SPANISH.h"
-
 typedef struct estado
 {
 	int acumulador;/*posicion de memoria del acumulador*/

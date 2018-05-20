@@ -2,9 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #include "estructuras_prototipos.h"
 
+#define LANG_SPANISH
+
+#ifdef LANG_SPANISH
+#include "LANG_SPANISH.h"
+#endif
+
+#ifdef LANG_ENGLISH
+#include "LANG_ENGLISH.h"
+#endif
 
 int main(int argc, char *argv[])
 {
