@@ -22,6 +22,8 @@
 #define MSJ_ERROR_CANT_ARG "number of arguments"
 #define MSJ_ERROR_CANT_PALABRAS "number of word"
 #define MSJ_ERROR_NO_MEM "out of memory."
+#define MSJ_ERROR_PALABRA_NULA "the entered word is null"
+
 
 #define LEER 10
 #define ESCRIBIR 11

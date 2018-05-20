@@ -8,10 +8,13 @@
 
 int main(int argc, char *argv[])
 {
-	estado_t *estado;
+	estado_t *estado2;
 	parametros_t *params;
     status_t st;
     FILE *FENTRADA, *FSALIDA;
+    params=NULL;
+    FENTRADA=NULL;
+    FSALIDA=NULL;
 	
 	if(argc==ARGC2_MAX){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
@@ -20,19 +23,19 @@ int main(int argc, char *argv[])
 	}
 
     else {
-    	if((estado= calloc(params->cant_palabras, sizeof (estado)))==NULL){
+    	if((estado2= calloc(params->cant_palabras, sizeof (estado2)))==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
 
-    	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
-    		liberar_memoria(estado);
+    	if((st=validar_argumentos(argc, argv, params, estado2, FENTRADA, FSALIDA))!=ST_OK){
+    		liberar_memoria(estado2);
     		return EXIT_FAILURE;
     	}
 
-    	while(st!=ST_SALIR) st=operaciones(estado);
+    	while(st!=ST_SALIR) st=operaciones(estado2);
 
-    	liberar_memoria(estado);
+    	liberar_memoria(estado2);
     	cerrar_archivos(FENTRADA,FSALIDA);
     }
     return EXIT_SUCCESS;
@@ -466,6 +469,16 @@ status_t operaciones (estado_t * estado){
 	}
 }
 
+status_t op_leer (estado_t * estado)/*Lee una palabra por stdin a una posicion de memoria*/{
+	int * AUX;
+	AUX=NULL;
+	printf("%s\n", MSJ_INGRESO_PALABRA);
+	if (fgets((char*)AUX,MAX_LARGO_PALABRA,stdin)==NULL)
+		fprintf(stderr, "%s\n", MSJ_ERROR_PALABRA_NULA );
+		return ST_ERROR_PALABRA_VACIA;/*la palabra ingresada es nula*/	
+	estado->palabras[estado->operando] = *AUX;	
+	return ST_OK;
+}
 
 
 status_t op_escribir(estado_t * estado)/*imprime por stdout el contenido de la posicion solicitada*/{

@@ -22,7 +22,8 @@
 #define MSJ_ERROR_PTR_NULO "puntero nulo"
 #define MSJ_ERROR_CANT_ARG "cantidad de argumentos"
 #define MSJ_ERROR_CANT_PALABRAS "cantidad de palabras"
-#define MSJ_ERROR_NO_MEM "no hay memoria."
+#define MSJ_ERROR_NO_MEM "no hay memoria"
+#define MSJ_ERROR_PALABRA_NULA "la palabra ingresada es nula"
 
 
 #define LEER 10
