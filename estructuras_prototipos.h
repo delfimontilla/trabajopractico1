@@ -10,19 +10,19 @@ typedef struct estado
 	int *acumulador;/*posicion de memoria del acumulador*/
 	int *contador_programa;/*cuenta el numero de paso y de memoria que se encuentra el programa*/
     int *palabras;/*vector donde estan guardadas las palabras*/
-    int opcode;
-    int operando;
+    int opcode; /*el codigo de operacion, que especifica la operación a realizar*/
+    int operando; /*represeta la dirección de memoria que contiene la palabra a la que se le aplica la operación*/
 
-}estado_t;
+}estado_t; /*una estructura para almacenar el estado del Simpletron*/
 
 typedef struct parametros
 {
-	int cant_palabras;
-	char i;
-	char ia;
-	char o;
-	char of;
-}parametros_t;
+	int cant_palabras; /*la cantidad de palabras que han sido asignadas en memoria para las instrucciones*/
+	char i;/*argumento que indica que el programa se leera del archivo pasado como opcion*/
+	char ia;/*argumento que indica que el archivo de entrada se leera con el formato especificado como opcion*/
+	char o;/*argumento que indica que el dump se hara en el archivo pasado como opcion*/
+	char of;/*argumento que indica que el dump se hara en el formato especificado como opcion*/
+}parametros_t; /*estructura con los argumentos que son pasados al momento de ejecucion*/
 
 typedef enum 
 {

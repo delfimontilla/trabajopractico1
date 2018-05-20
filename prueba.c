@@ -8,8 +8,7 @@ typedef struct parametros
 }parametros_t;
 
  int main(void)
-{   parametros_t *params;
-	p
+{   parametros_t *params = NULL;
 
 	int a=3;
 	(*params).contador=a;
