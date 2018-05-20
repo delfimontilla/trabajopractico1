@@ -9,11 +9,13 @@ typedef struct parametros
 
  int main(void)
 {   parametros_t *params;
-	int a=3;
-	params->contador=a;
+	p
 
-    params->palabras = calloc(5, sizeof (params->palabras));
+	int a=3;
+	(*params).contador=a;
+
+    params->palabras = (int *)calloc(5, sizeof (params->palabras));
     
-	printf("%i",params->contador);
+	printf("%d",(*params).contador);
 	return 0;
 }
