@@ -151,7 +151,7 @@ status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA,
 status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE * FSALIDA){
 	
 	char *pc;
-	if(!argv || !params){
+	if(!argv){
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
