@@ -12,6 +12,10 @@ int main(int argc, char *argv[])
 	parametros_t *params;
     status_t st;
     FILE *FENTRADA, *FSALIDA;
+    params=NULL;
+    estado=NULL;
+    FENTRADA=NULL;
+    FSALIDA=NULL;
 	
 	if(argc==ARGC2_MAX){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
@@ -20,13 +24,16 @@ int main(int argc, char *argv[])
 	}
 
     else {
-    	if((estado= calloc(params->cant_palabras, sizeof (estado)))==NULL){
-    		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
-    		return EXIT_FAILURE;
-    	}
+    	
 
     	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
     		liberar_memoria(estado);
+    		return EXIT_FAILURE;
+    	}
+
+        estado->palabras = calloc(params->cant_palabras, sizeof(params->cant_palabras));
+    	if(estado->palabras==NULL){
+    		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
 
