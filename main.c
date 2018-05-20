@@ -69,7 +69,7 @@ status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA
 
 status_t leer_teclado(parametros_t *params, estado_t *estado){
  
- size_t i;
+ int i;
  char aux[MAX_LARGO_PALABRA];
  long instruccion=0;
  char *pc;
@@ -468,12 +468,12 @@ status_t operaciones (estado_t * estado){
 
 
 
-status_t escribir(estado_t * estado)/*imprime por stdout el contenido de la posicion solicitada*/{
+status_t op_escribir(estado_t * estado)/*imprime por stdout el contenido de la posicion solicitada*/{
 	fprintf(stdout, "%s %i : %i\n", MSJ_IMPRIMIR_PALABRA,estado->operando, estado->palabras[estado->operando]);
 	return ST_OK;
 }
 
-status_t cargar (estado_t * estado)/*Carga en el acumulador la posicion de memoria indicada*/{
+status_t op_cargar (estado_t * estado)/*Carga en el acumulador la posicion de memoria indicada*/{
 	estado->acumulador = estado->palabras[estado->operando];
 	return ST_OK;
 }
@@ -495,27 +495,27 @@ status_t op_restar (estado_t * estado)/*resta al acumulador lo guardado en la po
 	return ST_OK;
 }
 
-status_t dividir (estado_t * estado)/*divide al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_dividir (estado_t * estado)/*divide al acumulador lo guardado en la posicion de memoria indcada*/{
 	estado->acumulador /= estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t multiplicar (estado_t * estado)/*multiplica al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_multiplicar (estado_t * estado)/*multiplica al acumulador lo guardado en la posicion de memoria indcada*/{
 	estado->acumulador *= estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t sumar(estado_t * estado)/*suma al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_sumar(estado_t * estado)/*suma al acumulador lo guardado en la posicion de memoria indcada*/{
 	estado->acumulador += estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t jmp (estado_t * estado)/*salta a la posicion de memoria indicada menos un valor*/{
+status_t op_jmp (estado_t * estado)/*salta a la posicion de memoria indicada menos un valor*/{
 	estado->contador_programa = estado->operando;/*se resta porque al salir del switch */
 	return ST_OK;
 }
 
-status_t djnz (estado_t * estado)/*decrementa en 1 el acumulador y salta a la poscion deseada en el caso que el acumulador sea distinto de 0*/{
+status_t op_djnz (estado_t * estado)/*decrementa en 1 el acumulador y salta a la poscion deseada en el caso que el acumulador sea distinto de 0*/{
 	estado->acumulador--;
 	if (estado->acumulador!=0){
 		estado->contador_programa = estado->operando;
@@ -525,7 +525,7 @@ status_t djnz (estado_t * estado)/*decrementa en 1 el acumulador y salta a la po
 	return ST_OK;
 }
 
-status_t jmpneg (estado_t * estado)/*salta a la posicion de memoria desada menos 1 si el acuumlador es negativo*/{
+status_t op_jmpneg (estado_t * estado)/*salta a la posicion de memoria desada menos 1 si el acuumlador es negativo*/{
 	if (estado->acumulador<0){
 		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
 	}
@@ -533,14 +533,14 @@ status_t jmpneg (estado_t * estado)/*salta a la posicion de memoria desada menos
 
 }
 
-status_t jmpzero (estado_t * estado)/*salta a la posicion de memoria deseada menos uno si el acummulador es 0*/{
+status_t op_jmpzero (estado_t * estado)/*salta a la posicion de memoria deseada menos uno si el acummulador es 0*/{
 	if (estado->acumulador==0){
 		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
 	}
 	return ST_OK;
 }
 
-status_t jnz (estado_t * estado)/*salta a la posicion de memeoria deseada menos 1 si el contador es distinto de 0*/{
+status_t op_jnz (estado_t * estado)/*salta a la posicion de memeoria deseada menos 1 si el contador es distinto de 0*/{
 	if (estado->acumulador!=0){
 		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
 	}
