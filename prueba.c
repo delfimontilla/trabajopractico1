@@ -3,7 +3,7 @@
 
 typedef struct parametros
 {
-	int contador;
+	int *contador;
 	int *palabras;
 }parametros_t;
 
@@ -11,10 +11,8 @@ typedef struct parametros
 {   parametros_t *params = NULL;
 
 	int a=3;
-	(*params).contador=a;
+	(*params).contador=&a;
 
-    params->palabras = (int *)calloc(5, sizeof (params->palabras));
-    
-	printf("%d",(*params).contador);
+	printf("%d",(params.palabras)->*(params.contador));
 	return 0;
 }
