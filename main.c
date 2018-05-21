@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
     estado=NULL;
     FENTRADA=NULL;
     FSALIDA=NULL;
+
+
 	if(argc==ARGC2_MAX){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
 			return EXIT_FAILURE;
@@ -40,13 +42,19 @@ int main(int argc, char *argv[])
     		return EXIT_FAILURE;
     	}
     	while(st!=ST_SALIR) st=operaciones(estado);
+    	seleccionar_salida(argv,params,estado,FSALIDA);
     	liberar_memoria(estado);
     	cerrar_archivos(FENTRADA,FSALIDA);
     }
     return EXIT_SUCCESS;
 }
 
-status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA,FILE *FSALIDA){
+status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA,FILE *FSALIDA)
+/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+a la estructura de estado para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
+al archivo de entrada para poder leer los datos,
+y al archivo de salida (para cerrar dos archivos en caso de error)*/
+{
  
 	int i;
 	int instruccion;
@@ -68,7 +76,10 @@ status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA
  	return ST_OK;
 }
 
-status_t leer_teclado(parametros_t *params, estado_t *estado){
+status_t leer_teclado(parametros_t *params, estado_t *estado)
+/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones) y
+a la estructura de estado para cargar las instrucciones en el vector palabras*/
+{
  
  	int i;
  	char aux[MAX_LARGO_PALABRA];
@@ -89,19 +100,25 @@ status_t leer_teclado(parametros_t *params, estado_t *estado){
 	 		return ST_OK;
 	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
 	 		return ST_ERROR_FUERA_RANGO;
-	 	estado->palabras[i]=instruccion;/********hay que castear??***************/
+	 	estado->palabras[i]=instruccion;
 	 }
 	 printf("%s\n",MSJ_CARGA_COMPLETA);
 	 printf("%s\n",MSJ_COMIENZO_EJECUCION);	
 	 return ST_OK;
 }
 
-status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA, FILE *FSALIDA){
+status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA, FILE *FSALIDA)
+/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+a la estructura de estado para cargar las instrucciones en el vector palabras,
+al archivo de entrada para poder leer los datos,
+y al archivo de salida (para cerrar los dos archivos en caso de error)*/
+{
 	size_t i;
 	char aux[MAX_LARGO_PALABRA];
 	long instruccion;
 	char *pc;
 	instruccion = 0;
+
  	for(i=0; i<params->cant_palabras;i++){
 	    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL){
 	    	liberar_memoria(estado);
@@ -121,14 +138,21 @@ status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA,
 	 return ST_OK;
 }
 
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE * FSALIDA){
-	char *pc;
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE * FSALIDA)
+/*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
+además recibe los punteros: a la estructura de los argumentos para poder cargar el valor a cant_palabras (cantidad de instrucciones),
+a la estructura de estado para después ser pasada a la funcion de lectura correspondiente,
+al archivo de entrada para poder leer los datos,
+y al archivo de salida para poder escribir los datos*/
+
+{
+	char *pc=NULL;
 	if(!argv){
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
 
-	if(argc>ARGC_MAX){
+	if(ARGC_MAX!=argc){
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_ARG );
 		return ST_ERROR_CANT_ARG;
 	}
@@ -138,7 +162,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 	}
 	else {
 		params->cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
-		if(params->cant_palabras<0 || (*pc!='\0' && *pc!='\n') || params->cant_palabras>100){
+		if(params->cant_palabras<0 || params->cant_palabras>100){
 			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_PALABRAS );
 			return ST_ERROR_CANT_PALABRAS;
 		}
@@ -164,21 +188,20 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 		return ST_ERROR_APERTURA_ARCHIVO;
 	}
 	else
-		leer_teclado(params,estado);	
+		leer_teclado(params,estado);
+
 	if(argv[ARG_POS_FSALIDA2]!=NULL){
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
 			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1],"wt"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			imprimir_archivo_txt(params, estado, FSALIDA);
 		}
 		else if (strcmp(argv[ARG_POS_FENTRADA2],OPCION_BIN)){
 			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1 ],"wb"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			imprimir_archivo_bin(params, estado, FSALIDA);
 		}
 	}
 	else if(argv[ARG_POS_FSALIDA2]==NULL && argv[ARG_POS_FSALIDA1]!=NULL){
@@ -186,12 +209,29 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 
-	else 
-		imprimir_pantalla(params,estado);
 	return ST_OK;
 }
 
-status_t imprimir_ayuda(){
+status_t validar_ayuda(int argc, char *argv[])
+/*recibe arc y argv para verificar si el usuario ejecuto el programa con el argumento de ayuda 
+ para que fuese impresa la información correspondiente*/
+{
+
+	if(!argv){
+		return ST_ERROR_PTR_NULO;
+	}
+	if(argc!=ARGC2_MAX){
+		return ST_ERROR_CANT_ARG;
+	}
+	if(argv[ARG_POS_H]!=NULL){
+		imprimir_ayuda();
+	}	
+
+	return ST_OK;
+}
+
+status_t imprimir_ayuda()/*Imprime la información de ayuda: tabla del orden de los argumentos y
+ tabla de las operaciones validas*/{
 
 	printf("%s\n", MSJ_ACLARACION_AYUDA );
 
@@ -230,20 +270,22 @@ status_t imprimir_ayuda(){
 	return ST_OK;
 }
 
-status_t validar_ayuda(int argc, char *argv[]){
 
-	if(!argv){
-		return ST_ERROR_PTR_NULO;
-	}
-	if(argc!=ARGC2_MAX){
-		return ST_ERROR_CANT_ARG;
-	}
-	if(argv[ARG_POS_H]!=NULL){
-		imprimir_ayuda();
-	}	
+status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado, FILE *FSALIDA){
 
-	return ST_OK;
+	if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
+		imprimir_archivo_txt(params, estado, FSALIDA);
+	}
+	else if (strcmp(argv[ARG_POS_FENTRADA2],OPCION_BIN)){
+		imprimir_archivo_bin(params, estado, FSALIDA);
+	}
+
+    else 
+    imprimir_pantalla(params,estado);
+
+    return ST_OK;
 }
+
 
 status_t imprimir_pantalla(parametros_t *params, estado_t * estado)
 /*Recibe los punteros a las estructuras params y estado para imprimir los datos guardados

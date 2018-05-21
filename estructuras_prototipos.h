@@ -46,6 +46,7 @@ status_t leer_archivo_txt(parametros_t *params, estado_t * estado,FILE *FENTRADA
 status_t leer_archivo_bin(parametros_t *params, estado_t * estado, FILE *FENTRADA, FILE *FSALIDA);
 status_t leer_teclado(parametros_t *params, estado_t * estado);
 
+status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado, FILE *FSALIDA);
 status_t imprimir_pantalla(parametros_t *params, estado_t  * estado);
 status_t imprimir_archivo_bin (parametros_t *params, estado_t * estado, FILE *FSALIDA);
 status_t imprimir_archivo_txt(parametros_t *params, estado_t * estado, FILE *FSALIDA);

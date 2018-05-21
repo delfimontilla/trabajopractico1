@@ -26,6 +26,7 @@
 #define MSJ_ERROR_PALABRA_NULA "la palabra ingresada es nula"
 
 
+
 #define LEER 10
 #define ESCRIBIR 11
 #define CARGAR 20
@@ -99,7 +100,7 @@
 #define MSJ_SALIDA_ARCH_TXT_OPC "txt" 
 #define MSJ_SALIDA_ARCH_TXT_DESC "El volcado se hará en formato de texto imprimiendo los registros y la memoria."
 
-#define MSJ_ACLARACION_AYUDA "Para ingresar estos argumentos se deberán colocar en el orden mostrado anteriormente. En caso de querer dejar el campo vacio se deberá colocar '-' . "
+#define MSJ_ACLARACION_AYUDA "Para ingresar estos argumentos se deberán colocar en el orden mostrado a continuación. En caso de querer dejar el campo vacio se deberá colocar '-' . "
 
 #define TAB_TITULO_OP "Operación"
 #define TAB_TITULO_CODE "OpCode"
