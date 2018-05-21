@@ -554,25 +554,3 @@ status_t op_djnz (estado_t * estado)/*decrementa en 1 el acumulador y salta a la
 		estado->contador_programa++;
 	return ST_OK;
 }
-
-status_t op_jmpneg (estado_t * estado)/*salta a la posicion de memoria desada menos 1 si el acuumlador es negativo*/{
-	if (estado->acumulador<0){
-		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
-	}
-	return ST_OK;
-
-}
-
-status_t op_jmpzero (estado_t * estado)/*salta a la posicion de memoria deseada menos uno si el acummulador es 0*/{
-	if (estado->acumulador==0){
-		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
-	}
-	return ST_OK;
-}
-
-status_t op_jnz (estado_t * estado)/*salta a la posicion de memeoria deseada menos 1 si el contador es distinto de 0*/{
-	if (estado->acumulador!=0){
-		estado->contador_programa = estado->operando-1;/*le resto uno para que cuando salgo del switch y le sume 1 quede donde quiero*/
-	}
-	return ST_OK;
-}
