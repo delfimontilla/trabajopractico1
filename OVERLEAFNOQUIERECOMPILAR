@@ -1,0 +1,587 @@
+%
+% Carátula para 75.02 / 95.11 Algoritmos y Programación I.
+%
+% Basado en el template realizado por Diego Essaya, disponible en
+%                                                         http://lug.fi.uba.ar
+% Modificado por Sebastián Santisi.
+% 2007: Modificado por Patricio Moreno y Michel Peterson.
+% 2014: Modificado por Patricio Moreno.
+% 2017: Modificado por Patricio Moreno.
+
+% Acá se define el tamaño de letra principal:
+% Para utilizar los estilos de KOMA-script, descomentar la línea siguiente y
+% comentar la que le sigue (dejar sin comentar un único documentclass)
+%\documentclass[10pt, spanish]{scrartcl}
+\documentclass[a4paper, twoside, 10pt, spanish]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{booktabs}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%yjhfjyhf%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONFIGURACIONES GENERALES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definición del tamaño de página y los márgenes:
+% Si preferís menos márgenes, descomentá la línea siguiente
+%\usepackage[a4paper,headheight=16pt,scale={0.7,0.8},hoffset=0.5cm]{geometry}
+
+\usepackage{babel}  % contiene la correcta separación en sílabas del español
+\usepackage[utf8x]{inputenc}    % porque el encoding del documento es UTF-8
+
+
+%
+% El paquete amsmath agrega algunas funcionalidades extra a las fórmulas.
+% Además defino la numeración de las tablas y figuras al estilo "Figura 2.3",
+% en lugar de "Figura 7". (Por lo tanto, aunque no uses fórmulas, si querés
+% este tipo de numeración dejá el paquete amsmath descomentado).
+%
+\usepackage{amsmath, amsfonts, amssymb}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENCABEZADO y PIE DE PÁGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}   % Para poder personalizarlo
+\usepackage{lastpage}   % Para poder saber cuántas páginas tiene el documento
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}}
+\fancyhead{}	% Elimino el contenido del encabezado
+% Muestra la sección a la derecha (izquierda) en páginas impares (pares)
+\fancyhead[RO,LE]{\rightmark}
+% El siguiente texto a la derecha (izquierda) en páginas pares (impares)
+\fancyhead[RE,LO]{95.11 - Trabajo práctico \Nro~1}
+\fancyfoot{}	% Elimino el contenido del pie de página
+% A la izquierda (derecha) en páginas pares (impares): nro. de página / total
+\fancyfoot[LE,RO]{\thepage/\pageref{LastPage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hipervínculos (enlaces) en el documento (y modificación de atributos)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\urlstyle{tt}
+\usepackage[colorlinks=true,linkcolor=black, urlcolor=blue]{hyperref}
+\hypersetup{
+    breaklinks,
+    baseurl       = http://,
+    pdfborder     = 0 0 0,
+    pdfpagemode   = UseNone,
+    pdfstartpage  = 1,
+    pdfcreator    = {Plantilla de informe de TP para \LaTeX{}},
+    bookmarksopen = true,
+    bookmarksdepth= 2,% to show sections and subsections
+    pdfauthor     = {Apellido~1, Apellido~2, Apellido~3},
+    pdftitle      = {Algoritmos y programación I -- Trabajo práctico N\textsuperscript{o}~ZZ},
+    pdfsubject    = {Informe},
+    pdfkeywords   = {}%
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTAS (para poder modificar los 'bullets' de las listas)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLAS (para que se vean bien)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{booktabs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMÁGENES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Para incluir imágenes, el siguiente código carga el paquete graphicx
+% según se esté generando un archivo dvi o un pdf (con pdflatex).
+
+% Para generar dvi, descomentá la linea siguiente:
+%\usepackage[dvips]{graphicx}
+
+% Para generar pdf, descomentá las dos lineas seguientes:
+\usepackage{graphicx}
+\pdfcompresslevel=9
+
+% Todas las imágenes están en el directorio imgs:
+\newcommand{\imgdir}{imgs}
+\graphicspath{{\imgdir/}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DIAGRAMAS DE FLUJO EN DIA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Necesitas este paquete si haces los diagramas de flujo en el programa Dia
+% y exportás a latex
+%\usepackage{tikz}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INSERCIÓN DE CÓDIGO FUENTE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% El paquete recomendado actualmente es minted.
+% Documentación: https://www.ctan.org/pkg/minted
+\usepackage[
+        section,    % Numera el código según la sección
+    ]{minted}
+% minted provee los comandos:
+% 1)  \mint[<opciones>]{<lenguaje>}<delimitador><código><delimitador>
+% 2)  \mintinline[<opciones>]{<lenguaje>}<delimitador><código><delimitador>
+% 3)  \inputminted[<opciones>]{<lenguaje>}{<archivo>}
+\setminted[c]{
+%        style=,
+        linenos,            % Mostrar los números de línea
+        numberfirstline,    % Numerar SIEMPRE la primera línea mostrada
+        tabsize=4,          % Reemplazar las tabulaciones por 4 espacios
+        autogobble          % Eliminar espacio sobrante al comienzo
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMANDOS UTILES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% los siguientes comandos permiten escribir de manera uniforme en todo el
+% documento
+
+% Para poder manejar los espacios al final de los comandos propios
+\usepackage{xspace}
+
+% Abreviatura de 'número' utilizando letras voladas (correcto español)
+\newcommand{\Nro}{N.\textsuperscript{o}\xspace}
+\newcommand{\nro}{n.\textsuperscript{o}\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INICIO DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+%
+% Carátula:
+%
+\begin{titlepage}
+
+\thispagestyle{empty}
+
+\begin{center}
+\includegraphics[scale=0.3]{fiuba}\\
+\large{\textsc{Universidad de Buenos Aires}}\\
+\large{\textsc{Facultad de Ingeniería}}\\
+% Modificar año y cuatrimestre
+\small{Año 2018 - 1\textsuperscript{er} cuatrimestre}
+\end{center}
+
+\vfill
+
+\begin{center} % Modificar el código de ser necesario
+\Large{\underline{\textsc{Algoritmos y Programación I (95.11)}}}
+\end{center}
+
+\vfill
+
+\begin{tabbing}
+\hspace{2cm}\=\+TRABAJO PRÁCTICO \Nro~\textless{}1\textgreater{}\\
+	TEMA:\textless{}Diseño y desarrollo de una aplicación que permita \\interpretar y ejecutar un lenguaje de máquina inventado.\textgreater{}\\
+	FECHA:\textless{}22/05/2018\textgreater{}\\% \today\\
+\\
+	INTEGRANTES:\hspace{-1cm}\=\+\hspace{1cm}\=\hspace{6cm}\=\\
+		Galli, Joaquín	\>\>- 99793\\
+			\>\footnotesize{\verb!<taigalli@hotmail.com>!}\\
+		Montilla, Delfina	\>\>- 99214\\
+			\>\footnotesize{\verb!<delfinamontilla@gmail.com>!}\\
+		Sobico, Carla	\>\>- 99738\\
+			\>\footnotesize{\verb!<carlasobico@hotmail.com>!}\\
+\end{tabbing}
+
+\vfill
+
+\hrule
+\vspace{0.2cm}
+
+% Modificar código de ser necesario
+\noindent\small{95.11 - Algoritmos y Programación I \hfill Lic. Mónica Kuhn}
+
+\end{titlepage}
+
+%
+% Hago que las páginas se comiencen a contar a partir de aquí:
+%
+\setcounter{page}{1}
+
+%
+% Pongo el índice en una página aparte:
+%
+\tableofcontents
+\newpage
+
+%
+% Inicio del TP:
+%
+\section{Enunciado}
+%Acá va el enunciado del trabajo, o al menos la parte relevante del problema planteado. Es decir ¿cuál es el problema a resolver?
+%\flushleft\includegraphics[scale=0.75]{especificacion.pdf}
+Se ha de crear una “computadora” a la cual llamaremos Simpletron, que ejecuta programas escritos en un lenguaje diseñado específicamente para este problema, el Lenguaje de Máquina de la Simpletron, LMS. Este lenguaje y ejercicio brindarán un mayor entendimiento de lo que ocurre en los lenguajes de programación más cercanos al hardware.
+
+Toda la información que utiliza la Simpletron se maneja en palabras; cada una es un número entero de cuatro dígitos con signo. Le Simpletron tiene espacio para almacenar una cantidad fija y finita de palabras, la memoria. En ella, se pueden almacenar instrucciones del programa, un dato o nada. Todas las instrucciones se deben cargar en memoria, por lo que las instrucciones son palabras. Además, deben ser siempre positivos. Los primeros dos dígitos de cada instrucción represetan el código de operación, \textit{opcode}, el cual especifica la operación a realizar. En la tabla \ref{tabla1} se resumen los códigos de operación que debe soportar el programa. Los últimos dos dígitos de la instrucción son el \textit{operando}, el cual represeta la dirección dememoria que contiene la palabra a la que se le aplica la operación.
+
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+  \begin{table}[htbp]
+\centering
+\begin{tabular}{lcp{8.5cm}}
+
+\toprule
+\textbf{Operación} & \textbf{\textit{OpCode}} & \textbf{Descripción} \\
+\midrule
+\multicolumn{1}{l}{\textit{Op.de Entrada/Salida:}}&  & \\
+\texttt{LEER}  & $10$ & Lee una palabra de \textit{stdin} a una posición de memoria \\
+\texttt{ESCRIBIR}  & $11$ & Imprime por \textit{stdout} una posición de memoria \\
+\multicolumn{1}{l}{\textit{Op.de movimiento:}}  &  & \\
+\texttt{CARGAR}  & $20$ & Carga una palabra de la memoria en el acumulador \\
+\texttt{GUARDAR}  & $21$ & Guarda una palabra de la memoria en el acumulador \\
+\texttt{PCARGAR} & $22$ & Carga una palabra de la memoria en el acumulador pero el operando es \textit{puntero} \\
+\texttt{PGUARDAR } & $23$ & Guarda una palabra de la memoria en el acumulador pero el operando es \textit{puntero}\\
+\multicolumn{1}{l}{\textit{Op.de aritméticas:} } &  & \\
+\texttt{SUMAR}  & $30$& Suma una palabra al acumulador \\
+\texttt{RESTAR}  & $31$ & Resta una palabra al acumulador\\
+
+\texttt{DIVIDIR}  & $32$ & Divide el acumulador por el operando \\
+\texttt{MULTIPLICAR}  & $33$ & Multiplica el acumulador por el operando \\
+\multicolumn{1}{l}{\textit{Op.de movimiento:}}  &  & \\
+\texttt{JMP}& $40$ & Salta a una ubicación de memoria \\
+\texttt{JMPNEG}  & $41$ & Idem sólo si el acumulador es negativo \\
+\texttt{JMPZERO}  & $42$ & Idem sólo si el acumulador es cero \\
+\texttt{JNZ} & $43$ & Idem sólo si el acumulador NO es cero\\
+\texttt{DJNZ} & $44$ & Decrementa sólo si el acumulador NO es cero \\
+\texttt{HALT}& $45$ & Finaliza el programa \\
+\bottomrule
+
+\end{tabular}
+\caption{\label{tabla1}Códigos de operación—\textit{opcodes}—del LMS}
+\end{table}
+
+
+
+Además, la Simpletron posee un \textit{acumulador}, un registro en el cual la información se coloca antes de ser utilizada por las distintas instrucciones que soporta la máquina. Antes de ejecutar un programa escrito en lenguaje LMS, el mismo debe ser cargado en memoria. Siempre, la primera instrucción de cada programa se carga en la posición 00 .
+
+Finalizada la ejecución del programa, se hará un volcado de la aplicación, mostrando todos sus parámetros y el estado de la memoria. Este volcado se conoce como \textit{dump}.
+
+Podrá ser configurado con algunos pocos parámetros. Mediante estos parámetros se podrá configurar la cantidad de memoria que dispone el Simpletron, el formato de salida, el archivo de salida, el archivo de entrada y el formato de la entrada. En la tabla \ref{tabla2} se detallan los argumentos que recibirá el programa. %Opcional: considere que el carácter ; indica el comienzo de un comentario que termina al finalizar la línea. Además, todos los espacios en blanco al final de código útil son descartados, lo mismo que los comentarios.
+
+
+
+  \begin{table}[htbp]
+
+\centering
+
+\begin{tabular}{lcp{10cm}}
+\toprule
+\textbf{Arg.} & \textbf{Opción} & \textbf{Descripción} \\
+\midrule
+ -h  & no posee & Muestra una ayuda \\
+ -m & N & \textit{Simpletron} tiene una memoria de N palabras. Si no se da el argumento, por omisión tendrá 50 palabras. \\
+ -i & archivo & El programa se leerá del archivo pasado como opción, en caso contrario, de \textit{stdin}. \\
+ -ia & bin & El archivo de entrada se entenderá como una secuencia binaria de enteros que representan las palabras que forman el programa. \\
+    & txt & El archivo de entrada se interpretará como secuencia de números, cada uno en una única linea. \\
+ -o  & archivo & El\textit{dump} se hará en el archivo pasado como opción, si no pasa el argumento, el volacado se hará por \textit{stdout}.\\
+ -of  & bin & El volcado se haráen binario guardando cada elemento de la estructura del \textit{Simpletron}, además de la memoria \\
+   & txt & El volcado se hará en formato de texto, imprimiendo los registros de la memoria.  \\
+
+\bottomrule
+
+\end{tabular}
+\caption{\label{tabla2}Tabla de argumentos del programa principal}
+\end{table}
+
+\newpage
+\section{Alternativas consideradas}
+%En esta sección se ingresan TODAS las opciones que se analizaron a la hora de resolver el problema. También se ingresan las fortalezas y debilidades de cada una de éstas opciones. Si las alternativas lo ameritan, se pueden crear subsecciones para cada una de ellas, por ejemplo si se implementan distintos algoritmos conocidos, o soluciones conocidas con nombre propio. Otros motivos son válidos también.
+Antes de comenzar el desarrollo del código se enlistaron los posibles problemas donde se debería tomar una decisión de como ejecutarlo. Estos fueron:
+\begin{enumerate}
+\item Usar argumentos posicionales o no posicionales.
+\item Cómo leer los argumentos y la implementación de los \textit{default} de los mismos.
+\item Cuál es la máxima cantidad de palabras que se pueden ingresar.
+\item Qué hacer si no especifica si el archivo ingresado es binario o de texto.
+\item Qué tipo de redacción se desea en los archivos ingresados.
+\item La impresión final, sobrescribe o no el archivo de salida.
+\item Qué hacer en caso de que pase un archivo que no coincida con el tipo indicado.
+\item Cómo leer los datos ingresados (para cada una de las palabras), tomando sólo la parte necesaria de estos.
+\item Cómo separar las palabras en su signo, \textit{opcode} y\textit{ operando}.
+\item Qué número establecer como cierre de ingreso de palabras por stdin.
+\item Qué manera es más rápida en la selección de que opcode se está usando para las operaciones.
+\item Cómo imprimir en el archivo binario.
+\item Cómo organizar los archivos \textit{``.h''}.
+\item ¿Es confuso que un argumento sea \textit{-if}?
+\end{enumerate}
+ 
+\subsection{Estrategias adoptadas}
+%En esta subsección se justifica por qué se toma una de las alternativas anteriores frente a las demás.
+Los problemas enunciados anteriormente se discutieron llegando así a las siguientes decisiones, que fueron tomadas considerando que el usuario leyó previamente el archivo de ayuda y que sabe lo que hace.
+\begin{enumerate}
+\item Se decidió usar argumentos posicionales ya que esto simplicaría la lectura de los argumentos; para que el usuario no comenta algún error, esto se especificó en el archivo de ayuda.
+\item Los \textit{default} utilizados fueron los especificados en la consigna. Luego, cada argumento se analizó pasando por una serie de \textit{else if} para poder implementar la función necesaria para cada caso.
+\item Se tomó como máxima cantidad de palabras ingresadas 100, ya que la parte del operando de cada palabra sólo puede ir desde 00 a 99.
+\item Si se llega a pasar un archivo y no se especifica si el mismo es de tipo binario o texto se imprimirá un error y se cerrará el programa.
+\item Para una más fácil lectura se quiere que los archivos sean escritos de la forma \textit{`` ±XXXX ; dddd  ''}.
+\item Se decidió que al imprimir en los archivos de salida estos sean sobrescritos, ya que se le avisó esto anteriormente al usuario en el archivo ayuda.
+\item En el caso de que el archivo sea de un distinto formato al especificado, se continuará ejecutando el programa como si este archivo fuera del formato dicho, a pesar de no llegar al objetivo deseado.
+\item 
+\item La parte del signado sólo era importante en pocas funciones, por lo que esto se simplificó tomando el número y viendo si era mayor o menor a 0 para luego continuar. Para separar el \textit{opcode} y el \textit{operando}, en caso que el signado sea positivo, se dividió el número por 100, como éste era un int esta división deja unicamente lo que sería el \textit{opcode}. Para encontrar el \textit{operando}, que son los dos últimos dígitos del número se busca restando el número con el \textit{opcode} multiplicado previamente por 100.
+\item Se utilizó como cierre el \textit{`` -99999 ''} ya que éste fue sugerido en un ejemplo dado.
+\item Para decidir que operación se debe utilizar según el opcode recibido, se decidió utlizar la función \textit{Switch} teniendo cada \textit{case} la función a utilizar para ese \textit{opcode}.
+\item Se decidió imprimir en el archivo binario la información en igual orden que para el archivo de texto y por pantalla, pero sin señalar con texto que es cada cosa y la memoria en forma de lista en vez de forma de matriz.
+\item Se decidió utilizar tres de estos archivos, uno para español, otro para inglés y otro para las estructuras y prototipos. Se consideró hacer de esta manera ya que las estructuras y los prototipos se deben ingresar independientemente del idioma y al no poner todo en un mismo archivo se puede hacer una actualización del programa a otro idioma de manera más simple y sin correr riesgo que se dañe otra parte del programa. Se pensó también en crear los prototipos y las estructuras en archivos separados, pero al no ser muchas se decidió dejarlo todo en uno. En caso de haber implementado más se hubieran separado.
+\item Se consideró que el argumento \textit{-if} era confuso por lo que se lo nombro \textit{-ia} reemplazando la inicial de \textit{file} por la inicial de \textit{archivo}.
+\end{enumerate}
+
+
+
+
+%\newpage
+%\section{Estructura Lógica}
+%Acá va la estructura lógica de la solución. Diagramas de flujo, diagramas en bloque, etc.
+
+
+\newpage
+\section{Escructura Funcional}
+Se decidió separar las estructuras para su mejor visualización.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{main.jpeg}
+\caption{Funciones que surgen del main}
+\label{main}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=1\textwidth]{operaciones.jpeg}
+\caption{Funciones que surgen de las operaciones}
+\label{operaciones}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{imprimir.jpeg}
+\caption{Funciones que imprimen}
+\label{imprimir}
+\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=1\textwidth]{leer.jpeg}
+\caption{Funciones de lectura}
+\label{leer}
+\end{center}
+\end{figure}
+
+
+
+
+%\begin{verbatim}
+ %                   __________
+  %                 | programa |
+   %       ______________||_____________________________________________________
+    %     |                             |
+ % _______↓_________            ________↓________
+ %| calcular_precio |          | imprimir_mensaje|
+  %                                     |
+   %                                    |
+    %                               ____↓____
+     %                             | fprintf |
+%\end{verbatim}
+
+
+\newpage
+\section{Problemas encontrados}
+En esta sección se detallan los problemas encontrados, sus posibles soluciones,
+la solución adoptada y una justificación de la misma. Los errores de sintaxis,
+salvo que sea además conceptuales, no es necesario que sean marcados. Ejemplo
+de errores comunes que no han de ser marcados: olvidarse un ; al final de una
+sentencia, olvidarse una \} o un ], escribir print() en vez de printf()etc.
+Problemas que sí pueden ser marcados: iterar de más o menos en un ciclo,
+utilizar incorrectamente un enum, problemas con un algoritmo, problemas con
+manejos de arreglos o punteros, etc.
+
+\subsection{Niveles de punteros/* se puede llamar asi al problema del vector palabras?*/}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+
+\subsection{Contador}
+Se generó un problema al llegar a las operaciones de \textit{opcode} en las que se generaba un salto en el contador. Como en primera instancia se implementó un aumento del contador al salir de la selección de operaciones, sucedía que se incrementaba en uno la posición deseada.\\
+	\subsubsection{Posibles soluciones}
+\begin{itemize}
+\item Modificar las funciones de salto haciendo que salga de las mismas en una posición menos de la deseada. 
+\item Al ingresar en cada \textit{case} aumentar el contador y en los casos de los saltos analizarlo dentro de cada \textit{case}.
+\end{itemize}
+
+    \subsubsection{Solución adoptada}
+    El problema de la primera opción a de solucionarlo era en el caso de querer ir a la posición $00$. Por lo que se utilizó la segunda opción.\\
+
+\subsection{Violación de segmento}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+
+\subsection{Estructura para el estado}
+En un principio, el estado de la Simpletron no había sido definido en una estructura. Es decir, el \textit{acumulador}, \textit{contador del programa}, \textit{opcode}, \textit{operando} y vector de instrucciones, \textit{palabras}, eran variables independientes. Esto generaba que al momento de implementar una nueva función, los argumentos eran extensos. Además no se cumplía con lo pedido en el sección de Implementación acerca de la realización del trabajo práctico. \\
+	\subsubsection{Posibles soluciones}
+    Se debía crear la estructura \textit{estado} necesariamente. \\
+    \subsubsection{Solución adoptada}
+    Al crearse la nueva estructura, se procedió a realizar los cambios necesarios en la escritura del programa. A raíz del anterior cambio, se tuvo algunos problemas al momento de imprimir un vector en una posición especificada por un puntero, siendo los dos miembros de \textit{estado}. Al momento de compilación, aparecía un error que marcaba que el subíndice no era un número entero; o en otro caso, \guillemotleft el formato `\% i' espera el argumento de tipo `int', pero el argumento tiene el tipo `int *'\guillemotright\\
+    
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+    
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+    
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+    
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+
+\subsection{}
+	\subsubsection{Posibles soluciones}
+    \subsubsection{Solución adoptada}
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Casos de prueba}
+En esta sección se añade el diseño de los casos de prueba.
+LOS EJEMPLOS QUE EL NOS DIO
+
+
+\newpage
+\section{Resultados de ejecución}
+En esta sección se ingresan los resultados de ejecución, sean los casos de
+prueba u otros.
+
+
+\newpage
+\section{Referencias}
+
+Lo recomendado es usar el paquete \texttt{biblatex} o \texttt{natbib} junto con
+un archivo de bibliografía (\texttt{.bib}) y usar el comando
+\mintinline{latex}{\cite{...}} donde se desee citar alguna fuente.
+
+Para las referencias se puede utilizar el estilo de referencias de la IEEE, que
+se encuentra en\\
+\url{www.ieee.org/conferences_events/conferences/publishing/templates.html},
+junto con su archivo de bibliografía. O bien pueden ingresarse a mano
+manteniendo el estilo. Ejemplos:
+
+\begin{enumerate}[{[}1{]}]
+\item https://www.lucidchart.com
+ % \item G. Eason, B. Noble, and I.N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions'', Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955. (references)  \item J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed.,vol. 2. Oxford: Clarendon, 1982, pp. 68-73.
+  %\item I.S. Jacobs and C.P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G.T. Rado and H. Suhl, Eds. New York> Academic, 1963, pp. 271-350.
+%\item K. Elissa, ``Title of paper if known,'' unpublished.
+%  \item R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
+%  \item Y. Yorozu, M. Hirano, K.Oka, and Y. Tagawa, ``Electron spectroscopy studis on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740-741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p.301, 1982].
+ % \item M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989
+\end{enumerate}
+
+
+\newpage
+\section{Código fuente}
+
+%En esta sección va el código fuente. Se deben mostrar los nombres de los archivos y diferenciar el comienzo y fin de ellos, para facilitar la lectura. Agrego ejemplos de código incluído utilizando el paquete \texttt{minted}. El comando para incluir un archivo, sin modificar nada más, es:% Para el que está leyendo el fuente, el comando es:
+% \inputminted{c}{archivo.c}
+\subsection{Archivos \textit{.c}}
+
+\mint{latex}{\inputminted{c}{main.c}} 
+\inputminted[style=arduino, label=main, frame=lines]{c}{main.c}
+\mint{latex}{\inputminted{c}{validar_argumentos.c}} 
+\inputminted[style=arduino, label=validar argumentos, frame=lines]{c}{validar_argumentos.c}
+\mint{latex}{\inputminted{c}{validar_ayuda.c}} 
+\inputminted[style=arduino, label=validarayuda, frame=lines]{c}{validar_ayuda.c}
+\mint{latex}{\inputminted{c}{imprimir_ayuda.c}} 
+\inputminted[style=arduino, label=imprimirayuda, frame=lines]{c}{imprimir_ayuda.c}
+\mint{latex}{\inputminted{c}{leer_archivo_bin.c}} 
+\inputminted[style=arduino, label=leerarchivo, frame=lines]{c}{leer_archivo_bin.c}
+\mint{latex}{\inputminted{c}{leer_teclado.c}} 
+\inputminted[style=arduino, label=leerteclado, frame=lines]{c}{leer_teclado.c}
+\mint{latex}{\inputminted{c}{leer_archivo_txt.c}} 
+\inputminted[style=arduino, label=leerarchivo, frame=lines]{c}{leer_archivo_txt.c}
+\mint{latex}{\inputminted{c}{imprimir_pantalla.c}} 
+\inputminted[style=arduino, label=imprimirpantalla, frame=lines]{c}{imprimir_pantalla.c}
+\mint{latex}{\inputminted{c}{imprimir_archivo_txt.c}} 
+\inputminted[style=arduino, label=imprimirarchivotxt, frame=lines]{c}{imprimir_archivo_txt.c}
+\mint{latex}{\inputminted{c}{imprimir_archivo_bin.c}} 
+\inputminted[style=arduino, label=imprimirarchivobin, frame=lines]{c}{imprimir_archivo_bin.c}
+\mint{latex}{\inputminted{c}{cerrar_archivos.c}} 
+\inputminted[style=arduino, label=cerrararchivo, frame=lines]{c}{cerrar_archivos.c}
+\mint{latex}{\inputminted{c}{liberar_memoria.c}} 
+\inputminted[style=arduino, label=liberarmemoria, frame=lines]{c}{liberar_memoria.c}
+\mint{latex}{\inputminted{c}{operaciones.c}} 
+\inputminted[style=arduino, label=operaciones, frame=lines]{c}{operaciones.c}
+\mint{latex}{\inputminted{c}{op_leer.c}} 
+\inputminted[style=arduino, label=opleer, frame=lines]{c}{op_leer.c}
+\mint{latex}{\inputminted{c}{op_escribir.c}} 
+\inputminted[style=arduino, label=opescribir, frame=lines]{c}{op_escribir.c}
+\mint{latex}{\inputminted{c}{op_cargar.c}} 
+\inputminted[style=arduino, label=opcargar, frame=lines]{c}{op_cargar.c}
+\mint{latex}{\inputminted{c}{op_guardar.c}} 
+\inputminted[style=arduino, label=opguardar, frame=lines]{c}{op_guardar.c}
+\mint{latex}{\inputminted{c}{op_pcargar.c}} 
+\inputminted[style=arduino, label=oppcargar, frame=lines]{c}{op_pcargar.c}
+\mint{latex}{\inputminted{c}{op_pguardar.c}} 
+\inputminted[style=arduino, label=oppguardar, frame=lines]{c}{op_pguardar.c}
+\mint{latex}{\inputminted{c}{op_restar.c}} 
+\inputminted[style=arduino, label=oprestar, frame=lines]{c}{op_restar.c}
+\mint{latex}{\inputminted{c}{op_dividir.c}} 
+\inputminted[style=arduino, label=opdividir, frame=lines]{c}{op_dividir.c}
+\mint{latex}{\inputminted{c}{op_multiplicar.c}} 
+\inputminted[style=arduino, label=opmultiplicar, frame=lines]{c}{op_multiplicar.c}
+\mint{latex}{\inputminted{c}{op_sumar.c}} 
+\inputminted[style=arduino, label=opsumar, frame=lines]{c}{op_sumar.c}
+\mint{latex}{\inputminted{c}{op_jmp.c}} 
+\inputminted[style=arduino, label=opjmp, frame=lines]{c}{op_jmp.c}
+\mint{latex}{\inputminted{c}{op_djnz.c}} 
+\inputminted[style=arduino, label=opdjnz, frame=lines]{c}{op_djnz.c}
+
+\subsection{Archivos \textit{.h}}
+
+\mint{latex}{\inputminted{c}{estructura_prototipo.h}} 
+\inputminted[style=arduino, label=estructura_prototipo, frame=lines]{c}{estructura_prototipo.h}
+\mint{latex}{\inputminted{c}{LANG_ENGLISH.h}} 
+\inputminted[style=arduino, label=LANG_ENGLISH, frame=lines]{c}{LANG_ENGLISH.h}
+\mint{latex}{\inputminted{c}{LANG_SPANISH.h}} 
+\inputminted[style=arduino, label=LANG_SPANISH, frame=lines]{c}{LANG_SPANISH.h}
+
+%Lamentablemente, no soporta nativamente el tema de colores \emph{Solarized} de Ethan Schoonover.
+
+%Para poder compilar utilizando \texttt{minted}, es necesario tener instalado python pygments y compilar agregando \texttt{-shell-escape} a la línea de compilación de pdflatex. {\color{red}{Usar \texttt{-shell-escape} con responsabilidad}}.
+
+
+
+
+\end{document}
