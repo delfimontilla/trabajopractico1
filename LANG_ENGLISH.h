@@ -12,7 +12,7 @@
 #define ARG_POS_FENTRADA2 3 
 #define ARG_POS_FSALIDA1 4
 #define ARG_POS_FSALIDA2 5
-#define ARG_POS_H 3
+#define ARG_POS_H 1
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
 
@@ -67,7 +67,7 @@
 
 #define MSJ_AYUDA_ARG "-h" 
 #define MSJ_AYUDA_OPC "doesn't have" 
-#define MSJ_AYUDA_DESC "Shows helo."
+#define MSJ_AYUDA_DESC "Shows help."
 
 #define MSJ_MEMORIA_ARG "-m" 
 #define MSJ_MEMORIA_OPC "N" 
@@ -78,15 +78,15 @@
 #define MSJ_ENTRADA_DESC "The program will be read from the file provided, otherwise, from stdin."
 
 #define MSJ_ARCHIVO_ARG "-ia" 
-
 #define MSJ_ARCHIVO_OPC_BIN "bin" 
 #define MSJ_ARCHIVO_DESC_BIN "The input file will be understood as a binary sequence of integers that represent the words that make up the program."
-
 #define MSJ_ARCHIVO_OPC_TXT "txt" 
 #define MSJ_ARCHIVO_DESC_TXT "The input file will be interpreted as a sequence of numbers, each one in a single line"
+
 #define MSJ_SALIDA_ARG "-o"
 #define MSJ_SALIDA_OPC "archivo" 
 #define MSJ_SALIDA_DESC "The dump will be done in the file provided, otherwise, the dump will be done by stdout."
+
 #define MSJ_SALIDA_ARCH_ARG "-of" 
 
 #define MSJ_SALIDA_ARCH_BIN_OPC "bin"

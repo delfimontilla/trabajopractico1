@@ -4,7 +4,7 @@
 
 #include "estructuras_prototipos.h"
 
-#define LANG_SPANISH
+#define LANG_ENGLISH
 
 #ifdef LANG_SPANISH
 #include "LANG_SPANISH.h"
@@ -50,10 +50,10 @@ int main(int argc, char *argv[])
 }
 
 status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA,FILE *FSALIDA)
-/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
-a la estructura de estado para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
-al archivo de entrada para poder leer los datos,
-y al archivo de salida (para cerrar dos archivos en caso de error)*/
+ /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+ a la estructura de estado para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
+ al archivo de entrada para poder leer los datos,
+ y al archivo de salida (para cerrar dos archivos en caso de error)*/
 {
  
 	int i;
@@ -77,8 +77,8 @@ y al archivo de salida (para cerrar dos archivos en caso de error)*/
 }
 
 status_t leer_teclado(parametros_t *params, estado_t *estado)
-/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones) y
-a la estructura de estado para cargar las instrucciones en el vector palabras*/
+ /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones) y
+ a la estructura de estado para cargar las instrucciones en el vector palabras*/
 {
  
  	int i;
@@ -108,10 +108,10 @@ a la estructura de estado para cargar las instrucciones en el vector palabras*/
 }
 
 status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA, FILE *FSALIDA)
-/*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
-a la estructura de estado para cargar las instrucciones en el vector palabras,
-al archivo de entrada para poder leer los datos,
-y al archivo de salida (para cerrar los dos archivos en caso de error)*/
+ /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+ a la estructura de estado para cargar las instrucciones en el vector palabras,
+ al archivo de entrada para poder leer los datos,
+ y al archivo de salida (para cerrar los dos archivos en caso de error)*/
 {
 	size_t i;
 	char aux[MAX_LARGO_PALABRA];
@@ -139,12 +139,11 @@ y al archivo de salida (para cerrar los dos archivos en caso de error)*/
 }
 
 status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE * FSALIDA)
-/*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
-además recibe los punteros: a la estructura de los argumentos para poder cargar el valor a cant_palabras (cantidad de instrucciones),
-a la estructura de estado para después ser pasada a la funcion de lectura correspondiente,
-al archivo de entrada para poder leer los datos,
-y al archivo de salida para poder escribir los datos*/
-
+ /*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
+ además recibe los punteros: a la estructura de los argumentos para poder cargar el valor a cant_palabras (cantidad de instrucciones),
+ a la estructura de estado para después ser pasada a la funcion de lectura correspondiente,
+ al archivo de entrada para poder leer los datos,
+ y al archivo de salida para poder escribir los datos*/
 {
 	char *pc=NULL;
 	if(!argv){
@@ -213,7 +212,7 @@ y al archivo de salida para poder escribir los datos*/
 }
 
 status_t validar_ayuda(int argc, char *argv[])
-/*recibe arc y argv para verificar si el usuario ejecuto el programa con el argumento de ayuda 
+ /*recibe arc y argv para verificar si el usuario ejecuto el programa con el argumento de ayuda 
  para que fuese impresa la información correspondiente*/
 {
 
@@ -230,48 +229,54 @@ status_t validar_ayuda(int argc, char *argv[])
 	return ST_OK;
 }
 
-status_t imprimir_ayuda()/*Imprime la información de ayuda: tabla del orden de los argumentos y
- tabla de las operaciones validas*/{
+status_t imprimir_ayuda()
+ /*Imprime la información de ayuda: tabla del orden de los argumentos y
+ tabla de las operaciones validas*/
+{
 
 	printf("%s\n", MSJ_ACLARACION_AYUDA );
 
-	printf("%s   %s   %s\n",MSJ_TITULO_ARG, MSJ_TITULO_OPC, MSJ_TITULO_DESC);
-	printf("%s   %s   %s\n",MSJ_AYUDA_ARG, MSJ_AYUDA_OPC, MSJ_AYUDA_DESC);
-	printf("%s   %s   %s\n",MSJ_MEMORIA_ARG, MSJ_MEMORIA_OPC, MSJ_MEMORIA_DESC);
-	printf("%s   %s   %s\n",MSJ_ENTRADA_ARG, MSJ_ENTRADA_OPC, MSJ_ENTRADA_DESC);
-	printf("%s   %s   %s\n",MSJ_ARCHIVO_ARG, MSJ_ARCHIVO_OPC_BIN, MSJ_ARCHIVO_DESC_BIN);
-	printf("     %s   %s\n",MSJ_ARCHIVO_OPC_TXT,MSJ_ARCHIVO_DESC_TXT);
-	printf("%s   %s   %s\n",MSJ_SALIDA_ARG, MSJ_SALIDA_OPC, MSJ_SALIDA_DESC);
-	printf("%s   %s   %s\n",MSJ_SALIDA_ARCH_ARG, MSJ_SALIDA_ARCH_BIN_OPC, MSJ_SALIDA_ARCH_BIN_DESC);
-	printf("     %s   %s\n",MSJ_SALIDA_ARCH_TXT_OPC, MSJ_SALIDA_ARCH_TXT_DESC);
+	printf("%s     %s     %s\n",MSJ_TITULO_ARG, MSJ_TITULO_OPC, MSJ_TITULO_DESC);
+	printf("%s     %s     %s\n",MSJ_AYUDA_ARG, MSJ_AYUDA_OPC, MSJ_AYUDA_DESC);
+	printf("%s     %s     %s\n",MSJ_MEMORIA_ARG, MSJ_MEMORIA_OPC, MSJ_MEMORIA_DESC);
+	printf("%s     %s     %s\n",MSJ_ENTRADA_ARG, MSJ_ENTRADA_OPC, MSJ_ENTRADA_DESC);
+	printf("%s     %s     %s\n",MSJ_ARCHIVO_ARG, MSJ_ARCHIVO_OPC_BIN, MSJ_ARCHIVO_DESC_BIN);
+	printf("       %s     %s\n",MSJ_ARCHIVO_OPC_TXT,MSJ_ARCHIVO_DESC_TXT);
+	printf("%s     %s     %s\n",MSJ_SALIDA_ARG, MSJ_SALIDA_OPC, MSJ_SALIDA_DESC);
+	printf("%s     %s     %s\n",MSJ_SALIDA_ARCH_ARG, MSJ_SALIDA_ARCH_BIN_OPC, MSJ_SALIDA_ARCH_BIN_DESC);
+	printf("       %s     %s\n",MSJ_SALIDA_ARCH_TXT_OPC, MSJ_SALIDA_ARCH_TXT_DESC);
 
-	printf("%s   %s   %s\n",TAB_TITULO_OP,TAB_TITULO_CODE,TAB_TITULO_DESC);
+	printf("%s     %s     %s\n",TAB_TITULO_OP,TAB_TITULO_CODE,TAB_TITULO_DESC);
 	printf("%s\n",TAB_ENT_SAL);
-	printf("%s   %s   %s\n",TAB_LEER_OP,TAB_LEER_CODE,TAB_LEER_DESC);
-	printf("%s   %s   %s\n",TAB_ESCRIBIR_OP,TAB_ESCRIBIR_CODE,TAB_ESCRIBIR_DESC);
+	printf("%s     %s     %s\n",TAB_LEER_OP,TAB_LEER_CODE,TAB_LEER_DESC);
+	printf("%s     %s     %s\n",TAB_ESCRIBIR_OP,TAB_ESCRIBIR_CODE,TAB_ESCRIBIR_DESC);
 	printf("%s\n",TAB_MOV);
-	printf("%s   %s   %s\n",TAB_CARGAR_OP,TAB_CARGAR_CODE,TAB_CARGAR_DESC);
-	printf("%s   %s   %s\n",TAB_GUARDAR_OP,TAB_GUARDAR_CODE,TAB_GUARDAR_DESC);
-	printf("%s   %s   %s\n",TAB_PCARGAR_OP,TAB_PCARGAR_CODE,TAB_PCARGAR_DESC);
-	printf("%s   %s   %s\n",TAB_PGUARDAR_OP,TAB_PGUARDAR_CODE,TAB_PGUARDAR_DESC);
+	printf("%s     %s     %s\n",TAB_CARGAR_OP,TAB_CARGAR_CODE,TAB_CARGAR_DESC);
+	printf("%s     %s     %s\n",TAB_GUARDAR_OP,TAB_GUARDAR_CODE,TAB_GUARDAR_DESC);
+	printf("%s     %s     %s\n",TAB_PCARGAR_OP,TAB_PCARGAR_CODE,TAB_PCARGAR_DESC);
+	printf("%s     %s     %s\n",TAB_PGUARDAR_OP,TAB_PGUARDAR_CODE,TAB_PGUARDAR_DESC);
 	printf("%s\n",TAB_MATE);
-	printf("%s   %s   %s\n",TAB_SUMAR_OP,TAB_SUMAR_CODE,TAB_SUMAR_DESC);
-	printf("%s   %s   %s\n",TAB_RESTAR_OP,TAB_RESTAR_CODE, TAB_RESTAR_DESC);
-	printf("%s   %s   %s\n",TAB_DIVIDIR_OP,TAB_DIVIDIR_CODE,TAB_DIVIDIR_DESC);
-	printf("%s   %s   %s\n",TAB_MULT_OP,TAB_MULT_CODE,TAB_MULT_DESC);
+	printf("%s     %s     %s\n",TAB_SUMAR_OP,TAB_SUMAR_CODE,TAB_SUMAR_DESC);
+	printf("%s     %s     %s\n",TAB_RESTAR_OP,TAB_RESTAR_CODE, TAB_RESTAR_DESC);
+	printf("%s     %s     %s\n",TAB_DIVIDIR_OP,TAB_DIVIDIR_CODE,TAB_DIVIDIR_DESC);
+	printf("%s     %s     %s\n",TAB_MULT_OP,TAB_MULT_CODE,TAB_MULT_DESC);
 	printf("%s\n",TAB_CONTROL);
-	printf("%s   %s   %s\n",TAB_JUMP_OP, TAB_JUMP_CODE,TAB_JUMP_DESC);
-	printf("%s   %s   %s\n",TAB_JMPNEG_OP, TAB_JMPNEG_CODE,TAB_JMPNEG_DESC);
-	printf("%s   %s   %s\n",TAB_JMPZERO_OP, TAB_JMPZERO_CODE,TAB_JMPZERO_DESC);
-	printf("%s   %s   %s\n",TAB_JNZ_OP,TAB_JNZ_CODE,TAB_JNZ_DESC);
-	printf("%s   %s   %s\n",TAB_DJNZ_OP,TAB_DJNZ_CODE,TAB_DJNZ_DESC);
-	printf("%s   %s   %s\n",TAB_FIN_OP,TAB_FIN_CODE,TAB_FIN_DESC);
+	printf("%s     %s     %s\n",TAB_JUMP_OP, TAB_JUMP_CODE,TAB_JUMP_DESC);
+	printf("%s     %s     %s\n",TAB_JMPNEG_OP, TAB_JMPNEG_CODE,TAB_JMPNEG_DESC);
+	printf("%s     %s     %s\n",TAB_JMPZERO_OP, TAB_JMPZERO_CODE,TAB_JMPZERO_DESC);
+	printf("%s     %s     %s\n",TAB_JNZ_OP,TAB_JNZ_CODE,TAB_JNZ_DESC);
+	printf("%s     %s     %s\n",TAB_DJNZ_OP,TAB_DJNZ_CODE,TAB_DJNZ_DESC);
+	printf("%s     %s     %s\n",TAB_FIN_OP,TAB_FIN_CODE,TAB_FIN_DESC);
 
 	return ST_OK;
 }
 
 
-status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado, FILE *FSALIDA){
+status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado, FILE *FSALIDA)
+ /*recibe argv para verficar cual es el formato del archivo de salida o si se hara por stdout;
+ además recibe el puntero a la estructura de argumentos, de estado y al archivo de salida para poder pasarselos
+ a las funciones que se encargaran de imprimir en el formato correspondiente.*/
+{
 
 	if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
 		imprimir_archivo_txt(params, estado, FSALIDA);
@@ -288,8 +293,10 @@ status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado,
 
 
 status_t imprimir_pantalla(parametros_t *params, estado_t * estado)
-/*Recibe los punteros a las estructuras params y estado para imprimir los datos guardados
- en el acumulador, en el contador del programa, la ultima instruccion ejecutada, el ultimo opcode y operando, ademas de la memoria de todas las palabras*/{
+ /*Recibe los punteros a la estructura de argumentos y a la de estado para imprimir los datos guardados
+ en el acumulador, en el contador del programa, la ultima instruccion ejecutada, 
+ el ultimo opcode y operando, además de la memoria de todas las palabras, en forma de matriz*/
+{
 	int i,k,l;
 
     printf("%s\n", MSJ_REGISTRO);
@@ -318,7 +325,12 @@ status_t imprimir_pantalla(parametros_t *params, estado_t * estado)
     return ST_OK;
 }
 
-status_t imprimir_archivo_txt(parametros_t *params, estado_t *estado, FILE *FSALIDA){
+status_t imprimir_archivo_txt(parametros_t *params, estado_t *estado, FILE *FSALIDA)
+ /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
+ a la de estado para imprimir los datos guardados en el acumulador, en el contador del programa, 
+ la ultima instruccion ejecutada, el ultimo opcode y operando, 
+ además de la memoria de todas las palabras, en forma de matriz*/
+{
 	int i,k,l;
     fprintf(FSALIDA,"%s\n", MSJ_REGISTRO);
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_ACUM, estado->acumulador );
@@ -346,7 +358,11 @@ status_t imprimir_archivo_txt(parametros_t *params, estado_t *estado, FILE *FSAL
     return ST_OK;
 }
 
-status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSALIDA){
+status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSALIDA)
+ /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
+ a la de estado para imprimir los datos guardados en el acumulador, en el contador del programa, 
+ la ultima instruccion ejecutada, el ultimo opcode y operando, además de la memoria de todas las palabras.*/
+{
 	
 	fwrite(&estado->acumulador, sizeof(estado_t),1, FSALIDA);
 	fwrite(&estado->contador_programa, sizeof(estado_t),1, FSALIDA );
@@ -359,20 +375,25 @@ status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSA
 	return ST_OK;
 }
 
-status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA)/*Recibe los punteros a los archivos de entrada y salida para cerrarlos*/{
-
+status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA)
+ /*Recibe los punteros a los archivos de entrada y salida para cerrarlos*/
+ {
 	fclose(FENTRADA);
 	fclose(FSALIDA);
 	return ST_OK;
 }
 
-status_t liberar_memoria(estado_t * estado)/*Recibe el puntero a las instrucciones para liberar la memoria pedida*/{
-	
+status_t liberar_memoria(estado_t * estado)
+/*Recibe el puntero a la estructura de estado para liberar la memoria pedida*/
+{	
 	free(estado);
 	return ST_OK;
 }
 
-status_t operaciones (estado_t * estado){
+status_t operaciones (estado_t * estado)
+/*Recibe el puntero a la estructura de estado para hacer un análisis de las instrucciones que se encuentran
+en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
+{
 	int salir;
 	if (estado->palabras[estado->contador_programa]<0){
 		estado->contador_programa++;
@@ -461,7 +482,9 @@ status_t operaciones (estado_t * estado){
 	}
 }
 
-status_t op_leer (estado_t * estado)/*Lee una palabra por stdin a una posicion de memoria*/{
+status_t op_leer (estado_t * estado)
+ /*Lee una palabra por stdin a una posicion de memoria que está indicada por el operando (miembro de la estructura estado)*/
+{
 	int * AUX;
 	AUX=NULL;
 	printf("%s\n", MSJ_INGRESO_PALABRA);
@@ -472,59 +495,87 @@ status_t op_leer (estado_t * estado)/*Lee una palabra por stdin a una posicion d
 	return ST_OK;
 }
 
-status_t op_escribir(estado_t * estado)/*imprime por stdout el contenido de la posicion solicitada*/{
+status_t op_escribir(estado_t * estado)
+ /*imprime por stdout el contenido de la posicion del operando(miembro de la estructura estado)*/
+{
 	fprintf(stdout, "%s %i : %i\n", MSJ_IMPRIMIR_PALABRA,estado->operando, estado->palabras[estado->operando]);
 	return ST_OK;
 }
 
-status_t op_cargar (estado_t * estado)/*Carga en el acumulador la posicion de memoria indicada*/{
+status_t op_cargar (estado_t * estado)
+/*Carga en el acumulador (miembro de la estructura estado) la posicion de memoria indicada 
+por el operando(miembro de la estructura estado)*/
+{
 	estado->acumulador = estado->palabras[estado->operando];
 	return ST_OK;
 }
 
 
-status_t op_pcargar (estado_t * estado)/*Carga en el acumulador la posicion de memoria indicadapor la palabra a la que apunta el operando*/{
+status_t op_pcargar (estado_t * estado)
+ /*Carga en el acumulador (miembro de la estructura estado) la posicion de memoria indicada 
+ por la palabra a la que apunta el operando(miembro de la estructura estado)*/
+{
 	estado->acumulador = estado->palabras[estado->palabras[estado->operando]];
 	return ST_OK;
 }
 
-status_t op_guardar (estado_t * estado)/*guarda en la posicion de memoria indicada lo que esta en el acumulador*/{
+status_t op_guardar (estado_t * estado)
+ /*guarda en la posicion de memoria indicada por el operando(miembro de la estructura estado)
+  lo que está en el acumulador(miembro de la estructura estado)*/{
 	estado->palabras[estado->operando] = estado->acumulador ;
 	return ST_OK;
 }
 
-status_t op_pguardar (estado_t * estado)/*guarda en la posicion de memoria indicada por la palabra a la que apunta el operando lo que esta en el acumulador*/{
+status_t op_pguardar (estado_t * estado)
+ /*guarda en la posicion de memoria indicada por la palabra a la que apunta el operando (miembro de la estructura estado) 
+ lo que esta en el acumulador(miembro de la estructura estado)*/
+{
 	estado->palabras[estado->palabras[estado->operando]] = estado->acumulador ;
 	return ST_OK;
 }
 
 
-status_t op_restar (estado_t * estado)/*resta al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_restar (estado_t * estado)
+ /*resta al acumulador (miembro de la estructura estado) lo guardado en la posicion de memoria indcada 
+ por el operando(miembro de la estructura estado)*/
+{
 	estado->acumulador -= estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t op_dividir (estado_t * estado)/*divide al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_dividir (estado_t * estado)
+ /*divide al acumulador (miembro de la estructura estado) por lo guardado en la posicion de memoria indicada
+  por el operando(miembro de la estructura estado)*/{
 	estado->acumulador /= estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t op_multiplicar (estado_t * estado)/*multiplica al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_multiplicar (estado_t * estado)
+ /*multiplica al acumulador (miembro de la estructura estado)lo guardado en la posicion de memoria indicada por el operando(miembro de la estructura estado)*/
+{
 	estado->acumulador *= estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t op_sumar(estado_t * estado)/*suma al acumulador lo guardado en la posicion de memoria indcada*/{
+status_t op_sumar(estado_t * estado)
+ /*suma al acumulador (miembro de la estructura estado) lo guardado en la posicion de memoria indcada 
+ por el operando(miembro de la estructura estado)*/
+{
 	estado->acumulador += estado->palabras[estado->operando];
 	return ST_OK;
 }
 
-status_t op_jmp (estado_t * estado)/*salta a la posicion de memoria indicada menos un valor*/{
-	estado->contador_programa = estado->operando;/*se resta porque al salir del switch */
+status_t op_jmp (estado_t * estado)
+/*salta a la posicion de memoria indicada por el operando(miembro de la estructura estado) menos un valor*/
+{
+	estado->contador_programa = estado->operando;
 	return ST_OK;
 }
 
-status_t op_djnz (estado_t * estado)/*decrementa en 1 el acumulador y salta a la poscion deseada en el caso que el acumulador sea distinto de 0*/{
+status_t op_djnz (estado_t * estado)
+ /*decrementa en 1 el acumulador (miembro de la estructura estado) y salta a la posicion indicada 
+ por el operando (miembro de la estructura estado) en el caso que el acumulador sea distinto de 0*/
+{
 	estado->acumulador--;
 	if (estado->acumulador!=0){
 		estado->contador_programa = estado->operando;

@@ -4,15 +4,15 @@
 #ifndef LANG_SPANISH__H
 #define lang_spanish__H 1
 
-#define ARGC_MAX 7
+#define ARGC_MAX 6
 #define ARGC2_MAX 2
 #define CANT_PALABRAS_DEFAULT 50
-#define ARG_POS_CANT_PALABRAS 2
-#define ARG_POS_FENTRADA1 3
-#define ARG_POS_FENTRADA2 4
-#define ARG_POS_FSALIDA1 6
+#define ARG_POS_CANT_PALABRAS 1
+#define ARG_POS_FENTRADA1 2
+#define ARG_POS_FENTRADA2 3
+#define ARG_POS_FSALIDA1 4
 #define ARG_POS_FSALIDA2 5
-#define ARG_POS_H 3
+#define ARG_POS_H 1
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
 
