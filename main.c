@@ -24,29 +24,22 @@ int main(int argc, char *argv[])
     estado=NULL;
     FENTRADA=NULL;
     FSALIDA=NULL;
-	
 	if(argc==ARGC2_MAX){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
 			return EXIT_FAILURE;
 		}
 	}
-
     else {
-    	
-
     	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
     		liberar_memoria(estado);
     		return EXIT_FAILURE;
     	}
-
         estado->palabras = calloc(params->cant_palabras, sizeof(params->cant_palabras));
     	if(estado->palabras==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
-
     	while(st!=ST_SALIR) st=operaciones(estado);
-
     	liberar_memoria(estado);
     	cerrar_archivos(FENTRADA,FSALIDA);
     }
@@ -56,100 +49,79 @@ int main(int argc, char *argv[])
 status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA,FILE *FSALIDA){
  
 	int i;
-	int instruccion=0;
-
-
+	int instruccion;
+	instruccion =0;
  	for(i=0; i<params->cant_palabras;i++){
-
     	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,FENTRADA)!=MAX_LARGO_PALABRA){
     		liberar_memoria(estado);
     		cerrar_archivos(FENTRADA,FSALIDA);
     		return ST_ERROR_FUERA_RANGO;
     	}
-    
  		if(instruccion==FIN)
  			return ST_OK;
  		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
  			return ST_ERROR_FUERA_RANGO;
-
  		estado->palabras[i]=instruccion;
- 	
  	}
-  
  	printf("%s\n",MSJ_CARGA_COMPLETA);
  	printf("%s\n",MSJ_COMIENZO_EJECUCION);
- 
  	return ST_OK;
 }
 
 status_t leer_teclado(parametros_t *params, estado_t *estado){
  
- int i;
- char aux[MAX_LARGO_PALABRA];
- long instruccion=0;
- char *pc;
-
- printf("%s\n",MSJ_BIENVENIDA);
- 
-
- for(i=0; i<params->cant_palabras;i++){
- 	printf("%2.i ? \n", i);
-    if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
-    	liberar_memoria(estado);
+ 	int i;
+ 	char aux[MAX_LARGO_PALABRA];
+ 	long instruccion;
+ 	char *pc;
+ 	instruccion = 0;
+ 	printf("%s\n",MSJ_BIENVENIDA);
+ 	for(i=0; i<params->cant_palabras;i++){
+ 		printf("%2.i ? \n", i);
+ 	   if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
+ 		liberar_memoria(estado);
     	return ST_ERROR_FUERA_RANGO;
-    }
-    instruccion= strtol(aux,&pc,10);
-    if(*pc!='\0'&& *pc!='\n')
-    return ST_ERROR_NO_NUMERICO;
-
-
- 	if(instruccion==FIN)
- 		return ST_OK;
- 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
- 		return ST_ERROR_FUERA_RANGO;
-
- 	estado->palabras[i]=instruccion;
- 	
- }
-  
- printf("%s\n",MSJ_CARGA_COMPLETA);
- printf("%s\n",MSJ_COMIENZO_EJECUCION);
- 	
- return ST_OK;
+	    }
+	    instruccion = strtol(aux,&pc,10);
+	    if(*pc!='\0'&& *pc!='\n')
+			return ST_ERROR_NO_NUMERICO;
+	 	if(instruccion==FIN)
+	 		return ST_OK;
+	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+	 		return ST_ERROR_FUERA_RANGO;
+	 	estado->palabras[i]=instruccion;/********hay que castear??***************/
+	 }
+	 printf("%s\n",MSJ_CARGA_COMPLETA);
+	 printf("%s\n",MSJ_COMIENZO_EJECUCION);	
+	 return ST_OK;
 }
 
 status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA, FILE *FSALIDA){
- size_t i;
- char aux[MAX_LARGO_PALABRA];
- long instruccion=0;
- char *pc;
-
- for(i=0; i<params->cant_palabras;i++){
-    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL){
-    	liberar_memoria(estado);
-    	cerrar_archivos(FENTRADA,FSALIDA);
-    	return ST_ERROR_FUERA_RANGO;
-    }
-    instruccion= strtol(aux,&pc,10); 
-    if(*pc!='\0'&& *pc!='\n')
-    	return ST_ERROR_NO_NUMERICO;
-
-    /*validar que "     " no sea un 0*/ 
-
- 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
- 		return ST_ERROR_FUERA_RANGO;
-
- 	estado->palabras[i]=instruccion;
- }
-
- printf("%s\n",MSJ_CARGA_COMPLETA);
- printf("%s\n",MSJ_COMIENZO_EJECUCION); 
-
- return ST_OK;
+	size_t i;
+	char aux[MAX_LARGO_PALABRA];
+	long instruccion;
+	char *pc;
+	instruccion = 0;
+ 	for(i=0; i<params->cant_palabras;i++){
+	    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL){
+	    	liberar_memoria(estado);
+	    	cerrar_archivos(FENTRADA,FSALIDA);
+	    	return ST_ERROR_FUERA_RANGO;
+	    }
+	    instruccion = strtol(aux,&pc,10); 
+	    if(*pc!='\0'&& *pc!='\n')
+	    	return ST_ERROR_NO_NUMERICO;
+	 /*validar que "     " no sea un 0*/ 
+	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+	 		return ST_ERROR_FUERA_RANGO;
+	 	estado->palabras[i]=instruccion;
+	 }
+	 printf("%s\n",MSJ_CARGA_COMPLETA);
+	 printf("%s\n",MSJ_COMIENZO_EJECUCION); 
+	 return ST_OK;
 }
 
 status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * FENTRADA, FILE * FSALIDA){
-	
 	char *pc;
 	if(!argv){
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
@@ -171,7 +143,6 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 			return ST_ERROR_CANT_PALABRAS;
 		}
 	}
-
 	if(argv[ARG_POS_FENTRADA2]!=NULL){
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
@@ -188,30 +159,26 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 			leer_archivo_bin(params, estado, FENTRADA, FSALIDA);
 		}
 	}
-	
 	else if(argv[ARG_POS_FENTRADA2]==NULL && argv[ARG_POS_FENTRADA1]!=NULL){
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
 		return ST_ERROR_APERTURA_ARCHIVO;
 	}
-
 	else
-		leer_teclado(params,estado);
-
-	
-	
+		leer_teclado(params,estado);	
 	if(argv[ARG_POS_FSALIDA2]!=NULL){
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
-			
 			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1],"wt"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
+			imprimir_archivo_txt(params, estado, FSALIDA);
 		}
 		else if (strcmp(argv[ARG_POS_FENTRADA2],OPCION_BIN)){
-			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1],"wb"))==NULL){
+			if((FSALIDA=fopen(argv[ARG_POS_FSALIDA1 ],"wb"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
+			imprimir_archivo_bin(params, estado, FSALIDA);
 		}
 	}
 	else if(argv[ARG_POS_FSALIDA2]==NULL && argv[ARG_POS_FSALIDA1]!=NULL){
@@ -221,11 +188,12 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 
 	else 
 		imprimir_pantalla(params,estado);
-
 	return ST_OK;
 }
 
 status_t imprimir_ayuda(){
+
+	printf("%s\n", MSJ_ACLARACION_AYUDA );
 
 	printf("%s   %s   %s\n",MSJ_TITULO_ARG, MSJ_TITULO_OPC, MSJ_TITULO_DESC);
 	printf("%s   %s   %s\n",MSJ_AYUDA_ARG, MSJ_AYUDA_OPC, MSJ_AYUDA_DESC);
@@ -280,103 +248,72 @@ status_t validar_ayuda(int argc, char *argv[]){
 status_t imprimir_pantalla(parametros_t *params, estado_t * estado)
 /*Recibe los punteros a las estructuras params y estado para imprimir los datos guardados
  en el acumulador, en el contador del programa, la ultima instruccion ejecutada, el ultimo opcode y operando, ademas de la memoria de todas las palabras*/{
-	
-	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
-    
-    int i,k,l;
+	int i,k,l;
 
     printf("%s\n", MSJ_REGISTRO);
 	printf("%25s: %6i\n",MSJ_ACUM, estado->acumulador );
 	printf("%25s: %6i\n",MSJ_CONT_PROG, estado->contador_programa );
-	printf("%25s: %6i\n",MSJ_INST, estado->palabras[estado->contador_programa] );
-	
+	printf("%25s: %6i\n",MSJ_INST, estado->palabras[estado->contador_programa] );	
 	estado->opcode = *(estado->palabras + estado->contador_programa) /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	
 	printf("%25s: %6i\n",MSJ_OPCODE, estado->opcode );
 	printf("%25s: %6i\n",MSJ_OPERANDO, estado->operando );
-
-	
 	k=0;
-
 	printf("    ");
 	for (l = 0; l < 10; l++)
 		printf("  %i   ",l) ;
-
-
 	for ( i = 0; i < params->cant_palabras ; i++){
-      
       if ((i%10)==0){
-	  printf("\n%02i  ",k);
-	  k+=10;
-	  }
-		  
+		  printf("\n%02i  ",k);
+		  k+=10;
+	  }	  
       if(estado->palabras[i]<0)
 		printf("%05i ",estado->palabras[i] );
 	  else 
 		printf("+%04i ",estado->palabras[i] );
-
 	}
     printf("\n");
-    
     return ST_OK;
 }
 
-status_t imprimir_archivos_txt(parametros_t *params, estado_t *estado, FILE *FSALIDA){
-	
-	/******************** FALTA ALINEAR TODO A LA DERECHA CREO QUE ES CON EL MENOS VERIFICAR************/
+status_t imprimir_archivo_txt(parametros_t *params, estado_t *estado, FILE *FSALIDA){
 	int i,k,l;
-
     fprintf(FSALIDA,"%s\n", MSJ_REGISTRO);
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_ACUM, estado->acumulador );
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_CONT_PROG, estado->contador_programa );
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_INST, estado->palabras[estado->contador_programa] );
-	
 	estado->opcode = estado->palabras[estado->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_OPCODE, estado->opcode );
 	fprintf(FSALIDA, "%25s: %6d\n",MSJ_OPERANDO, estado->operando );
-
-
 	k=0;
-
 	fprintf(FSALIDA,"    ");
 	for (l = 0; l < 10; l++)
 		fprintf(FSALIDA,"  %i   ",l) ;
-
 	for ( i = 0; i < params->cant_palabras ; i++){ 
       if ((i%10)==0){
-	  fprintf(FSALIDA,"\n%02i  ",k);
-	  k+=10;
-	  }
-		  
+		  fprintf(FSALIDA,"\n%02i  ",k);
+		  k+=10;
+	  }		  
       if(estado->palabras[i]<0)
 		fprintf(FSALIDA,"%05i ",estado->palabras[i] );
 	  else 
 		fprintf(FSALIDA,"+%04i ",estado->palabras[i] );
 	}
-    
     fprintf(FSALIDA,"\n");
-    
     return ST_OK;
 }
 
 status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSALIDA){
 	
-	
 	fwrite(&estado->acumulador, sizeof(estado_t),1, FSALIDA);
 	fwrite(&estado->contador_programa, sizeof(estado_t),1, FSALIDA );
 	fwrite(&estado->palabras[estado->contador_programa], sizeof(estado_t),1, FSALIDA);
-	
 	estado->opcode = estado->palabras[estado->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	
 	fwrite(&estado->opcode, sizeof(estado_t),1, FSALIDA);
 	fwrite(&estado->operando, sizeof(estado_t),1, FSALIDA);	
-
 	fwrite(&estado->palabras[params->cant_palabras], sizeof(int), params->cant_palabras, FSALIDA);
-	
 	return ST_OK;
 }
 

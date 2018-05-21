@@ -4,15 +4,15 @@
 #ifndef LANG_SPANISH__H
 #define lang_spanish__H 1
 
-#define ARGC_MAX 6
+#define ARGC_MAX 7
 #define ARGC2_MAX 2
 #define CANT_PALABRAS_DEFAULT 50
-#define ARG_POS_CANT_PALABRAS 1
-#define ARG_POS_FENTRADA1 2
-#define ARG_POS_FENTRADA2 3 
-#define ARG_POS_FSALIDA1 4
+#define ARG_POS_CANT_PALABRAS 2
+#define ARG_POS_FENTRADA1 3
+#define ARG_POS_FENTRADA2 4
+#define ARG_POS_FSALIDA1 6
 #define ARG_POS_FSALIDA2 5
-#define ARG_POS_H 2
+#define ARG_POS_H 3
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
 
@@ -99,6 +99,8 @@
 #define MSJ_SALIDA_ARCH_TXT_OPC "txt" 
 #define MSJ_SALIDA_ARCH_TXT_DESC "El volcado se hará en formato de texto imprimiendo los registros y la memoria."
 
+#define MSJ_ACLARACION_AYUDA "Para ingresar estos argumentos se deberán colocar en el orden mostrado anteriormente. En caso de querer dejar el campo vacio se deberá colocar '-' . "
+
 #define TAB_TITULO_OP "Operación"
 #define TAB_TITULO_CODE "OpCode"
 #define TAB_TITULO_DESC "Descripción"
@@ -107,6 +109,7 @@
 #define TAB_LEER_OP "LEER" 
 #define TAB_LEER_CODE "10" 
 #define TAB_LEER_DESC "Lee una palabra de stdin a una posición de memoria"
+
 #define TAB_ESCRIBIR_OP "ESCRIBIR"
 #define TAB_ESCRIBIR_CODE "11"
 #define TAB_ESCRIBIR_DESC "Imprime por stdout una posición de memoria"

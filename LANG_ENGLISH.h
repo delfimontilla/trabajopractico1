@@ -12,7 +12,7 @@
 #define ARG_POS_FENTRADA2 3 
 #define ARG_POS_FSALIDA1 4
 #define ARG_POS_FSALIDA2 5
-#define ARG_POS_H 2
+#define ARG_POS_H 3
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
 
@@ -94,6 +94,8 @@
 #define MSJ_SALIDA_ARCH_TXT_OPC "txt" 
 #define MSJ_SALIDA_ARCH_TXT_DESC "The dump will be made in text format by printing the registers and the memory."
 
+#define MSJ_ACLARACION_AYUDA "To enter these arguments must be placed in order. If you want to leave the field empty you must put '-'."
+
 #define TAB_TITULO_OP "Operation"
 #define TAB_TITULO_CODE "OpCode"
 #define TAB_TITULO_DESC "Description"
@@ -102,6 +104,7 @@
 #define TAB_LEER_OP "READ" 
 #define TAB_LEER_CODE "10" 
 #define TAB_LEER_DESC "Reads a word from stdin to a position of memory"
+
 #define TAB_ESCRIBIR_OP "WRITE"
 #define TAB_ESCRIBIR_CODE "11"
 #define TAB_ESCRIBIR_DESC "Prints by stdout a position of memory"
