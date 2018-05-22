@@ -50,7 +50,6 @@ status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado,
 status_t imprimir_pantalla(parametros_t *params, estado_t  * estado);
 status_t imprimir_archivo_bin (parametros_t *params, estado_t * estado, FILE *FSALIDA);
 status_t imprimir_archivo_txt(parametros_t *params, estado_t * estado, FILE *FSALIDA);
-status_t cerrar_archivos(FILE *FENTSAL);
 status_t liberar_memoria(estado_t *estado);
 
 status_t operaciones (estado_t * estado);
