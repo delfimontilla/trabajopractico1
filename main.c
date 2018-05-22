@@ -196,8 +196,9 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
 		return ST_ERROR_APERTURA_ARCHIVO;
 	}
-	else 
+	else if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_STDIN)){
 		leer_teclado(params,estado);
+	}	
 
 	if(argv[ARG_POS_FSALIDA2]!=NULL){
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
@@ -297,8 +298,9 @@ status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado,
 		imprimir_archivo_bin(params, estado, FSALIDA);
 	}
 
-    else 
-    imprimir_pantalla(params,estado);
+    else if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
+    	imprimir_pantalla(params,estado);
+    }
 
     return ST_OK;
 }

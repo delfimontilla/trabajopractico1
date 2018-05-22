@@ -61,7 +61,7 @@
 #define MSJ_CARGA_COMPLETA "*** Program upload complete ***"
 #define MSJ_COMIENZO_EJECUCION "*** Program execution starts ***"
 
-#define MSJ_ARG_POSICIONALES "The arguments are positional"
+#define MSJ_ARG_POSICIONALES "The arguments are positional. If you want input to be stdin you must enter 'entry stdin'; and in case you want output to be stdout, 'output stdout'."
 
 #define MSJ_TITULO_ARG "Arg."
 #define MSJ_TITULO_OPC "Option"

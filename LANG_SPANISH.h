@@ -64,7 +64,7 @@
 #define MSJ_COMIENZO_EJECUCION "*** Comienza la ejecución del programa ***"
 
 
-#define MSJ_ARG_POSICIONALES "Los argumentos son posicionales. En caso de querer que entrada sea por stdin se debe escribir 'entrada stdin' y en caso de querer que salida sea por stdout 'salida stdout'."
+#define MSJ_ARG_POSICIONALES "Los argumentos son posicionales. En caso de querer que entrada sea por stdin se debe escribir 'entrada stdin'; y en caso de querer que salida sea por stdout, 'salida stdout'."
 
 #define MSJ_TITULO_ARG "Arg."
 #define MSJ_TITULO_OPC "Opción"
