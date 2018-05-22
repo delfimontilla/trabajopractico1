@@ -52,7 +52,9 @@ int main(int argc, char *argv[])
     	seleccionar_salida(argv,params,estado,FSALIDA);
     	liberar_memoria(estado);
 
-    	fclose(FENTRADA);
+        if(FENTRADA!=NULL)
+    	 fclose(FENTRADA);
+    	if(FSALIDA!=NULL)
 	    fclose(FSALIDA);
     }
     return EXIT_SUCCESS;
