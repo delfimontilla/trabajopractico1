@@ -16,7 +16,10 @@
 
 int main(int argc, char *argv[])
 {
+	estado_t simpletron;
 	estado_t *estado;
+
+	parametros_t argumentos;
 	parametros_t *params;
     status_t st;
     FILE *FENTRADA, *FSALIDA;
@@ -24,6 +27,9 @@ int main(int argc, char *argv[])
     estado=NULL;
     FENTRADA=NULL;
     FSALIDA=NULL;
+
+    estado=&simpletron;
+    params=&argumentos;
 
 
 	if(argc==ARGC2_MAX){
@@ -34,9 +40,12 @@ int main(int argc, char *argv[])
     else {
     	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
     		liberar_memoria(estado);
+    		cerrar_archivos(FENTRADA);
+    	    cerrar_archivos(FSALIDA);
     		return EXIT_FAILURE;
     	}
         estado->palabras = calloc(params->cant_palabras, sizeof(params->cant_palabras));
+    	
     	if(estado->palabras==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
@@ -44,7 +53,8 @@ int main(int argc, char *argv[])
     	while(st!=ST_SALIR) st=operaciones(estado);
     	seleccionar_salida(argv,params,estado,FSALIDA);
     	liberar_memoria(estado);
-    	cerrar_archivos(FENTRADA,FSALIDA);
+    	cerrar_archivos(FENTRADA);
+    	cerrar_archivos(FSALIDA);
     }
     return EXIT_SUCCESS;
 }
@@ -61,8 +71,6 @@ status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *FENTRADA
 	instruccion =0;
  	for(i=0; i<params->cant_palabras;i++){
     	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,FENTRADA)!=MAX_LARGO_PALABRA){
-    		liberar_memoria(estado);
-    		cerrar_archivos(FENTRADA,FSALIDA);
     		return ST_ERROR_FUERA_RANGO;
     	}
  		if(instruccion==FIN)
@@ -90,7 +98,6 @@ status_t leer_teclado(parametros_t *params, estado_t *estado)
  	for(i=0; i<params->cant_palabras;i++){
  		printf("%2.i ? \n", i);
  	   if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
- 		liberar_memoria(estado);
     	return ST_ERROR_FUERA_RANGO;
 	    }
 	    instruccion = strtol(aux,&pc,10);
@@ -121,14 +128,12 @@ status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *FENTRADA,
 
  	for(i=0; i<params->cant_palabras;i++){
 	    if(fgets(aux,MAX_LARGO_PALABRA,FENTRADA)==NULL){
-	    	liberar_memoria(estado);
-	    	cerrar_archivos(FENTRADA,FSALIDA);
 	    	return ST_ERROR_FUERA_RANGO;
 	    }
 	    instruccion = strtol(aux,&pc,10); 
 	    if(*pc!='\0'&& *pc!='\n')
 	    	return ST_ERROR_NO_NUMERICO;
-	 /*validar que "     " no sea un 0*/ 
+	 
 	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
 	 		return ST_ERROR_FUERA_RANGO;
 	 	estado->palabras[i]=instruccion;
@@ -375,18 +380,18 @@ status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *FSA
 	return ST_OK;
 }
 
-status_t cerrar_archivos(FILE *FENTRADA, FILE *FSALIDA)
+status_t cerrar_archivos(FILE *FENTSAL)
  /*Recibe los punteros a los archivos de entrada y salida para cerrarlos*/
  {
-	fclose(FENTRADA);
-	fclose(FSALIDA);
+	fclose(FENTSAL);
+
 	return ST_OK;
 }
 
 status_t liberar_memoria(estado_t * estado)
 /*Recibe el puntero a la estructura de estado para liberar la memoria pedida*/
 {	
-	free(estado);
+	free(estado->palabras);
 	return ST_OK;
 }
 

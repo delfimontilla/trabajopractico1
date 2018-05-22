@@ -20,8 +20,8 @@
 #define MSJ_ERROR_APERTURA_ARCHIVO "opening file"
 #define MSJ_ERROR_PTR_NULO "null pointer"
 #define MSJ_ERROR_CANT_ARG "number of arguments"
-#define MSJ_ERROR_CANT_PALABRAS "number of word"
-#define MSJ_ERROR_NO_MEM "out of memory."
+#define MSJ_ERROR_CANT_PALABRAS "number of words"
+#define MSJ_ERROR_NO_MEM "out of memory"
 #define MSJ_ERROR_PALABRA_NULA "the entered word is null"
 
 
@@ -124,7 +124,7 @@
 
 #define TAB_PGUARDAR_OP "PSAVE"
 #define TAB_PGUARDAR_CODE "23"
-#define TAB_PGUARDAR_DESC "SAME a SAVE but the operand is pointer"
+#define TAB_PGUARDAR_DESC "Same a SAVE but the operand is pointer"
 
 #define TAB_MATE "Arithmetic Op.:"
 #define TAB_SUMAR_OP "ADDITION" 
