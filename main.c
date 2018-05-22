@@ -4,7 +4,7 @@
 
 #include "estructuras_prototipos.h"
 
-#define LANG_ENGLISH
+#define LANG_ENGLISH /*elección del idioma del programa*/
 
 #ifdef LANG_SPANISH
 #include "LANG_SPANISH.h"
@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
 	}
     else {
     	if((st=validar_argumentos(argc, argv, params, estado, FENTRADA, FSALIDA))!=ST_OK){
-    		liberar_memoria(estado);
     		return EXIT_FAILURE;
     	}
         estado->palabras = calloc(params->cant_palabras, sizeof(params->cant_palabras));
@@ -181,7 +180,6 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
-				fclose(FENTRADA);
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
 			leer_archivo_txt(params, estado, FENTRADA, FSALIDA);
@@ -189,7 +187,6 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 		else if (strcmp(argv[ARG_POS_FENTRADA2],OPCION_BIN)){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rb"))==NULL){
 				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
-				fclose(FENTRADA);
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
 			leer_archivo_bin(params, estado, FENTRADA, FSALIDA);
@@ -199,7 +196,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
 		return ST_ERROR_APERTURA_ARCHIVO;
 	}
-	else
+	else 
 		leer_teclado(params,estado);
 
 	if(argv[ARG_POS_FSALIDA2]!=NULL){
@@ -395,6 +392,7 @@ status_t liberar_memoria(estado_t * estado)
 /*Recibe el puntero a la estructura de estado para liberar la memoria pedida*/
 {	
 	free(estado->palabras);
+	estado->palabras=NULL;
 	return ST_OK;
 }
 

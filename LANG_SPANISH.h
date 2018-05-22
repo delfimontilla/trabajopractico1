@@ -15,6 +15,8 @@
 #define ARG_POS_H 1
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
+#define OPCION_STDIN "stdin"
+#define OPCION_STDOUT "stdout"
 
 
 #define MSJ_ERROR "ERROR"
@@ -62,7 +64,7 @@
 #define MSJ_COMIENZO_EJECUCION "*** Comienza la ejecución del programa ***"
 
 
-#define MSJ_ARG_POSICIONALES "Los argumentos son posicionales."
+#define MSJ_ARG_POSICIONALES "Los argumentos son posicionales. En caso de querer que entrada sea por stdin se debe escribir 'entrada stdin' y en caso de querer que salida sea por stdout 'salida stdout'."
 
 #define MSJ_TITULO_ARG "Arg."
 #define MSJ_TITULO_OPC "Opción"

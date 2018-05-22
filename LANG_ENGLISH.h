@@ -15,6 +15,8 @@
 #define ARG_POS_H 1
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
+#define OPCION_STDIN "stdin"
+#define OPCION_STDOUT "stdout"
 
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "opening file"

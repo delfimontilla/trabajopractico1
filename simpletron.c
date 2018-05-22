@@ -4,14 +4,34 @@
 
 #include "estructuras_prototipos.h"
 
+#define LANG_ENGLISH /*elección del idioma del programa*/
+
+#ifdef LANG_SPANISH
+#include "LANG_SPANISH.h"
+#endif
+
+#ifdef LANG_ENGLISH
+#include "LANG_ENGLISH.h"
+#endif
 
 int main(int argc, char *argv[])
 {
-	
+	estado_t simpletron;
 	estado_t *estado;
-	status_t st;
+
+	parametros_t argumentos;
 	parametros_t *params;
-	FILE *FENTRADA, *FSALIDA;
+    status_t st;
+    FILE *FENTRADA, *FSALIDA;
+
+	params=NULL;
+    estado=NULL;
+    FENTRADA=NULL;
+    FSALIDA=NULL;
+
+
+    estado=&simpletron;
+    params=&argumentos;
 
 	estado= (estado_t*)malloc(sizeof(estado_t));
 
@@ -161,7 +181,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_PALABRAS );
 			return ST_ERROR_CANT_PALABRAS;
 		}
-	}
+	}`
 	if(argv[ARG_POS_FENTRADA2]!=NULL){
 		if(strcmp(argv[ARG_POS_FENTRADA2],OPCION_TXT)){
 			if((FENTRADA=fopen(argv[ARG_POS_FENTRADA1],"rt"))==NULL){
