@@ -327,19 +327,14 @@ status_t imprimir_pantalla(parametros_t *params, estado_t * estado)
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
 	printf("%25s: %6i\n",MSJ_OPCODE, estado->opcode );
 	printf("%25s: %6i\n",MSJ_OPERANDO, estado->operando );
-	k=0;
 	printf("    ");
 	for (l = 0; l < 10; l++)
 		printf("  %i   ",l) ;
 	for ( i = 0; i < params->cant_palabras ; i++){
       if ((i%10)==0){
-		  printf("\n%02i  ",k);
-		  k+=10;
+		  printf("\n%02i  ",i);
 	  }	  
-      if(estado->palabras[i]<0)
-		printf("%05i ",estado->palabras[i] );
-	  else 
-		printf("+%04i ",estado->palabras[i] );
+		printf("%+04i ",estado->palabras[i] );
 	}
     printf("\n");
     return ST_OK;
@@ -360,19 +355,14 @@ status_t imprimir_archivo_txt(parametros_t *params, estado_t *estado, FILE *fsal
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
 	fprintf(fsalida, "%25s: %6d\n",MSJ_OPCODE, estado->opcode );
 	fprintf(fsalida, "%25s: %6d\n",MSJ_OPERANDO, estado->operando );
-	k=0;
 	fprintf(fsalida,"    ");
 	for (l = 0; l < 10; l++)
 		fprintf(fsalida,"  %i   ",l) ;
 	for ( i = 0; i < params->cant_palabras ; i++){ 
       if ((i%10)==0){
-		  fprintf(fsalida,"\n%02i  ",k);
-		  k+=10;
+		  fprintf(fsalida,"\n%02i  ",i);
 	  }		  
-      if(estado->palabras[i]<0)
-		fprintf(fsalida,"%05i ",estado->palabras[i] );
-	  else 
-		fprintf(fsalida,"+%04i ",estado->palabras[i] );
+		fprintf(fsalida,"%+04i ",estado->palabras[i] );
 	}
     fprintf(fsalida,"\n");
     return ST_OK;
@@ -391,15 +381,17 @@ status_t imprimir_archivo_bin (parametros_t *params, estado_t *estado, FILE *fsa
 	estado->operando = estado->palabras[estado->contador_programa] - (estado->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
 	fwrite(&estado->opcode, sizeof(estado_t),1, fsalida);
 	fwrite(&estado->operando, sizeof(estado_t),1, fsalida);	
-	fwrite(&estado->palabras[params->cant_palabras], sizeof(int), params->cant_palabras, fsalida);
+	fwrite(estado->palabras, sizeof(int), params->cant_palabras, fsalida);
 	return ST_OK;
 }
 
 
-status_t liberar_memoria(estado_t * estado)
+status_t liberar_memoria(estado_t * estado) /*LA ESTRUCTURA RECIBIDA DEBERIA SER INTEGRAMENTE EN MEM DINAMICA*/
 /*Recibe el puntero a la estructura de estado para liberar la memoria pedida*/
 {	
-	free(estado->palabras);
+	if (estado!=NULL)
+		free(estado->palabras);
+
 	estado->palabras=NULL;
 	return ST_OK;
 }
@@ -409,6 +401,7 @@ status_t operaciones (estado_t * estado)
 en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
 {
 	int salir;
+
 	if (estado->palabras[estado->contador_programa]<0){
 		estado->contador_programa++;
 		return ST_OK_NEG;
