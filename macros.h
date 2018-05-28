@@ -21,5 +21,3 @@
 #define FIN -99999
 #define MIN_PALABRA -9999
 #define MAX_PALABRA 9999
-
-/*#define MAX_LARGO_PALABRA 5 /*maxima cantidad caracteres en una palabra*/ /*PATO LO TACHO*/

@@ -12,6 +12,7 @@
 #define MSJ_ERROR_CANT_PALABRAS "number of words"
 #define MSJ_ERROR_NO_MEM "out of memory"
 #define MSJ_ERROR_PALABRA_NULA "the entered word is null"
+#define MSJ_FUERA_DE_RANGO "an attempt was made to access a memory location out of range "
 
 
 
