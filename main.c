@@ -2,16 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "estructuras_prototipos.h"
+#include "prototipos.h"
+#include "macros.h"
+#include "simpletron.h"
+#include "status.h"
 
 #define LANG_ENGLISH /*elección del idioma del programa*/
 
 #ifdef LANG_SPANISH
 #include "LANG_SPANISH.h"
-#endif
 
-#ifdef LANG_ENGLISH
+#elif LANG_ENGLISH
 #include "LANG_ENGLISH.h"
+
+#else 
+#include LANG_SPANISH
 #endif
 
 int main(int argc, char *argv[])

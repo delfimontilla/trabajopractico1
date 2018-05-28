@@ -1,22 +1,9 @@
+#ifndef LANG_ENGLISH__H
+#define LANG_ENGLISH__H 1
+
 #include <stdio.h>
 
 
-#ifndef LANG_ENGLISH__H
-#define lang_english__H 1
-
-#define ARGC_MAX 6
-#define ARGC2_MAX 2
-#define CANT_PALABRAS_DEFAULT 50
-#define ARG_POS_CANT_PALABRAS 1
-#define ARG_POS_FENTRADA1 2
-#define ARG_POS_FENTRADA2 3 
-#define ARG_POS_FSALIDA1 4
-#define ARG_POS_FSALIDA2 5
-#define ARG_POS_H 1
-#define OPCION_TXT "txt"
-#define OPCION_BIN "bin"
-#define OPCION_STDIN "stdin"
-#define OPCION_STDOUT "stdout"
 
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "opening file"
@@ -27,24 +14,8 @@
 #define MSJ_ERROR_PALABRA_NULA "the entered word is null"
 
 
-#define LEER 10
-#define ESCRIBIR 11
-#define CARGAR 20
-#define GUARDAR 21
-#define PCARGAR 22
-#define PGUARDAR 23
-#define SUMAR 30
-#define RESTAR 31
-#define DIVIDIR 32
-#define MULTIPLICAR 33
-#define JMP 40
-#define JMPNEG 41
-#define JMPZERO 42
-#define JNZ 43
-#define DJNZ 44
-#define HALT 45
+
 #define MSJ_IMPRIMIR_PALABRA "Content of the position"
-#define MAX_LARGO_PALABRA 5 /*maximum number of characters in a word*/
 #define MSJ_INGRESO_PALABRA "Enter a word:"
 
 #define MSJ_ACUM "accumulator"
@@ -55,9 +26,6 @@
 
 
 #define MSJ_BIENVENIDA "Welcome to Simpletron! Please enter your program one instruction (or data word) at a time. I will type the location number and a question mark (?). You then type the word for that location. Type the sentinel -99999 to stop entering your program."
-#define FIN -99999
-#define MIN_PALABRA -9999
-#define MAX_PALABRA 9999
 #define MSJ_CARGA_COMPLETA "*** Program upload complete ***"
 #define MSJ_COMIENZO_EJECUCION "*** Program execution starts ***"
 
