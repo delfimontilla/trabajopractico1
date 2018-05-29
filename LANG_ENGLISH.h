@@ -13,6 +13,7 @@
 #define MSJ_ERROR_NO_MEM "out of memory"
 #define MSJ_ERROR_PALABRA_NULA "the entered word is null"
 #define MSJ_FUERA_DE_RANGO "an attempt was made to access a memory location out of range "
+#define MSJ_ERROR_LIBERAR_MEM "error when freeing memory"
 
 
 

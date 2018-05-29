@@ -2,7 +2,7 @@
 #define SIMPLETRON__H 1
 
 #include <stdio.h>
-
+#include "status.h"
 
 typedef enum 
 {
@@ -19,12 +19,12 @@ typedef enum
 	MULTIPLICAR = 33,
 	JMP = 40,
 	JMPNEG = 41,
-	JMPZERO = 42
+	JMPZERO = 42,
 	JNZ = 43,
 	DJNZ = 44,
-	HALT = 45,
+	HALT = 45
 
-} opcode_t;
+}opcode_t;
 
 
 typedef struct estado
@@ -37,7 +37,7 @@ typedef struct estado
 
 }estado_t; /*una estructura para almacenar el estado del Simpletron*/
 
-status_t operaciones (estado_t * estado);
+status_t ejecutar_simpletron (estado_t * estado);
 status_t op_leer (estado_t * estado);
 status_t op_escribir(estado_t * estado);
 status_t op_cargar (estado_t * estado);
@@ -50,3 +50,5 @@ status_t op_multiplicar (estado_t * estado);
 status_t op_sumar (estado_t * estado);
 status_t op_jmp (estado_t * estado);
 status_t op_djnz (estado_t * estado);
+
+#endif

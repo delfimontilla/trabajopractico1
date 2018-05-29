@@ -11,6 +11,7 @@
 #define MSJ_ERROR_NO_MEM "no hay memoria"
 #define MSJ_ERROR_PALABRA_NULA "la palabra ingresada es nula"
 #define MSJ_FUERA_DE_RANGO "se ha intentado acceder a una posición de memoria fuera de rango"
+#define MSJ_ERROR_LIBERAR_MEM "error al liberar memoria"
 
 
 #define MSJ_IMPRIMIR_PALABRA "Contenido de la posicion"

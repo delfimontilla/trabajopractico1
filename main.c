@@ -16,16 +16,13 @@
 #include "LANG_ENGLISH.h"
 
 #else 
-#include LANG_SPANISH
+#include "LANG_SPANISH.h"
 #endif
 
 int main(int argc, char *argv[])
 {
-	estado_t simpletron;
-	estado_t *estado;
-
+	estado_t * simpletron;
 	parametros_t argumentos;
-	parametros_t *params;
     status_t st;
     FILE *fentrada, *fsalida;
     
@@ -34,92 +31,124 @@ int main(int argc, char *argv[])
     fentrada=NULL;
     fsalida=NULL;
 
-    estado=&simpletron;
-    params=&argumentos;
-
-
-	if(argc==ARGC2_MAX){
+	if(argc==ARGC_MIN){
 		if((st=validar_ayuda(argc, argv))!=ST_OK){
 			return EXIT_FAILURE;
 		}
 	}
+
     else {
-    	if((st=validar_argumentos(argc, argv, params, estado, fentrada, fsalida))!=ST_OK){
+    	if((st=validar_argumentos(argc, argv, &argumentos, estado, fentrada, fsalida))!=ST_OK){
     		return EXIT_FAILURE;
     	}
-        estado->palabras = calloc(params->cant_palabras, sizeof(params->cant_palabras));
+        if((simpletron = (estado_t *)malloc(params->cant_palabras*sizeof(estado_t)))==NULL){
+			fprintf(stderr, "%s\n",MSJ_ERROR_NO_MEM);
+			liberar_memoria(estado);
+			return ST_ERROR_NO_MEM;
+		}
     	
     	if(estado->palabras==NULL){
     		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
     		return EXIT_FAILURE;
     	}
-    	while(st!=ST_SALIR) st=operaciones(estado);
+
+    	while(st!=ST_SALIR) 
+    		st=ejecutar_simpletron(estado);
+    	
     	seleccionar_salida(argv,params,estado,fsalida);
-    	liberar_memoria(estado);
+    	
+    	if((st=liberar_memoria(estado))!=ST_OK){
+    		fprintf(stderr, "%s:%s\n", MSJ_ERROR, MSJ_ERROR_LIBERAR_MEM)
+    		return EXIT_FAILURE;
 
         if(fentrada!=NULL)
-    	 fclose(fentrada);
+    	    fclose(fentrada);
     	if(fsalida!=NULL)
-	    fclose(fsalida);
+	    	fclose(fsalida);
     }
     return EXIT_SUCCESS;
 }
 
-status_t leer_archivo_bin(parametros_t *params, estado_t *estado, FILE *fentrada,FILE *fsalida)
+status_t simpletron(parametros_t *argumentos, estado_t *simpletron){
+
+	if((simpletron = (estado_t *)malloc(argumentos->cant_palabras*sizeof(estado_t)))==NULL){
+		fprintf(stderr, "%s\n",MSJ_ERROR_NO_MEM);
+		free(simpletron);
+		return ST_ERROR_NO_MEM;
+	}
+
+	return ST_OK;
+}
+
+status_t leer_archivo_bin(estado_t *estado, FILE *fentrada)
  /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
  a la estructura de estado para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
  al archivo de entrada para poder leer los datos,
  y al archivo de salida (para cerrar dos archivos en caso de error)*/
 {
- 
 	int i;
 	int instruccion;
+
 	instruccion =0;
  	for(i=0; i<params->cant_palabras;i++){
     	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,fentrada)!=MAX_LARGO_PALABRA){
     		liberar_memoria(estado);
-    		fclose(fentrada);
     		return ST_ERROR_FUERA_RANGO;
     	}
+
  		if(instruccion==FIN)
  			return ST_OK;
+ 		
  		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
  			return ST_ERROR_FUERA_RANGO;
+ 		
  		estado->palabras[i]=instruccion;
  	}
- 	printf("%s\n",MSJ_CARGA_COMPLETA);
- 	printf("%s\n",MSJ_COMIENZO_EJECUCION);
+
  	return ST_OK;
 }
 
-status_t leer_teclado(parametros_t *params, estado_t *estado)
+status_t leer_stdin_txt(parametros_t *params, estado_t *estado)
  /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones) y
  a la estructura de estado para cargar las instrucciones en el vector palabras*/
 {
- 
  	int i;
  	char aux[MAX_LARGO_PALABRA];
  	long instruccion;
  	char *pc;
+
  	instruccion = 0;
+
  	printf("%s\n",MSJ_BIENVENIDA);
+
  	for(i=0; i<params->cant_palabras;i++){
+ 		
  		printf("%2.i ? \n", i);
- 	   if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
- 		liberar_memoria(estado);
-    	return ST_ERROR_FUERA_RANGO;
+ 	    
+ 	    if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
+ 			liberar_memoria(estado);
+    		return ST_ERROR_FUERA_RANGO;
 	    }
+	    
 	    instruccion = strtol(aux,&pc,10);
+	    
 	    if(*pc!='\0'&& *pc!='\n')
 			return ST_ERROR_NO_NUMERICO;
+	 	
 	 	if(instruccion==FIN)
 	 		return ST_OK;
-	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+	 	
+	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA){
+	 		liberar_memoria(estado);
 	 		return ST_ERROR_FUERA_RANGO;
+	 	}
+
 	 	estado->palabras[i]=instruccion;
 	 }
+
 	 printf("%s\n",MSJ_CARGA_COMPLETA);
 	 printf("%s\n",MSJ_COMIENZO_EJECUCION);	
+
 	 return ST_OK;
 }
 
@@ -138,23 +167,27 @@ status_t leer_archivo_txt(parametros_t *params, estado_t *estado,FILE *fentrada,
  	for(i=0; i<params->cant_palabras;i++){
 	    if(fgets(aux,MAX_LARGO_PALABRA,fentrada)==NULL){
 	    	liberar_memoria(estado);
-	    	fclose(fentrada);
 	    	return ST_ERROR_FUERA_RANGO;
 	    }
+
 	    instruccion = strtol(aux,&pc,10); 
+	    
 	    if(*pc!='\0'&& *pc!='\n')
 	    	return ST_ERROR_NO_NUMERICO;
 	 /*validar que "     " no sea un 0*/ 
 	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
 	 		return ST_ERROR_FUERA_RANGO;
+	 	
 	 	estado->palabras[i]=instruccion;
 	 }
+
 	 printf("%s\n",MSJ_CARGA_COMPLETA);
 	 printf("%s\n",MSJ_COMIENZO_EJECUCION); 
+	 
 	 return ST_OK;
 }
 
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE * fentrada, FILE * fsalida)
+status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t *estado, FILE ** FENTRADA, FILE ** FSALIDA)
  /*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
  además recibe los punteros: a la estructura de los argumentos para poder cargar el valor a cant_palabras (cantidad de instrucciones),
  a la estructura de estado para después ser pasada a la funcion de lectura correspondiente,
@@ -162,73 +195,59 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
  y al archivo de salida para poder escribir los datos*/
 {
 	char *pc=NULL;
+
 	if(!argv){
-		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_PTR_NULO );
 		return ST_ERROR_PTR_NULO;
 	}
 
-	if(ARGC_MAX!=argc){
-		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_ARG );
+	if(argc!=ARGC_MAX){
 		return ST_ERROR_CANT_ARG;
 	}
 
-	if(argv[ARG_POS_CANT_PALABRAS]==NULL){
+	if((strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO))==0){
 		params->cant_palabras=CANT_PALABRAS_DEFAULT;
 	}
 	else {
 		params->cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(params->cant_palabras<0 || (*pc!='\0' && *pc!='\n') || params->cant_palabras>100){
-			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_CANT_PALABRAS );
 			return ST_ERROR_CANT_PALABRAS;
 		}
 	}
-	if(argv[ARG_POS_fentrada2]!=NULL){
-		if(strcmp(argv[ARG_POS_fentrada2],OPCION_TXT)){
-			if((fentrada=fopen(argv[ARG_POS_fentrada1],"rt"))==NULL){
-				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
+	if((strcmp(argv[ARG_POS_FENTRADA_TIPO],ARG_VALIDO))!=0){
+		if((strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT))==0){
+			if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA_NOMBRE],"rt"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			leer_archivo_txt(params, estado, fentrada, fsalida);
 		}
-		else if (strcmp(argv[ARG_POS_fentrada2],OPCION_BIN)){
-			if((fentrada=fopen(argv[ARG_POS_fentrada1],"rb"))==NULL){
-				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+		else if ((strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_BIN))==0){
+			if((*FENTRADA=fopen(argv[ARG_POS_FENTRADA_NOMBRE],"rb"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			leer_archivo_bin(params, estado, fentrada, fsalida);
 		}
 	}
-	else if(argv[ARG_POS_fentrada2]==NULL && argv[ARG_POS_fentrada1]!=NULL){
-		fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO);
+	else if((strcmp(argv[ARG_POS_FENTRADA_TIPO],ARG_VALIDO))==0 && (strcmp(argv[ARG_POS_FENTRADA_NOMBRE],ARG_VALIDO))!=0){
 		return ST_ERROR_APERTURA_ARCHIVO;
 	}
-	else if(strcmp(argv[ARG_POS_fentrada2],OPCION_STDIN)){
-		leer_teclado(params,estado);
-	}	
 
-	if(argv[ARG_POS_fsalida2]!=NULL){
-		if(strcmp(argv[ARG_POS_fentrada2],OPCION_TXT)){
-			if((fsalida=fopen(argv[ARG_POS_fsalida1],"wt"))==NULL){
-				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
-	            fclose(fsalida);
+	if((strcmp(argv[ARG_POS_FSALIDA_TIPO],ARG_VALIDO))!=0){
+		if((strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT))==0){
+			if((*FSALIDA=fopen(argv[ARG_POS_FSALIDA_NOMBRE],"wt"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
 		}
-		else if (strcmp(argv[ARG_POS_fentrada2],OPCION_BIN)){
-			if((fsalida=fopen(argv[ARG_POS_fsalida1 ],"wb"))==NULL){
-				fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
-			    fclose(fsalida);
+		else if ((strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_BIN))==0){
+			if((*FSALIDA=fopen(argv[ARG_POS_FSALIDA_NOMBRE ],"wb"))==NULL){  
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
 		}
-	}
-	else if(argv[ARG_POS_fsalida2]==NULL && argv[ARG_POS_fsalida1]!=NULL){
-			fprintf(stderr, "%s: %s\n", MSJ_ERROR, MSJ_ERROR_APERTURA_ARCHIVO );
+	
+	else if((strcmp(argv[ARG_POS_FSALIDA_TIPO],ARG_VALIDO))==0 && (strcmp(argv[ARG_POS_FSALIDA_NOMBRE],ARG_VALIDO))!=0){
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
 
 	return ST_OK;
 }
+
 
 status_t validar_ayuda(int argc, char *argv[])
  /*recibe arc y argv para verificar si el usuario ejecuto el programa con el argumento de ayuda 
@@ -241,12 +260,12 @@ status_t validar_ayuda(int argc, char *argv[])
 	if(argc!=ARGC2_MAX){
 		return ST_ERROR_CANT_ARG;
 	}
-	if(argv[ARG_POS_H]!=NULL){
+	if((strcmp(argv[ARG_POS_H],ARG_H))==0){
 		imprimir_ayuda();
 	}	
 
 	return ST_OK;
-}
+}/*Podemos meter esta funcion de validar_ayuda directo en validar_argumentos*/
 
 status_t imprimir_ayuda()
  /*Imprime la información de ayuda: tabla del orden de los argumentos y
@@ -297,14 +316,14 @@ status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado,
  a las funciones que se encargaran de imprimir en el formato correspondiente.*/
 {
 
-	if(strcmp(argv[ARG_POS_fentrada2],OPCION_TXT)){
+	if(strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT)){
 		imprimir_archivo_txt(params, estado, fsalida);
 	}
-	else if (strcmp(argv[ARG_POS_fentrada2],OPCION_BIN)){
+	else if (strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_BIN)){
 		imprimir_archivo_bin(params, estado, fsalida);
 	}
 
-    else if(strcmp(argv[ARG_POS_fentrada2],OPCION_TXT)){
+    else if(strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT)){
     	imprimir_pantalla(params,estado);
     }
 
@@ -396,7 +415,7 @@ status_t liberar_memoria(estado_t * estado) /*LA ESTRUCTURA RECIBIDA DEBERIA SER
 	return ST_OK;
 }
 
-status_t operaciones (estado_t * estado)
+status_t ejecutar_simpletron (estado_t * estado)
 /*Recibe el puntero a la estructura de estado para hacer un análisis de las instrucciones que se encuentran
 en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
 {
