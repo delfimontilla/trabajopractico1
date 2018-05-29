@@ -10,7 +10,6 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, esta
 
 status_t leer_archivo_txt(parametros_t *params, estado_t * estado,FILE *fentrada, FILE *fsalida);
 status_t leer_archivo_bin(parametros_t *params, estado_t * estado, FILE *fentrada, FILE *fsalida);
-status_t leer_teclado(parametros_t *params, estado_t * estado);
 
 status_t seleccionar_salida(char *argv[],parametros_t *params, estado_t *estado, FILE *fsalida);
 status_t imprimir_pantalla(parametros_t *params, estado_t  * estado);

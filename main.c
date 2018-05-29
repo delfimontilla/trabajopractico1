@@ -12,7 +12,7 @@
 #ifdef LANG_SPANISH
 #include "LANG_SPANISH.h"
 
-#elif LANG_ENGLISH
+#elif defined (LANG_ENGLISH)
 #include "LANG_ENGLISH.h"
 
 #else 
@@ -60,124 +60,6 @@ int main(int argc, char *argv[])
 	    	fclose(fsalida);
     }
     return EXIT_SUCCESS;
-}
-
-status_t simpletron(parametros_t *argumentos, simpletron_t *simpletron){
-
-	if((simpletron = (simpletron_t *)malloc(argumentos->cant_palabras*sizeof(simpletron_t)))==NULL){
-		fprintf(stderr, "%s\n",MSJ_ERROR_NO_MEM);
-		free(simpletron);
-		return ST_ERROR_NO_MEM;
-	}
-
-	return ST_OK;
-}
-
-status_t leer_archivo_bin(simpletron_t *simpletron, FILE *fentrada)
- /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
- a la estructura de simpletron para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
- al archivo de entrada para poder leer los datos,
- y al archivo de salida (para cerrar dos archivos en caso de error)*/
-{
-	int i;
-	int instruccion;
-
-	instruccion =0;
- 	for(i=0; i<params->cant_palabras;i++){
-    	if(fread(&instruccion,sizeof(int),MAX_LARGO_PALABRA,fentrada)!=MAX_LARGO_PALABRA){
-    		liberar_memoria(simpletron);
-    		return ST_ERROR_FUERA_RANGO;
-    	}
-
- 		if(instruccion==FIN)
- 			return ST_OK;
- 		
- 		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
- 			return ST_ERROR_FUERA_RANGO;
- 		
- 		simpletron->palabras[i]=instruccion;
- 	}
-
- 	return ST_OK;
-}
-
-status_t leer_stdin_txt(parametros_t *params, simpletron_t *simpletron)
- /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones) y
- a la estructura de simpletron para cargar las instrucciones en el vector palabras*/
-{
- 	int i;
- 	char aux[MAX_LARGO_PALABRA];
- 	long instruccion;
- 	char *pc;
-
- 	instruccion = 0;
-
- 	printf("%s\n",MSJ_BIENVENIDA);
-
- 	for(i=0; i<params->cant_palabras;i++){
- 		
- 		printf("%2.i ? \n", i);
- 	    
- 	    if(fgets(aux,MAX_LARGO_PALABRA,stdin)==NULL){
- 			liberar_memoria(simpletron);
-    		return ST_ERROR_FUERA_RANGO;
-	    }
-	    
-	    instruccion = strtol(aux,&pc,10);
-	    
-	    if(*pc!='\0'&& *pc!='\n')
-			return ST_ERROR_NO_NUMERICO;
-	 	
-	 	if(instruccion==FIN)
-	 		return ST_OK;
-	 	
-	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA){
-	 		liberar_memoria(simpletron);
-	 		return ST_ERROR_FUERA_RANGO;
-	 	}
-
-	 	simpletron->palabras[i]=instruccion;
-	 }
-
-	 printf("%s\n",MSJ_CARGA_COMPLETA);
-	 printf("%s\n",MSJ_COMIENZO_EJECUCION);	
-
-	 return ST_OK;
-}
-
-status_t leer_archivo_txt(parametros_t *params, simpletron_t *simpletron,FILE *fentrada, FILE *fsalida)
- /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
- a la estructura de simpletron para cargar las instrucciones en el vector palabras,
- al archivo de entrada para poder leer los datos,
- y al archivo de salida (para cerrar los dos archivos en caso de error)*/
-{
-	size_t i;
-	char aux[MAX_LARGO_PALABRA];
-	long instruccion;
-	char *pc;
-	instruccion = 0;
-
- 	for(i=0; i<params->cant_palabras;i++){
-	    if(fgets(aux,MAX_LARGO_PALABRA,fentrada)==NULL){
-	    	liberar_memoria(simpletron);
-	    	return ST_ERROR_FUERA_RANGO;
-	    }
-
-	    instruccion = strtol(aux,&pc,10); 
-	    
-	    if(*pc!='\0'&& *pc!='\n')
-	    	return ST_ERROR_NO_NUMERICO;
-	 /*validar que "     " no sea un 0*/ 
-	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
-	 		return ST_ERROR_FUERA_RANGO;
-	 	
-	 	simpletron->palabras[i]=instruccion;
-	 }
-
-	 printf("%s\n",MSJ_CARGA_COMPLETA);
-	 printf("%s\n",MSJ_COMIENZO_EJECUCION); 
-	 
-	 return ST_OK;
 }
 
 status_t validar_argumentos (int argc , char *argv[], parametros_t *params, simpletron_t *simpletron, FILE ** fentrada, FILE ** fsalida)
@@ -248,6 +130,134 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *params, simp
 
 	return ST_OK;
 }
+}
+
+
+status_t simpletron (simpletron_t **simpletron, size_t cant_palabras, palabra_t * palabras){
+
+	if (!simpletron||!argumentos)
+		return ST_ERROR_PTR_NULO;
+
+	if(!cant_palabras)
+		return ST_ERROR_NADA_QUE_CARGAR;
+
+	if((*simpletron = (simpletron_t **) calloc((sizeof(simpletron_t), 1)))==NULL){
+		return ST_ERROR_NO_MEM;
+	}
+	
+	if(((*simpletron)->palabras = (palabra_t *) malloc(cant_palabras*(sizeof(palabra_t))))==NULL){
+		free(*simpletron);
+		*simpletron=NULL;
+		return ST_ERROR_NO_MEM;
+	}
+
+	memcpy ((*simpletron)->palabras, palabras,cant_palabras*sizeof(palabra_t))
+
+	return ST_OK;
+}
+
+status_t leer_archivo_bin (simpletron_t *simpletron, FILE *fentrada)
+ /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+ a la estructura de simpletron para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
+ al archivo de entrada para poder leer los datos,
+ y al archivo de salida (para cerrar dos archivos en caso de error)*/
+{
+	int i;
+	int instruccion;
+
+	instruccion =0;
+ 	for(i=0; i<params->cant_palabras;i++){
+    	if(fread(&instruccion,sizeof(int),MAX_LARGO_INGRESO,fentrada)!=MAX_LARGO_INGRESO){
+    		liberar_memoria(simpletron);
+    		return ST_ERROR_FUERA_RANGO;
+    	}
+
+ 		
+ 		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+ 			return ST_ERROR_FUERA_RANGO;
+ 		
+ 		simpletron->palabras[i]=instruccion;
+ 	}
+
+ 	return ST_OK;
+}
+
+status_t leer_archivo_txt(parametros_t *params, simpletron_t *simpletron,FILE *fentrada, FILE *fsalida)
+ /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
+ a la estructura de simpletron para cargar las instrucciones en el vector palabras y 
+ al archivo de entrada para poder */
+{
+	size_t i;
+	char aux[MAX_LARGO_INGRESO];
+	long instruccion;
+	char *pc;
+	instruccion = 0;
+
+ 	for(i=0; i<params->cant_palabras;i++){
+	    if(fgets(aux,MAX_LARGO_INGRESO,fentrada)==NULL){
+	    	liberar_memoria(simpletron);
+	    	return ST_ERROR_FUERA_RANGO;
+	    }
+
+	    instruccion = strtol(aux,&pc,10); 
+	    
+	    if(*pc!='\0'&& *pc!='\n')
+	    	return ST_ERROR_NO_NUMERICO;
+	 /*validar que "     " no sea un 0*/ 
+	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+	 		return ST_ERROR_FUERA_RANGO;
+	 	
+	 	simpletron->palabras[i]=instruccion;
+	 }
+
+	 printf("%s\n",MSJ_CARGA_COMPLETA);
+	 printf("%s\n",MSJ_COMIENZO_EJECUCION); 
+	 
+	 return ST_OK;
+
+{
+ 	
+
+ 	printf("%s\n",MSJ_BIENVENIDA);
+
+ 	for(i=0; i<params->cant_palabras;i++){
+ 		
+ 		printf("%2.i ? \n", i);
+ 	    
+ 	    if(fgets(aux,MAX_LARGO_INGRESO,stdin)==NULL){
+ 			liberar_memoria(simpletron);
+    		return ST_ERROR_FUERA_RANGO;
+	    }
+	    
+	    instruccion = strtol(aux,&pc,10);
+	    
+	    if(*pc!='\0'&& *pc!='\n')
+			return ST_ERROR_NO_NUMERICO;
+	 	
+	 	if(instruccion==FIN)
+	 		return ST_OK;
+	 	
+	 	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA){
+	 		liberar_memoria(simpletron);
+	 		return ST_ERROR_FUERA_RANGO;
+	 	}
+
+	 	simpletron->palabras[i]=instruccion;
+	 }
+
+	 printf("%s\n",MSJ_CARGA_COMPLETA);
+	 printf("%s\n",MSJ_COMIENZO_EJECUCION);	
+
+	 return ST_OK;
+}
+
+
+
+
+
+}
+
+
 
 
 status_t imprimir_ayuda()
@@ -405,8 +415,7 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 	int salir;
 
 	if (simpletron->palabras[simpletron->contador_programa]<0){
-		simpletron->contador_programa++;
-		return ST_OK_NEG;
+		return ST_ERROR_PALABRA_NEG;
 	}
 	else{
 		simpletron->opcode = simpletron->palabras[simpletron->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
@@ -504,9 +513,10 @@ status_t op_leer (simpletron_t * simpletron)
 
 	printf("%s\n", MSJ_INGRESO_PALABRA);
 
-	if (fgets((char*)lectura,MAX_LARGO_PALABRA,stdin)==NULL)
+	if (fgets((char*)lectura,MAX_LARGO_INGRESO,stdin)==NULL)
 		fprintf(stderr, "%s\n", MSJ_ERROR_PALABRA_NULA );
 		return ST_ERROR_PALABRA_VACIA; /*la palabra ingresada es nula*/	
+
 
 	numero = strtol(lectura,&pc,10);
 	
@@ -514,7 +524,7 @@ status_t op_leer (simpletron_t * simpletron)
 	    	return ST_ERROR_NO_NUMERICO; 
 	    /*validar que "     " no sea un 0*/ 
 	
-	if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
+	if(numero<MIN_PALABRA||numero>MAX_PALABRA)
 	 		return ST_ERROR_FUERA_RANGO;
 
 	simpletron->palabras[simpletron->operando] = numero;	
