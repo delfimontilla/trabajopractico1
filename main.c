@@ -22,11 +22,11 @@
 int main(int argc, char *argv[])
 {
 	simpletron_t * simpletron;
-	parametros_t argumentos;
+	size_t cant_palabras;
     status_t st;
     FILE *fentrada, *fsalida;
     
-    params=NULL;
+   	cant_palabras=0;
     simpletron=NULL;
     fentrada=NULL;
     fsalida=NULL;
@@ -34,17 +34,12 @@ int main(int argc, char *argv[])
     	if((st=validar_argumentos(argc, argv, &argumentos, simpletron, fentrada, fsalida))!=ST_OK){
     		return EXIT_FAILURE;
     	}
-        if((simpletron = (simpletron_t *)malloc(params->cant_palabras*sizeof(simpletron_t)))==NULL){
-			fprintf(stderr, "%s\n",MSJ_ERROR_NO_MEM);
-			liberar_memoria(simpletron);
-			return ST_ERROR_NO_MEM;
-		}
-    	
-    	if(simpletron->palabras==NULL){
-    		fprintf(stderr, "%s:%s\n",MSJ_ERROR,MSJ_ERROR_NO_MEM );
+        
+		if((st=simpletron(&simpletron, cant_palabras, palabras))!=ST_OK){
+			free(palabras);
+			fprintf(stderr, "%s\n", errmsg[st]);
     		return EXIT_FAILURE;
     	}
-
     	while(st!=ST_SALIR) 
     		st=ejecutar_simpletron(simpletron);
     	
@@ -62,7 +57,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, simpletron_t *simpletron, FILE ** fentrada, FILE ** fsalida)
+status_t validar_argumentos (int argc , char *argv[],size_t *cant_palabras,  simpletron_t *simpletron, FILE ** fentrada, FILE ** fsalida)
  /*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
  además recibe los punteros: a la estructura de los argumentos para poder cargar el valor a cant_palabras (cantidad de instrucciones),
  a la estructura de simpletron para después ser pasada a la funcion de lectura correspondiente,
@@ -151,7 +146,7 @@ status_t simpletron (simpletron_t **simpletron, size_t cant_palabras, palabra_t 
 		return ST_ERROR_NO_MEM;
 	}
 
-	memcpy ((*simpletron)->palabras, palabras,cant_palabras*sizeof(palabra_t))
+	memcpy ((*simpletron)->palabras, palabras, cant_palabras*sizeof(palabra_t));
 
 	return ST_OK;
 }

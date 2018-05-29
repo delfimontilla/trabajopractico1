@@ -4,9 +4,8 @@
 #include <stdio.h>
 
 
-status_t validar_ayuda(int argc, char *argv[]);
 status_t imprimir_ayuda();
-status_t validar_argumentos (int argc , char *argv[], parametros_t *params, estado_t * estado, FILE ** fentrada, FILE ** fsalida);
+status_t validar_argumentos (int argc , char *argv[], size_t *cant_palabras, FILE ** fentrada, FILE ** fsalida);
 
 status_t leer_archivo_txt(parametros_t *params, estado_t * estado,FILE *fentrada, FILE *fsalida);
 status_t leer_archivo_bin(parametros_t *params, estado_t * estado, FILE *fentrada, FILE *fsalida);
