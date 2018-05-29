@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-typedef enum 
+typedef enum status
 {
 	ST_OK,
 	ST_ERROR_PTR_NULO,
@@ -16,6 +16,6 @@ typedef enum
 	ST_ERROR_NO_NUMERICO,
 	ST_ERROR_NO_MEM,
 	ST_SALIR
-}status_t;
+} status_t;
 
 #endif

@@ -2,9 +2,8 @@
 #define SIMPLETRON__H 1
 
 #include <stdio.h>
-#include "status.h"
 
-typedef enum 
+typedef enum opcode
 {
 
 	LEER = 10,
@@ -35,7 +34,7 @@ typedef struct estado
     int opcode; /*el codigo de operacion, que especifica la operación a realizar*/
     int operando; /*represeta la dirección de memoria que contiene la palabra a la que se le aplica la operación*/
 
-}estado_t; /*una estructura para almacenar el estado del Simpletron*/
+}simpletron_t; /*una estructura para almacenar el estado del Simpletron*/
 
 status_t ejecutar_simpletron (estado_t * estado);
 status_t op_leer (estado_t * estado);

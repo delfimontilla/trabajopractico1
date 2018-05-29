@@ -5,7 +5,7 @@
 
 
 #define ARGC_MAX 6
-#define ARGC2_MAX 2
+#define ARGC_MIN 2
 #define CANT_PALABRAS_DEFAULT 50
 #define ARG_POS_CANT_PALABRAS 1
 #define ARG_POS_FENTRADA1 2
@@ -17,6 +17,7 @@
 #define OPCION_BIN "bin"
 #define OPCION_STDIN "stdin"
 #define OPCION_STDOUT "stdout"
+#define ARG_H "h"
 
 #define FIN -99999
 #define MIN_PALABRA -9999
