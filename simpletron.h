@@ -35,18 +35,5 @@ typedef struct estado
     size_t operando; /*represeta la dirección de memoria que contiene la palabra a la que se le aplica la operación*/
 }simpletron_t; /*una estructura para almacenar el estado del Simpletron*/
 
-status_t ejecutar_simpletron (estado_t * estado);
-status_t op_leer (estado_t * estado);
-status_t op_escribir(estado_t * estado);
-status_t op_cargar (estado_t * estado);
-status_t op_pcargar (estado_t * estado);
-status_t op_guardar (estado_t * estado);
-status_t op_pguardar (estado_t * estado);
-status_t op_restar (estado_t * estado);
-status_t op_dividir (estado_t * estado);
-status_t op_multiplicar (estado_t * estado);
-status_t op_sumar (estado_t * estado);
-status_t op_jmp (estado_t * estado);
-status_t op_djnz (estado_t * estado);
 
 #endif
