@@ -80,7 +80,7 @@
 
 #define TAB_ENT_SAL "Op. de Entrada/Salida:\n"
 
-#define TAB_LEER_OP "LEER\t" 
+#define TAB_LEER_OP "LEER\t\t" 
 #define TAB_LEER_CODE "10\t" 
 #define TAB_LEER_DESC "Lee una palabra de stdin a una posición de memoria\n"
 
@@ -90,32 +90,32 @@
 
 #define TAB_MOV "Op. de movimiento:\n"
 
-#define TAB_CARGAR_OP "CARGAR\t"
+#define TAB_CARGAR_OP "CARGAR\t\t"
 #define TAB_CARGAR_CODE "20\t" 
 #define TAB_CARGAR_DESC "Carga una palabra de la memoria en el acumulador\n"
 
-#define TAB_GUARDAR_OP "GUARDAR\t" 
+#define TAB_GUARDAR_OP "GUARDAR\t\t" 
 #define TAB_GUARDAR_CODE "21\t" 
 #define TAB_GUARDAR_DESC "Guarda una palabra del acumulador a la memoria\n"
 
-#define TAB_PCARGAR_OP "PCARGAR\t" 
+#define TAB_PCARGAR_OP "PCARGAR\t\t" 
 #define TAB_PCARGAR_CODE "22\t" 
 #define TAB_PCARGAR_DESC "Idem CARGAR pero el operando es puntero\n"
 
-#define TAB_PGUARDAR_OP "PGUARDAR\t"
+#define TAB_PGUARDAR_OP "PGUARDAR\t\t"
 #define TAB_PGUARDAR_CODE "23\t"
 #define TAB_PGUARDAR_DESC "Idem GUARDAR pero el operando es puntero\n"
 
 #define TAB_MATE "Op. aritméticas:\n"
-#define TAB_SUMAR_OP "SUMAR\t" 
+#define TAB_SUMAR_OP "SUMAR\t\t" 
 #define TAB_SUMAR_CODE "30\t" 
 #define TAB_SUMAR_DESC "Suma una palabra al acumulador\n"
 
-#define TAB_RESTAR_OP "RESTAR\t" 
+#define TAB_RESTAR_OP "RESTAR\t\t" 
 #define TAB_RESTAR_CODE "31\t"
 #define TAB_RESTAR_DESC "Resta una palabra al acumulador\n"
  
-#define TAB_DIVIDIR_OP "DIVIDIR\t" 
+#define TAB_DIVIDIR_OP "DIVIDIR\t\t" 
 #define TAB_DIVIDIR_CODE "32\t" 
 #define TAB_DIVIDIR_DESC "Divide el acumulador por el operando\n"
 
@@ -124,27 +124,27 @@
 #define TAB_MULT_DESC "Multiplica el acumulador por el operando\n"
 
 #define TAB_CONTROL "Op. control:\n"
-#define TAB_JUMP_OP "JMP\t" 
+#define TAB_JUMP_OP "JMP\t\t" 
 #define TAB_JUMP_CODE "40\t" 
 #define TAB_JUMP_DESC "Salta a una ubicación de memoria\n"
 
-#define TAB_JMPNEG_OP "JMPNEG\t" 
+#define TAB_JMPNEG_OP "JMPNEG\t\t" 
 #define TAB_JMPNEG_CODE "41\t" 
 #define TAB_JMPNEG_DESC "Idem sólo si el acumulador es negativo\n"
 
-#define TAB_JMPZERO_OP "JMPZERO\t" 
+#define TAB_JMPZERO_OP "JMPZERO\t\t" 
 #define TAB_JMPZERO_CODE "42\t" 
 #define TAB_JMPZERO_DESC "Idem sólo si el acumulador es cero\n"
 
-#define TAB_JNZ_OP "JNZ\t"
+#define TAB_JNZ_OP "JNZ\t\t"
 #define TAB_JNZ_CODE "43\t"
 #define TAB_JNZ_DESC "Idem sólo si el acumulador NO es cero\n"
 
-#define TAB_DJNZ_OP "DJNZ\t" 
+#define TAB_DJNZ_OP "DJNZ\t\t" 
 #define TAB_DJNZ_CODE "44\t"
 #define TAB_DJNZ_DESC "Decrementa el acumulador y salta si NO es cero\n"
 
-#define TAB_FIN_OP "HALT\t" 
+#define TAB_FIN_OP "HALT\t\t" 
 #define TAB_FIN_CODE "45\t" 
 #define TAB_FIN_DESC "Finaliza el programa\n"
 
