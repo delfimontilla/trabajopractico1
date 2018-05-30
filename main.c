@@ -62,10 +62,24 @@ int main(int argc, char *argv[])
     	while(st!=ST_SALIR) 
     		st=ejecutar_simpletron(simpletron);
     	
-    	seleccionar_salida(argv,params,simpletron,fsalida);
+    	if (!(strcmp(argumentos->io,OPCION_BIN))){
+			if((st=imprimir_archivo_bin(&simpletron, cant_palabras, fsalida))!=ST_OK){
+        		free(*simpletron);
+        		fprintf(stderr, "%s\n", errmsg[st]);
+    			return EXIT_FAILURE;
+    		}
+    	}
+
+    	else{
+			if((st=imprimir_archivo_txt(&simpletron, argumentos, cant_palabras, fsalida))!=ST_OK){
+        		free(*simpletron);
+        		fprintf(stderr, "%s\n", errmsg[st]);
+    			return EXIT_FAILURE;
+    		}
+    	}
     	
     	if((st=liberar_memoria(simpletron))!=ST_OK){
-    		fprintf(stderr, "%s:%s\n", MSJ_ERROR, MSJ_ERROR_LIBERAR_MEM);
+    		fprintf(stderr, "%s:%s\n", errmsg[st]);
     		return EXIT_FAILURE;
 
         if(fentrada!=NULL)
@@ -330,81 +344,56 @@ status_t imprimir_ayuda()
 	return ST_OK;
 }
 
-
-status_t seleccionar_salida(char *argv[],parametros_t *params, simpletron_t *simpletron, FILE *fsalida)
- /*recibe argv para verficar cual es el formato del archivo de salida o si se hara por stdout;
- además recibe el puntero a la estructura de argumentos, de simpletron y al archivo de salida para poder pasarselos
- a las funciones que se encargaran de imprimir en el formato correspondiente.*/
-{
-
-	if(strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT)){
-		imprimir_archivo_txt(params, simpletron, fsalida);
-	}
-	else if (strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_BIN)){
-		imprimir_archivo_bin(params, simpletron, fsalida);
-	}
-
-    else if(strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_TXT)){
-    	imprimir_pantalla(params,simpletron);
-    }
-
-    return ST_OK;
-}
-
-
-status_t imprimir_pantalla(parametros_t *params, simpletron_t * simpletron)
- /*Recibe los punteros a la estructura de argumentos y a la de simpletron para imprimir los datos guardados
- en el acumulador, en el contador del programa, la ultima instruccion ejecutada, 
- el ultimo opcode y operando, además de la memoria de todas las palabras, en forma de matriz*/
-{
-	int i,k,l;
-
-    printf("%s\n", MSJ_REGISTRO);
-	printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
-	printf("%25s: %6i\n",MSJ_CONT_PROG, simpletron->contador_programa );
-	printf("%25s: %6i\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );	
-	simpletron->opcode = *(simpletron->palabras + simpletron->contador_programa) /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
-	simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	printf("%25s: %6i\n",MSJ_OPCODE, simpletron->opcode );
-	printf("%25s: %6i\n",MSJ_OPERANDO, simpletron->operando );
-	printf("    ");
-	for (l = 0; l < 10; l++)
-		printf("  %i   ",l) ;
-	for ( i = 0; i < cant_palabras ; i++){
-      if ((i%10)==0){
-		  printf("\n%02i  ",i);
-	  }	  
-		printf("%+04i ",simpletron->palabras[i] );
-	}
-    printf("\n");
-    return ST_OK;
-}
-
-status_t imprimir_archivo_txt(parametros_t *params, simpletron_t *simpletron, FILE *fsalida)
+status_t imprimir_archivo_txt(size_t cant_palabras,parametros_t * argumentos, simpletron_t *simpletron, FILE *fsalida)
  /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
  a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
  la ultima instruccion ejecutada, el ultimo opcode y operando, 
  además de la memoria de todas las palabras, en forma de matriz*/
-{
+{	
 	int i,k,l;
-    fprintf(fsalida,"%s\n", MSJ_REGISTRO);
-	fprintf(fsalida, "%25s: %6d\n",MSJ_ACUM, simpletron->acumulador );
-	fprintf(fsalida, "%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
-	fprintf(fsalida, "%25s: %6d\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );
-	simpletron->opcode = simpletron->palabras[simpletron->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
-	simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	fprintf(fsalida, "%25s: %6d\n",MSJ_OPCODE, simpletron->opcode );
-	fprintf(fsalida, "%25s: %6d\n",MSJ_OPERANDO, simpletron->operando );
-	fprintf(fsalida,"    ");
-	for (l = 0; l < 10; l++)
-		fprintf(fsalida,"  %i   ",l) ;
-	for ( i = 0; i < cant_palabras ; i++){ 
-      if ((i%10)==0){
-		  fprintf(fsalida,"\n%02i  ",i);
-	  }		  
-		fprintf(fsalida,"%+04i ",simpletron->palabras[i] );
-	}
-    fprintf(fsalida,"\n");
+
+	if (!(strcmp(argumentos->io,OPCION_TXT))){
+    	fprintf(fsalida,"%s\n", MSJ_REGISTRO);
+		fprintf(fsalida, "%25s: %6d\n",MSJ_ACUM, simpletron->acumulador );
+		fprintf(fsalida, "%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
+		fprintf(fsalida, "%25s: %6d\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );
+		simpletron->opcode = simpletron->palabras[simpletron->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+		simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+		fprintf(fsalida, "%25s: %6d\n",MSJ_OPCODE, simpletron->opcode );
+		fprintf(fsalida, "%25s: %6d\n",MSJ_OPERANDO, simpletron->operando );
+		fprintf(fsalida,"    ");
+		for (l = 0; l < 10; l++)
+			fprintf(fsalida,"  %i   ",l) ;
+		for ( i = 0; i < cant_palabras ; i++){ 
+      		if ((i%10)==0){
+		  		fprintf(fsalida,"\n%02i  ",i);
+	  		}		  
+			fprintf(fsalida,"%+04i ",simpletron->palabras[i] );
+		}
+    	fprintf(fsalida,"\n");
+    }
+
+    else if (!(strcmp(argumentos->io,OPCION_STDIN))){
+    	printf("%s\n", MSJ_REGISTRO);
+		printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
+		printf("%25s: %6i\n",MSJ_CONT_PROG, simpletron->contador_programa );
+		printf("%25s: %6i\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );	
+		simpletron->opcode = *(simpletron->palabras + simpletron->contador_programa) /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+		simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+		printf("%25s: %6i\n",MSJ_OPCODE, simpletron->opcode );
+		printf("%25s: %6i\n",MSJ_OPERANDO, simpletron->operando );
+		printf("    ");
+		for (l = 0; l < 10; l++)
+			printf("  %i   ",l) ;
+		for ( i = 0; i < cant_palabras ; i++){
+      		if ((i%10)==0){
+		  		printf("\n%02i  ",i);
+	  		}	  
+			printf("%+04i ",simpletron->palabras[i] );
+		}
+    	printf("\n");
+    }
+	
     return ST_OK;
 }
 
@@ -426,13 +415,19 @@ status_t imprimir_archivo_bin (parametros_t *params, simpletron_t *simpletron, F
 }
 
 
-status_t liberar_memoria(simpletron_t * simpletron) /*LA ESTRUCTURA RECIBIDA DEBERIA SER INTEGRAMENTE EN MEM DINAMICA*/
+status_t liberar_memoria(simpletron_t ** simpletron) /*LA ESTRUCTURA RECIBIDA DEBERIA SER INTEGRAMENTE EN MEM DINAMICA*/
 /*Recibe el puntero a la estructura de simpletron para liberar la memoria pedida*/
 {	
-	if (simpletron!=NULL)
-		free(simpletron->palabras);
-
-	simpletron->palabras=NULL;
+	if (simpletron!=NULL && *simpletron!=NULL){
+		free((*simpletron)->palabras);
+		(*simpletron)->palabras=NULL;
+		(*simpletron)->acumulador=0;
+		(*simpletron)->contador_programa=0;
+		(*simpletron)->opcode=0;
+		(*simpletron)->operando=0;
+	}
+	free(*simpletron)
+	*simpletron=NULL;
 	return ST_OK;
 }
 
