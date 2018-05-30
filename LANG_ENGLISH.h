@@ -11,10 +11,14 @@
 #define MSJ_ERROR_CANT_ARG "number of arguments"
 #define MSJ_ERROR_CANT_PALABRAS "number of words"
 #define MSJ_ERROR_NO_MEM "out of memory"
-#define MSJ_ERROR_PALABRA_NULA "the entered word is null"
-#define MSJ_FUERA_DE_RANGO "an attempt was made to access a memory location out of range "
+#define MSJ_ERROR_PALABRA_VACIA "the entered word is null"
+#define MSJ_ERROR_FUERA_DE_RANGO "an attempt was made to access a memory location out of range "
 #define MSJ_ERROR_LIBERAR_MEM "error when freeing memory"
-
+#define MSJ_ERROR_LECTURA "reading file"
+#define MSJ_ERROR_PALABRA_NEG "negative word"
+#define MSJ_ERROR_ARG_INV "invalid argument"
+#define MSJ_ERROR_NO_NUMERICO "it's not a number"
+#define MSJ_OK "OK"
 
 
 #define MSJ_IMPRIMIR_PALABRA "Content of the position"

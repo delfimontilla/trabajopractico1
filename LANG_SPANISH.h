@@ -9,10 +9,14 @@
 #define MSJ_ERROR_CANT_ARG "cantidad de argumentos"
 #define MSJ_ERROR_CANT_PALABRAS "cantidad de palabras"
 #define MSJ_ERROR_NO_MEM "no hay memoria"
-#define MSJ_ERROR_PALABRA_NULA "la palabra ingresada es nula"
-#define MSJ_FUERA_DE_RANGO "se ha intentado acceder a una posición de memoria fuera de rango"
+#define MSJ_ERROR_PALABRA_VACIA "la palabra ingresada es nula"
+#define MSJ_ERROR_FUERA_DE_RANGO "se ha intentado acceder a una posición de memoria fuera de rango"
 #define MSJ_ERROR_LIBERAR_MEM "error al liberar memoria"
-
+#define MSJ_ERROR_LECTURA "lectura de archivo"
+#define MSJ_ERROR_PALABRA_NEG "palabra negativa"
+#define MSJ_ERROR_ARG_INV "argumento invalido"
+#define MSJ_ERROR_NO_NUMERICO "no es un numero"
+#define MSJ_OK "OK"
 
 #define MSJ_IMPRIMIR_PALABRA "Contenido de la posicion"
 #define MSJ_INGRESO_PALABRA "Ingrese una palabra:"
