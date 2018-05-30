@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "apertura de archivo"
 #define MSJ_ERROR_PTR_NULO "puntero nulo"

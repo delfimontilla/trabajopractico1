@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 
-
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "opening file"
 #define MSJ_ERROR_PTR_NULO "null pointer"

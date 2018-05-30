@@ -16,6 +16,7 @@
 #define ARG_POS_H 1
 #define MIN_CANT_PALABRA 1
 #define MAX_CANT_PALABRA 100
+#define MAX_CADENA 100
 #define OPCION_TXT "txt"
 #define OPCION_BIN "bin"
 #define OPCION_STDIN "stdin"
@@ -28,6 +29,7 @@
 
 #define TABULACION "\t"
 #define SALTO "\n"
+#define PREGUNTA "?"
 
 #define TXT_AYUDA \
 		MSJ_ACLARACION_AYUDA \

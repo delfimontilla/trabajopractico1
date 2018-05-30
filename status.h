@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-typedef enum status
+typedef enum
 {
 	ST_OK,
 	ST_ERROR_PTR_NULO,
@@ -21,7 +21,7 @@ typedef enum status
 	ST_SALIR
 } status_t;
 
-Const char * errmsg[] = {
+const char * errmsg[] = {
 	MSJ_OK
 	MSJ_ERROR \
 	MSJ_ERROR_PTR_NULO,
