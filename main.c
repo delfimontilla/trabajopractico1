@@ -229,7 +229,8 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	char aux[MAX_LARGO_INGRESO];
 	long instruccion;
 	instruccion = 0;
-	char * inicio, *fin;
+	char * inicio; 
+	char *fin;
 
 	
 	if (!(strcmp(argumentos->ia,OPCION_TXT))){
@@ -241,7 +242,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    	}
 	    	
 
-	    	if((pc=strrchr(aux,';'))!=NULL)
+	    	if((fin=strrchr(aux,';'))!=NULL)
 	 			*fin='\0';
 	    	
 	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
@@ -281,7 +282,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    		return ST_ERROR_FUERA_DE_RANGO;
 	    	}
 	    	
-	    	if((pc=strrchr(aux,';'))!=NULL)
+	    	if((fin=strrchr(aux,';'))!=NULL)
 	 			*fin='\0';
 	    	
 	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
