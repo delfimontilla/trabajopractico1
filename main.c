@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     fsalida=NULL;
 
     if((st=validar_argumentos(argc, argv, &argumentos, &cant_palabras, &fentrada, &fsalida))!=ST_OK){
+    	fprintf(stderr, "%s\n", errmsg[st]);
     	return EXIT_FAILURE;
     }
 
@@ -94,12 +95,11 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 {
 	char *pc=NULL;
 		
-	if(!argv){
+	if(!argv|| !cant_palabras || !argumentos || !fentrada || !fsalida){
 		return ST_ERROR_PTR_NULO;
 	}
 
 	if(argc==ARGC_MIN){
-
 		if(!(strcmp(argv[ARG_POS_H],ARG_H))){
 			imprimir_ayuda();
 			return ST_OK;
@@ -109,6 +109,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 	if(argc!=ARGC_MAX)
 		return ST_ERROR_CANT_ARG;
 
+	else{
 	
 	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO)))
 		*cant_palabras=CANT_PALABRAS_DEFAULT;
@@ -138,7 +139,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 		}
 	}
 
-	else if (!(strcmp(argv[ARG_POS_FENTRADA_NOMBRE],OPCION_STDIN))){
+	else if (strcmp(argv[ARG_POS_FENTRADA_NOMBRE],OPCION_STDIN)!=0){
 			return ST_ERROR_ARG_INV;
 	}
 
@@ -163,12 +164,12 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 		}
 	}	
 	
-	else if (!(strcmp(argv[ARG_POS_FSALIDA_NOMBRE],OPCION_STDOUT))){
+	else if (strcmp(argv[ARG_POS_FSALIDA_NOMBRE],OPCION_STDOUT)!=0){
 		return ST_ERROR_ARG_INV;
 	}
 
 	argumentos->oa=argv[ARG_POS_FSALIDA_NOMBRE];
-
+}
 	return ST_OK;
 }
 
@@ -225,13 +226,10 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	size_t i;
 	char aux[MAX_LARGO_INGRESO];
 	long instruccion;
-	instruccion = 0;
-
-	char * inicio;
+	char * comienzo;
 	char * fin;
-	char *pc;
-	char * inicio; 
-	char *fin;
+
+	instruccion = 0;
 
 	if (!(strcmp(argumentos.ia,OPCION_TXT))){
 
@@ -245,15 +243,15 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    	if((fin=strrchr(aux,';'))!=NULL)
 	 			*fin='\0';
 	    	
-	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
+	    	for (comienzo = aux; isspace(*comienzo) && *comienzo!='\0'; comienzo++){/*busco que apunte al \0*/		
 			}
-			if (*inicio=='\0')
+			if (*comienzo=='\0')
 				*aux='\0';/*equivalente a  aux[0]='\0'*/
 			
-			for(fin = strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){
+			for(fin = aux+strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){
 			}
 				*++fin='\0';
-			menmove(aux,inicio,fin-inicio+1);
+			memmove(aux,comienzo,fin-comienzo+1);
 	    	instruccion = strtol(aux,&fin,10); 
 	    	if(*fin!='\0'&& *fin!='\n')
 	    		return ST_ERROR_NO_NUMERICO;
@@ -276,8 +274,8 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	else if (!(strcmp(argumentos.ia,OPCION_STDIN))){
  		printf("%s\n",MSJ_BIENVENIDA);
 		for(i=0; i<cant_palabras;i++){
- 			printf("%2.i %s \n", i,PREGUNTA);
- 	    	if(fgets(aux,MAX_CADENA,fentrada)==NULL){
+ 			printf("%2.lu %s \n", i,PREGUNTA);
+ 	    	if(fgets(aux,MAX_CADENA,stdin)==NULL){
 	    		liberar_memoria(simpletron);
 	    		return ST_ERROR_FUERA_DE_RANGO;
 	    	}
@@ -285,15 +283,15 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    	if((fin=strrchr(aux,';'))!=NULL)
 	 			*fin='\0';
 	    	
-	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
+	    	for (comienzo = aux; isspace(*comienzo) && *comienzo!='\0'; comienzo++){/*busco que apunte al \0*/		
 			}
-			if (*inicio=='\0')
+			if (*comienzo=='\0')
 				*aux='\0';/*equivalente a  aux[0]='\0'*/
 			
-			for(fin = strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){
+			for(fin = aux+strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){
 			}
 			*++fin='\0';
-			menmove(aux,inicio,fin-inicio+1);
+			memmove(aux,comienzo,fin-comienzo+1);
 	    	instruccion = strtol(aux,&fin,10); 
 	    	if(*fin!='\0'&& *fin!='\n')
 	    		return ST_ERROR_NO_NUMERICO;
@@ -337,12 +335,12 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
 	if (!(strcmp(argumentos.oa,OPCION_TXT))){
     	fprintf(fsalida,"%s\n", MSJ_REGISTRO);
 		fprintf(fsalida, "%25s: %6d\n",MSJ_ACUM, simpletron->acumulador );
-		fprintf(fsalida, "%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
+		fprintf(fsalida, "%25s: %6lu\n",MSJ_CONT_PROG, simpletron->contador_programa );
 		fprintf(fsalida, "%25s: %6d\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );
 		simpletron->opcode = simpletron->palabras[simpletron->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 		simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-		fprintf(fsalida, "%25s: %6d\n",MSJ_OPCODE, simpletron->opcode );
-		fprintf(fsalida, "%25s: %6d\n",MSJ_OPERANDO, simpletron->operando );
+		fprintf(fsalida, "%25s: %6lu\n",MSJ_OPCODE, simpletron->opcode );
+		fprintf(fsalida, "%25s: %6lu\n",MSJ_OPERANDO, simpletron->operando );
 		fprintf(fsalida,"    ");
 		for (l = 0; l < 10; l++)
 			fprintf(fsalida,"  %i   ",l) ;
@@ -358,12 +356,12 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
     else if (!(strcmp(argumentos.oa,OPCION_STDIN))){
     	printf("%s\n", MSJ_REGISTRO);
 		printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
-		printf("%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
+		printf("%25s: %6lu\n",MSJ_CONT_PROG, simpletron->contador_programa );
 		printf("%25s: %6i\n",MSJ_INST, simpletron->palabras[simpletron->contador_programa] );	
 		simpletron->opcode = *(simpletron->palabras + simpletron->contador_programa) /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 		simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-		printf("%25s: %6d\n",MSJ_OPCODE, simpletron->opcode );
-		printf("%25s: %6d\n",MSJ_OPERANDO, simpletron->operando );
+		printf("%25s: %6lu\n",MSJ_OPCODE, simpletron->opcode );
+		printf("%25s: %6lu\n",MSJ_OPERANDO, simpletron->operando );
 		printf("    ");
 		for (l = 0; l < 10; l++)
 			printf("  %i   ",l) ;
@@ -418,6 +416,8 @@ status_t ejecutar_simpletron (simpletron_t * simpletron, size_t cant_palabras)
 en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
 {
 	int salir;
+
+	salir=0;
 
 	if (simpletron->palabras[simpletron->contador_programa]<0){
 		return ST_ERROR_PALABRA_NEG;
@@ -536,7 +536,7 @@ status_t op_leer (simpletron_t * simpletron)
 status_t op_escribir(simpletron_t * simpletron)
  /*imprime por stdout el contenido de la posicion del operando (miembro de la estructura simpletron)*/
 {
-	fprintf(stdout, "%s %d : %i\n", MSJ_IMPRIMIR_PALABRA,simpletron->operando, simpletron->palabras[simpletron->operando]);
+	fprintf(stdout, "%s %lu : %i\n", MSJ_IMPRIMIR_PALABRA,simpletron->operando, simpletron->palabras[simpletron->operando]);
 	return ST_OK;
 }
 
