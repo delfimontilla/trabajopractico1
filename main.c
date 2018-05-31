@@ -294,7 +294,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 			}
 			*++fin='\0';
 			menmove(aux,inicio,fin-inicio+1);
-	    	instruccion = strtol(aux,&aux,10); 
+	    	instruccion = strtol(aux,&fin,10); 
 	    	if(*fin!='\0'&& *fin!='\n')
 	    		return ST_ERROR_NO_NUMERICO;
 
