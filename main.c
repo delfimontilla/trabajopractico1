@@ -107,23 +107,14 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 		}
 	}
 
-	if(argc!=ARGC_MAX){
+	if(argc!=ARGC_MAX)
 		return ST_ERROR_CANT_ARG;
-	}
 
-	/*****no podemos comparar en este caso con arg_valido porque puede ser cualquier numero del 00 al 99 entonces mejor ver si es igual a - entonces lo mandamos por default
-	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO))){
+	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO)))
 		cant_palabras=CANT_PALABRAS_DEFAULT;
-	}***/
-	if (/**COMO HAGO PARA COMPRAR QUE SEA NUMERO Y NO LETRA??*//)
-	{
-		return ST_ERROR_FUERA_DE_RANGO
-	}
-	else if(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO_DEFAULT)){
-		cant_palabras=CANT_PALABRAS_DEFAULT;
-	}
+
 	else {
-		*cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);/*puede estar mal*/
+		*cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(*cant_palabras< MIN_CANT_PALABRA || *pc!='\0' || *cant_palabras> MAX_CANT_PALABRA){
 			return ST_ERROR_CANT_PALABRAS;
 		}
@@ -234,7 +225,6 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	size_t i;
 	char aux[MAX_LARGO_INGRESO];
 	long instruccion;
-	char *pc;
 	instruccion = 0;
 	char * inicio, *fin;
 
@@ -249,19 +239,19 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    	
 
 	    	if((pc=strrchr(aux,';'))!=NULL)
-	 			*pc='\0';
+	 			*fin='\0';
 	    	
 	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
 			}
 			if (*inicio=='\0')
 				*aux='\0';/*equivalente a  aux[0]='\0'*/
 			
-			for(fin = strlen(s)-1; isspace(*fin) && fin!=s;fin--){ /*cuento desde atras, apunta al ultimo caracter antes de un espacio. isspacefin termina donde no haabia un espacio*/
+			for(fin = strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){ /*cuento desde atras, apunta al ultimo caracter antes de un espacio. isspacefin termina donde no haabia un espacio*/
 			}
 				*++fin='\0';
 			menmove(aux,inicio,fin-inicio+1);
-	    	instruccion = strtol(aux,&pc,10); 
-	    	if(*pc!='\0'&& *pc!='\n')
+	    	instruccion = strtol(aux,&fin,10); 
+	    	if(*fin!='\0'&& *fin!='\n')
 	    		return ST_ERROR_NO_NUMERICO;
 
 	    	if(instruccion==FIN)
@@ -289,19 +279,19 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	    	}
 	    	
 	    	if((pc=strrchr(aux,';'))!=NULL)
-	 			*pc='\0';
+	 			*fin='\0';
 	    	
 	    	for (inicio = aux; isspace(*inicio) && *inicio!='\0'; inicio++){/*busco que apunte al \0*/		
 			}
 			if (*inicio=='\0')
 				*aux='\0';/*equivalente a  aux[0]='\0'*/
 			
-			for(fin = strlen(s)-1; isspace(*fin) && fin!=s;fin--){ /*cuento desde atras, apunta al ultimo caracter antes de un espacio. isspacefin termina donde no haabia un espacio*/
+			for(fin = strlen(aux)-1; isspace(*fin) && fin!=aux;fin--){ /*cuento desde atras, apunta al ultimo caracter antes de un espacio. isspacefin termina donde no haabia un espacio*/
 			}
 			*++fin='\0';
 			menmove(aux,inicio,fin-inicio+1);
-	    	instruccion = strtol(aux,&pc,10); 
-	    	if(*pc!='\0'&& *pc!='\n')
+	    	instruccion = strtol(aux,&aux,10); 
+	    	if(*fin!='\0'&& *fin!='\n')
 	    		return ST_ERROR_NO_NUMERICO;
 
 	    	if(instruccion==FIN)
