@@ -17,6 +17,7 @@
 #define MSJ_ERROR_PALABRA_NEG "palabra negativa"
 #define MSJ_ERROR_ARG_INV "argumento invalido"
 #define MSJ_ERROR_NO_NUMERICO "no es un numero"
+#define MSJ_ERROR_NADA_QUE_CARGAR "no hay nada que cargar"
 #define MSJ_OK "OK"
 #define MSJ_SALIR "Salir"
 
