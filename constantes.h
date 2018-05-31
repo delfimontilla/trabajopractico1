@@ -31,7 +31,6 @@
 #define SALTO "\n"
 #define PREGUNTA "?"
 
-#define ARG_VALIDO_DEFAULT '-'
 #define ARG_VALIDO "-"
 
 #define TXT_AYUDA1 \

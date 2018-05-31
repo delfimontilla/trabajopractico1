@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
    		return EXIT_FAILURE;
    	}
 
-   	if (!(strcmp(argumentos->ia,OPCION_BIN))){
+   	if (!(strcmp(argumentos.ia,OPCION_BIN))){
 		if((st=leer_archivo_bin(&simpletron, cant_palabras, fentrada))!=ST_OK){
        		free(simpletron);
        		fprintf(stderr, "%s\n", errmsg[st]);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
    	while(st!=ST_SALIR) 
    		st=ejecutar_simpletron(simpletron);
    	
-   	if (!(strcmp(argumentos->oa,OPCION_BIN))){
+   	if (!(strcmp(argumentos.oa,OPCION_BIN))){
 		if((st=imprimir_archivo_bin(simpletron, cant_palabras, fsalida))!=ST_OK){
        		free(simpletron);
        		fprintf(stderr, "%s\n", errmsg[st]);
@@ -112,23 +112,10 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 	if(argc!=ARGC_MAX)
 		return ST_ERROR_CANT_ARG;
 
-<<<<<<< HEAD
-	/*****no podemos comparar en este caso con arg_valido porque puede ser cualquier numero del 00 al 99 entonces mejor ver si es igual a - entonces lo mandamos por default
-	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO))){
-		cant_palabras=CANT_PALABRAS_DEFAULT;
-	}***/
-	if (/**COMO HAGO PARA COMPRAR QUE SEA NUMERO Y NO LETRA??*/)
-	{
-		return ST_ERROR_FUERA_DE_RANGO;
-	}
-	else if(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO_DEFAULT)){
-		*cant_palabras=CANT_PALABRAS_DEFAULT;
-	}
-=======
+	
 	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO)))
-		cant_palabras=CANT_PALABRAS_DEFAULT;
+		*cant_palabras=CANT_PALABRAS_DEFAULT;
 
->>>>>>> 7a24c2287ca2fc5943615cc535c31c15beb13717
 	else {
 		*cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(*cant_palabras< MIN_CANT_PALABRA || *pc!='\0' || *cant_palabras> MAX_CANT_PALABRA){
@@ -338,7 +325,7 @@ status_t imprimir_ayuda()
 }
 
 
-status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t * argumentos, size_t cant_palabras, FILE *fsalida)
+status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos, size_t cant_palabras, FILE *fsalida)
  /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
  a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
  la ultima instruccion ejecutada, el ultimo opcode y operando, 
@@ -346,7 +333,7 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t * argumento
 {	
 	int i,l;
 
-	if (!(strcmp((*argumentos).oa,OPCION_TXT))){
+	if (!(strcmp(argumentos.oa,OPCION_TXT))){
     	fprintf(fsalida,"%s\n", MSJ_REGISTRO);
 		fprintf(fsalida, "%25s: %6d\n",MSJ_ACUM, simpletron->acumulador );
 		fprintf(fsalida, "%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
@@ -367,7 +354,7 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t * argumento
     	fprintf(fsalida,"\n");
     }
 
-    else if (!(strcmp((*argumentos).o,OPCION_STDIN))){
+    else if (!(strcmp(argumento.o,OPCION_STDIN))){
     	printf("%s\n", MSJ_REGISTRO);
 		printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
 		printf("%25s: %6i\n",MSJ_CONT_PROG, simpletron->contador_programa );

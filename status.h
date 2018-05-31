@@ -36,7 +36,7 @@ const char * errmsg[] = {
 	MSJ_ERROR_NO_MEM,
 	MSJ_ERROR_LIBERAR_MEM,
 	MSJ_SALIR
-}
+};
 
 
 #endif
