@@ -1,12 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-#include "constantes.h"
-#include "status.h"
-#include "simpletron.h"
-#include "parametros.h"
-#include "prototipos.h"
 
 
 
@@ -21,6 +17,12 @@
 #else 
 #include "LANG_SPANISH.h"
 #endif
+
+#include "constantes.h"
+#include "status.h"
+#include "simpletron.h"
+#include "parametros.h"
+#include "prototipos.h"
 
 int main(int argc, char *argv[])
 {
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
    		return EXIT_FAILURE;
    	}
 
-   	if (!(strcmp(argumentos.ia,OPCION_BIN))){
+   	if (!(strcmp(argumentos->ia,OPCION_BIN))){
 		if((st=leer_archivo_bin(&simpletron, cant_palabras, fentrada))!=ST_OK){
        		free(simpletron);
        		fprintf(stderr, "%s\n", errmsg[st]);
@@ -61,7 +63,7 @@ int main(int argc, char *argv[])
    	while(st!=ST_SALIR) 
    		st=ejecutar_simpletron(simpletron);
    	
-   	if (!(strcmp(argumentos.oa,OPCION_BIN))){
+   	if (!(strcmp(argumentos->oa,OPCION_BIN))){
 		if((st=imprimir_archivo_bin(simpletron, cant_palabras, fsalida))!=ST_OK){
        		free(simpletron);
        		fprintf(stderr, "%s\n", errmsg[st]);
@@ -110,9 +112,23 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 	if(argc!=ARGC_MAX)
 		return ST_ERROR_CANT_ARG;
 
+<<<<<<< HEAD
+	/*****no podemos comparar en este caso con arg_valido porque puede ser cualquier numero del 00 al 99 entonces mejor ver si es igual a - entonces lo mandamos por default
+	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO))){
+		cant_palabras=CANT_PALABRAS_DEFAULT;
+	}***/
+	if (/**COMO HAGO PARA COMPRAR QUE SEA NUMERO Y NO LETRA??*/)
+	{
+		return ST_ERROR_FUERA_DE_RANGO;
+	}
+	else if(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO_DEFAULT)){
+		*cant_palabras=CANT_PALABRAS_DEFAULT;
+	}
+=======
 	if(!(strcmp(argv[ARG_POS_CANT_PALABRAS],ARG_VALIDO)))
 		cant_palabras=CANT_PALABRAS_DEFAULT;
 
+>>>>>>> 7a24c2287ca2fc5943615cc535c31c15beb13717
 	else {
 		*cant_palabras = strtol(argv[ARG_POS_CANT_PALABRAS], &pc, 10);
 		if(*cant_palabras< MIN_CANT_PALABRA || *pc!='\0' || *cant_palabras> MAX_CANT_PALABRA){
@@ -128,13 +144,13 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 			if((*fentrada=fopen(argv[ARG_POS_FENTRADA_NOMBRE],"rt"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			argumentos.ia=argv[ARG_POS_FENTRADA_TIPO];
+			argumentos->ia=argv[ARG_POS_FENTRADA_TIPO];
 		}
 		else if (!(strcmp(argv[ARG_POS_FENTRADA_TIPO],OPCION_BIN))){
 			if((*fentrada=fopen(argv[ARG_POS_FENTRADA_NOMBRE],"rb"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			argumentos.ia=argv[ARG_POS_FENTRADA_TIPO];
+			argumentos->ia=argv[ARG_POS_FENTRADA_TIPO];
 		}
 	}
 
@@ -142,24 +158,24 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 			return ST_ERROR_ARG_INV;
 	}
 
-	argumentos.i=argv[ARG_POS_FENTRADA_NOMBRE];
+	argumentos->ia=argv[ARG_POS_FENTRADA_NOMBRE];
 
 
 	if((strcmp(argv[ARG_POS_FSALIDA_TIPO],ARG_VALIDO))!=0){
 		if((strcmp(argv[ARG_POS_FSALIDA_NOMBRE],ARG_VALIDO))==0){
 			return ST_ERROR_APERTURA_ARCHIVO;
 		}
-		if(!(strcmp(argv[ARG_POS_FSALIDA_TIPO],OPCION_TXT))0){
+		if(!(strcmp(argv[ARG_POS_FSALIDA_TIPO],OPCION_TXT))){
 			if((*fsalida=fopen(argv[ARG_POS_FSALIDA_NOMBRE],"wt"))==NULL){
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			argumentos.oa=argv[ARG_POS_FSALIDA_TIPO];
+			argumentos->oa=argv[ARG_POS_FSALIDA_TIPO];
 		}
 		else if (!(strcmp(argv[ARG_POS_FSALIDA_TIPO],OPCION_BIN))){
 			if((*fsalida=fopen(argv[ARG_POS_FSALIDA_NOMBRE ],"wb"))==NULL){  
 				return ST_ERROR_APERTURA_ARCHIVO;
 			}
-			argumentos.oa=argv[ARG_POS_FENTRADA_TIPO];
+			argumentos->oa=argv[ARG_POS_FENTRADA_TIPO];
 		}
 	}	
 	
@@ -167,7 +183,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 		return ST_ERROR_ARG_INV;
 	}
 
-	argumentos.o=argv[ARG_POS_FSALIDA_NOMBRE];
+	argumentos->oa=argv[ARG_POS_FSALIDA_NOMBRE];
 
 	return ST_OK;
 }
@@ -176,13 +192,13 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 
 status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras){
 
-	if (!simpletron||!argumentos)
+	if (!simpletron)
 		return ST_ERROR_PTR_NULO;
 
 	if(!cant_palabras)
 		return ST_ERROR_NADA_QUE_CARGAR;
 
-	if((*simpletron = (simpletron_t **) calloc((sizeof(simpletron_t), 1)))==NULL){
+	if((*simpletron = (simpletron_t **) calloc(sizeof(simpletron_t), 1))==NULL){
 		return ST_ERROR_NO_MEM;
 	}
 	
@@ -195,7 +211,7 @@ status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras
 	return ST_OK;
 }
 
-status_t leer_archivo_bin (simpletron_t * simpletron, size_t cant_palabras, FILE *fentrada)
+status_t leer_archivo_bin (simpletron_t ** simpletron, size_t cant_palabras, FILE *fentrada)
  /*recibe los punteros: a la estructura de simpletron para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
  al archivo de entrada para poder leer los datos*/
 {
@@ -229,7 +245,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	char * inicio, *fin;
 
 	
-	if (!(strcmp(argumentos.ia,OPCION_TXT))){
+	if (!(strcmp(argumentos->ia,OPCION_TXT))){
 
  		for(i=0; i<cant_palabras;i++){
 	    	if(fgets(aux,MAX_CADENA,fentrada)==NULL){
@@ -269,7 +285,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 		return ST_OK;
 	}
 
-	else if (!(strcmp(argumentos.ia,OPCION_STDIN))){
+	else if (!(strcmp(argumentos->ia,OPCION_STDIN))){
  		printf("%s\n",MSJ_BIENVENIDA);
 		for(i=0; i<cant_palabras;i++){
  			printf("%2.i %s \n", i,PREGUNTA);
@@ -300,7 +316,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	 		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
 	 			return ST_ERROR_FUERA_DE_RANGO;
 	 	
-	 		simpletron->palabras[i]=instruccion;
+	 		(*simpletron)->palabras[i]=instruccion;
 	 	}
 
 	 	printf("%s\n",MSJ_CARGA_COMPLETA);

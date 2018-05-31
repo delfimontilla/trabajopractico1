@@ -18,6 +18,7 @@
 #define MSJ_ERROR_ARG_INV "argumento invalido"
 #define MSJ_ERROR_NO_NUMERICO "no es un numero"
 #define MSJ_OK "OK"
+#define MSJ_SALIR "Salir"
 
 #define MSJ_IMPRIMIR_PALABRA "Contenido de la posicion"
 #define MSJ_INGRESO_PALABRA "Ingrese una palabra:"
