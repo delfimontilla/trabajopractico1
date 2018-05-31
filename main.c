@@ -3,9 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 
-
-
-
 #define LANG_SPANISH /*elección del idioma del programa*/
 
 #ifdef LANG_SPANISH
@@ -214,7 +211,7 @@ status_t leer_archivo_bin (simpletron_t ** simpletron, size_t cant_palabras, FIL
  		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
  			return ST_ERROR_FUERA_DE_RANGO;
  		
- 		simpletron->palabras[i]=instruccion;
+ 		(*simpletron)->palabras[i]=instruccion;
  	}
 
  	return ST_OK;
@@ -229,11 +226,14 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	char aux[MAX_LARGO_INGRESO];
 	long instruccion;
 	instruccion = 0;
+
+	char * inicio;
+	char * fin;
+	char *pc;
 	char * inicio; 
 	char *fin;
 
-	
-	if (!(strcmp(argumentos->ia,OPCION_TXT))){
+	if (!(strcmp(argumentos.ia,OPCION_TXT))){
 
  		for(i=0; i<cant_palabras;i++){
 	    	if(fgets(aux,MAX_CADENA,fentrada)==NULL){
@@ -264,7 +264,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 	 		if(instruccion<MIN_PALABRA||instruccion>MAX_PALABRA)
 	 			return ST_ERROR_FUERA_DE_RANGO;
 	 	
-	 		simpletron->palabras[i]=instruccion;
+	 		(*simpletron)->palabras[i]=instruccion;
 	 	}
 
 	 	printf("%s\n",MSJ_CARGA_COMPLETA);
@@ -273,7 +273,7 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 		return ST_OK;
 	}
 
-	else if (!(strcmp(argumentos->ia,OPCION_STDIN))){
+	else if (!(strcmp(argumentos.ia,OPCION_STDIN))){
  		printf("%s\n",MSJ_BIENVENIDA);
 		for(i=0; i<cant_palabras;i++){
  			printf("%2.i %s \n", i,PREGUNTA);
@@ -355,7 +355,7 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
     	fprintf(fsalida,"\n");
     }
 
-    else if (!(strcmp(argumentos.o,OPCION_STDIN))){
+    else if (!(strcmp(argumentos.oa,OPCION_STDIN))){
     	printf("%s\n", MSJ_REGISTRO);
 		printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
 		printf("%25s: %6d\n",MSJ_CONT_PROG, simpletron->contador_programa );
@@ -408,7 +408,7 @@ status_t liberar_memoria(simpletron_t ** simpletron)
 		(*simpletron)->opcode=0;
 		(*simpletron)->operando=0;
 	}
-	free(*simpletron)
+	free(*simpletron);
 	*simpletron=NULL;
 	return ST_OK;
 }
