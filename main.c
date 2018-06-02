@@ -64,25 +64,13 @@ int main(int argc, char *argv[])
        	fprintf(stderr, "%s\n", errmsg[st]);
    		return EXIT_FAILURE;
    	}
-printf("%s\n","antes de ejecutar pro primera vez" );
-   	st=ejecutar_simpletron(ptr_simpletron, cant_palabras);
-   	  		printf("%i\n", simpletron->acumulador);
-   	printf("%s\n","por entrar a while" );
-   	while(st!=ST_SALIR){
-printf("%s\n", "en el while");
-   		if(st!=ST_OK){
-   			fprintf(stderr, "%s\n", errmsg[st]);
-   			return EXIT_FAILURE;
-   		}
-   		else {
-   			printf("%s\n", "voy a ejecutar simpletron de nuevo" );
-   			if((st=ejecutar_simpletron(ptr_simpletron, cant_palabras))!=ST_OK){
-   				fprintf(stderr, "%s\n", errmsg[st]);
-   				return EXIT_FAILURE;
 
-   			}
-   			  		printf("%i\n", simpletron->acumulador);
-   		} 
+   	if((st=ejecutar_simpletron(ptr_simpletron, cant_palabras))!=ST_OK){
+   		free(simpletron);
+       	simpletron=NULL;
+       	ptr_simpletron=NULL;
+   		fprintf(stderr, "%s\n", errmsg[st]);
+   		return EXIT_FAILURE;
 	}
 
    	if (!(strcmp(argumentos.oa,OPCION_BIN))){
@@ -511,7 +499,6 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 				(*simpletron)->contador_programa++;
 				break;
 			case(OP_DIVIDIR):
-			printf("%s\n", "op_dividir");
 				st=op_dividir(simpletron);
 				(*simpletron)->contador_programa++;
 				break;
