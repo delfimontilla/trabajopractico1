@@ -19,6 +19,7 @@ typedef enum
 	ST_ERROR_NO_MEM,
 	ST_ERROR_LIBERAR_MEM,
 	ST_ERROR_NADA_QUE_CARGAR,
+	ST_AYUDA,
 	ST_SALIR
 } status_t;
 
@@ -37,6 +38,7 @@ const char * errmsg[] = {
 	MSJ_ERROR_NO_MEM,
 	MSJ_ERROR_LIBERAR_MEM,
 	MSJ_ERROR_NADA_QUE_CARGAR,
+	MSJ_AYUDA,
 	MSJ_SALIR
 };
 
