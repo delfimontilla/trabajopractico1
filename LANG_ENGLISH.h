@@ -20,7 +20,7 @@
 #define MSJ_ERROR_NADA_QUE_CARGAR "ERROR: there's nothing to save"
 #define MSJ_OK "OK"
 #define MSJ_SALIR "Exit"
-
+#define MSJ_AYUDA "Help finished"
 
 #define MSJ_IMPRIMIR_PALABRA "Content of the position"
 #define MSJ_INGRESO_PALABRA "Enter a word:"
@@ -71,7 +71,7 @@
 #define MSJ_SALIDA_ARCH_TXT_OPC "txt\t" 
 #define MSJ_SALIDA_ARCH_TXT_DESC "The dump will be made in text format by printing the registers and the memory.\n"
 
-#define MSJ_ACLARACION_AYUDA "To enter these arguments must be placed in the order shown below. If you want to leave the field empty you must put '-'.\n"
+#define MSJ_ACLARACION_AYUDA "To enter these arguments they must be placed in the order shown below. If you want to leave the field of number of words in default, you must put '-' in the first field, this only works in case the input is stdin. If you want the entry of instructions to be stdin you must put 'stdin' and in format '-', the same will be done with stdout. In case of placing the output or the entry in a file, the name of the file must be followed by its type. \n"
 
 #define TAB_TITULO_OP "Operation\t"
 #define TAB_TITULO_CODE "OpCode\t"
@@ -79,29 +79,29 @@
 
 #define TAB_ENT_SAL "Input/Output Op.:\n"
 
-#define TAB_LEER_OP "READ\t" 
+#define TAB_LEER_OP "READ\t\t" 
 #define TAB_LEER_CODE "10\t" 
 #define TAB_LEER_DESC "Reads a word from stdin to a position of memory\n"
 
-#define TAB_ESCRIBIR_OP "WRITE\t"
+#define TAB_ESCRIBIR_OP "WRITE\t\t"
 #define TAB_ESCRIBIR_CODE "11\t"
 #define TAB_ESCRIBIR_DESC "Prints by stdout a position of memory\n"
 
 #define TAB_MOV "Movement Op.:\n"
 
-#define TAB_CARGAR_OP "LOAD\t"
+#define TAB_CARGAR_OP "LOAD\t\t"
 #define TAB_CARGAR_CODE "20\t" 
 #define TAB_CARGAR_DESC "Loads a word from the memory to the accumulator\n"
 
-#define TAB_GUARDAR_OP "SAVE\t" 
+#define TAB_GUARDAR_OP "SAVE\t\t" 
 #define TAB_GUARDAR_CODE "21\t" 
 #define TAB_GUARDAR_DESC "Saves a word from the accumulator to the memory\n"
 
-#define TAB_PCARGAR_OP "PLOAD\t" 
+#define TAB_PCARGAR_OP "PLOAD\t\t" 
 #define TAB_PCARGAR_CODE "22\t" 
 #define TAB_PCARGAR_DESC "Same as LOAD but the operand is pointer\n"
 
-#define TAB_PGUARDAR_OP "PSAVE\t"
+#define TAB_PGUARDAR_OP "PSAVE\t\t"
 #define TAB_PGUARDAR_CODE "23\t"
 #define TAB_PGUARDAR_DESC "Same a SAVE but the operand is pointer\n"
 
@@ -115,7 +115,7 @@
 #define TAB_RESTAR_CODE "31\t"
 #define TAB_RESTAR_DESC "Subtract a word to the accumulator\n"
  
-#define TAB_DIVIDIR_OP "DIVIION\t" 
+#define TAB_DIVIDIR_OP "DIVIION\t\t" 
 #define TAB_DIVIDIR_CODE "32\t" 
 #define TAB_DIVIDIR_DESC "Divides the accumulator by the operand\n"
 
@@ -125,27 +125,27 @@
 
 #define TAB_CONTROL "Control Op.:\n"
 
-#define TAB_JUMP_OP "JMP\t" 
+#define TAB_JUMP_OP "JMP\t\t" 
 #define TAB_JUMP_CODE "40\t" 
 #define TAB_JUMP_DESC "Jumps to a memory location\n"
 
-#define TAB_JMPNEG_OP "JMPNEG\t" 
+#define TAB_JMPNEG_OP "JMPNEG\t\t" 
 #define TAB_JMPNEG_CODE "41\t" 
 #define TAB_JMPNEG_DESC "Idem only if the accumulator is negative\n"
 
-#define TAB_JMPZERO_OP "JMPZERO\t" 
+#define TAB_JMPZERO_OP "JMPZERO\t\t" 
 #define TAB_JMPZERO_CODE "42\t" 
 #define TAB_JMPZERO_DESC "Idem only if the accumulator is zero\n"
 
-#define TAB_JNZ_OP "JNZ\t"
+#define TAB_JNZ_OP "JNZ\t\t"
 #define TAB_JNZ_CODE "43\t"
 #define TAB_JNZ_DESC "Idem only if the accumulator is NOT zero\n"
 
-#define TAB_DJNZ_OP "DJNZ\t" 
+#define TAB_DJNZ_OP "DJNZ\t\t" 
 #define TAB_DJNZ_CODE "44\t"
 #define TAB_DJNZ_DESC "Decreases the accumulator and jump if it is NOT zero\n"
 
-#define TAB_FIN_OP "HALT\t" 
+#define TAB_FIN_OP "HALT\t\t" 
 #define TAB_FIN_CODE "45\t" 
 #define TAB_FIN_DESC "Finishes the program\n"
 

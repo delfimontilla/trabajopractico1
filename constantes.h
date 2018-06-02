@@ -33,7 +33,6 @@
 #define ARG_VALIDO "-"
 
 #define TXT_AYUDA1 \
-		MSJ_ACLARACION_AYUDA \
 		SALTO \
 		MSJ_TITULO_ARG \
 		MSJ_TITULO_OPC \

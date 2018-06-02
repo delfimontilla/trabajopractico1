@@ -20,6 +20,7 @@
 #define MSJ_ERROR_NADA_QUE_CARGAR "ERROR: no hay nada que cargar"
 #define MSJ_OK "OK"
 #define MSJ_SALIR "Salir"
+#define MSJ_AYUDA "Finaliza la ayuda"
 
 #define MSJ_IMPRIMIR_PALABRA "Contenido de la posicion"
 #define MSJ_INGRESO_PALABRA "Ingrese una palabra:"
@@ -38,7 +39,7 @@
 
 
 
-#define MSJ_ACLARACION_AYUDA "Para ingresar estos argumentos se deberán colocar en el orden mostrado a continuación. En caso de querer dejar el campo vacio se deberá colocar '-' . \n "
+#define MSJ_ACLARACION_AYUDA "Para ingresar estos argumentos se deberán colocar en el orden mostrado a continuación. En caso de querer dejar el campo de cantidad de palabras en default se deberá colocar '-' en el primer campo, esto sólo funciona en el caso de que la entrada sea por stdin. Si se quiere que la entrada de instrucciones sea por stdin se deberá colocar 'stdin' y en el formato '-', se hará lo mismo con stdout. En caso de colocar de querer la salida o la entrada en un archivo se deberá colocar el nombre del archivo seguido por su tipo.\n "
 
 #define MSJ_TITULO_ARG "Arg.\t"
 #define MSJ_TITULO_OPC "Opción\t"

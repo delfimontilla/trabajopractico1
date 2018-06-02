@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define LANG_SPANISH /*elección del idioma del programa*/
+#define LANG_ENGLISH /*elección del idioma del programa*/
 
 #ifdef LANG_SPANISH
 #include "LANG_SPANISH.h"
@@ -121,7 +121,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 	if(argc==ARGC_MIN){
 		if(!(strcmp(argv[ARG_POS_H],ARG_H))){
 			imprimir_ayuda();
-			return ST_OK;
+			return ST_AYUDA;
 		}
 	}
 
@@ -333,12 +333,12 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 			
 			for(fin = aux+strlen(aux)-1; isspace(*fin) && fin!=aux;fin--)
 				{}
-							}
+							
 			*++fin='\0';
 
-			if (memmove(aux,comienzo,fin-comienzo+1)=='\0'){
+			if (memmove(aux,comienzo,fin-comienzo+1)=='\0')
 				continue;
-			}
+
 	    	
 	    	instruccion = strtol(aux,&fin,10); 
 
@@ -366,7 +366,7 @@ status_t imprimir_ayuda()
  /*Imprime la información de ayuda: tabla del orden de los argumentos y
  tabla de las operaciones validas*/
 {
-	printf("%s%s%s\n%s%s%s",TXT_AYUDA1,TXT_AYUDA2,TXT_AYUDA3,TXT_AYUDA4,TXT_AYUDA5,TXT_AYUDA6 );
+	printf("%s%s%s%s\n%s%s%s",MSJ_ACLARACION_AYUDA,TXT_AYUDA1,TXT_AYUDA2,TXT_AYUDA3,TXT_AYUDA4,TXT_AYUDA5,TXT_AYUDA6 );
 	return ST_OK;
 }
 
