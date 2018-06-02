@@ -73,7 +73,8 @@ int main(int argc, char *argv[])
    		return EXIT_FAILURE;
 	}
 
-   	if (!(strcmp(argumentos.oa,OPCION_BIN))){
+   	if ((strcmp(argumentos.oa,OPCION_BIN))==0){
+   		puts("k0");
 		if((st=imprimir_archivo_bin(simpletron, cant_palabras, fsalida))!=ST_OK){
        		free(simpletron);
        		simpletron=NULL;
@@ -181,7 +182,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 				if((*fsalida=fopen(argv[ARG_POS_FSALIDA_NOMBRE ],"wb"))==NULL){  
 					return ST_ERROR_APERTURA_ARCHIVO;
 				}
-				argumentos->oa=argv[ARG_POS_FENTRADA_TIPO];
+				argumentos->oa=argv[ARG_POS_FSALIDA_TIPO];
 			}
 		}	
 	
@@ -384,7 +385,7 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
     	fprintf(fsalida,"\n");
     }
 
-    else if ((strcmp(argumentos.o,OPCION_STDOUT))==0){
+    else if (!(strcmp(argumentos.o,OPCION_STDOUT))){
     	printf("%s\n", MSJ_REGISTRO);
 		printf("%25s: %6i\n",MSJ_ACUM, simpletron->acumulador );
 		printf("%25s: %6lu\n",MSJ_CONT_PROG, simpletron->contador_programa );
@@ -413,15 +414,7 @@ status_t imprimir_archivo_bin (simpletron_t *simpletron, size_t cant_palabras, F
  a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
  la ultima instruccion ejecutada, el ultimo opcode y operando, además de la memoria de todas las palabras.*/
 {
-	
-	fwrite(&simpletron->acumulador, sizeof(simpletron_t),1, fsalida);
-	fwrite(&simpletron->contador_programa, sizeof(simpletron_t),1, fsalida );
-	fwrite(&simpletron->palabras[simpletron->contador_programa], sizeof(simpletron_t),1, fsalida);
-	simpletron->opcode = simpletron->palabras[simpletron->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
-	simpletron->operando = simpletron->palabras[simpletron->contador_programa] - (simpletron->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-	fwrite(&simpletron->opcode, sizeof(simpletron_t),1, fsalida);
-	fwrite(&simpletron->operando, sizeof(simpletron_t),1, fsalida);	
-	fwrite(simpletron->palabras, sizeof(int), cant_palabras, fsalida);
+	fwrite(simpletron, sizeof(simpletron_t),1, fsalida);
 	return ST_OK;
 }
 
@@ -449,8 +442,6 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 	status_t st;
 
 	st=ST_OK;
-	
-	printf("%s\n", "estoy en simpletron");
 
 	if ((*simpletron)->palabras[(*simpletron)->contador_programa]<0){
 		return ST_ERROR_PALABRA_NEG;
@@ -461,22 +452,18 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 		(*simpletron)->operando = (*simpletron)->palabras[(*simpletron)->contador_programa] - ((*simpletron)->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
 		switch ((*simpletron)->opcode){
 			case (OP_LEER):
-			printf("%s\n","leer" );
 				st=op_leer(simpletron);
 				(*simpletron)->contador_programa++;
 				break;
 			case (OP_ESCRIBIR):
-			printf("%s\n","escribir" );
 				st=op_escribir(simpletron);
 				(*simpletron)->contador_programa++;
 				break;
 			case (OP_CARGAR):
-			printf("%s\n","cargar" );
 				st=op_cargar(simpletron,cant_palabras);
 				(*simpletron)->contador_programa++;
 				break;
 			case (OP_GUARDAR):
-			printf("%s\n","guardar" );
 				st=op_guardar(simpletron,cant_palabras);
 				(*simpletron)->contador_programa++;
 				break;
@@ -489,12 +476,10 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 				(*simpletron)->contador_programa++;
 				break;
 			case(OP_SUMAR):
-			printf("%s\n","sumar" );
 				st=op_sumar(simpletron);
 				(*simpletron)->contador_programa++;
 				break;
 			case(OP_RESTAR):
-			printf("%s\n", "op_restar");
 				st=op_restar(simpletron);
 				(*simpletron)->contador_programa++;
 				break;
@@ -539,7 +524,6 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 			}		
 		}
 	}
-printf("%s\n", "saliendo de simpletron" );
 	if(st==ST_SALIR)
 		st=ST_OK;
 	return st;		
