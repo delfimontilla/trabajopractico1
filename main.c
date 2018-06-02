@@ -450,6 +450,7 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 {
 	status_t st;
 
+	st=ST_OK;
 	
 	printf("%s\n", "estoy en simpletron");
 
@@ -457,7 +458,7 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 		return ST_ERROR_PALABRA_NEG;
 	}
 	else{
-		
+		while(st!=ST_SALIR){
 		(*simpletron)->opcode = (*simpletron)->palabras[(*simpletron)->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
 		(*simpletron)->operando = (*simpletron)->palabras[(*simpletron)->contador_programa] - ((*simpletron)->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
 		switch ((*simpletron)->opcode){
@@ -539,7 +540,7 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 				break;
 		}		
 	}
-
+}
 printf("%s\n", "saliendo de simpletron" );
 	return st;		
 }
