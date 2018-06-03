@@ -24,7 +24,7 @@
 #define FIN -99999
 #define MIN_PALABRA -9999
 #define MAX_PALABRA 9999
-#define LARGO_CADENA 4
+
 
 #define TABULACION "\t"
 #define SALTO "\n"
