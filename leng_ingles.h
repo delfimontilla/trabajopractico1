@@ -34,6 +34,9 @@
 #define MSJ_CARGA_COMPLETA "*** Program upload complete ***"
 #define MSJ_COMIENZO_EJECUCION "*** Program execution starts ***"
 
+#define MSJ_ACLARACION_AYUDA1 "To enter these arguments they must be placed in the order shown below. If you want to leave the field of number of words in default, you must put '-' in the first field, this only works in case the input is stdin. In case of reading from a file, you have to write the exact number of instructions."
+#define MSJ_ACLARACION_AYUDA2 " If you want the entry of instructions to be stdin you must put 'stdin' and in format '-', the same will be done with stdout. In case of placing the output or the entry in a file, the name of the file must be followed by its type. \n"
+
 #define MSJ_TITULO_ARG "Arg.\t"
 #define MSJ_TITULO_OPC "Option\t"
 #define MSJ_TITULO_DESC "Description\n"
@@ -68,9 +71,6 @@
 
 #define MSJ_SALIDA_ARCH_TXT_OPC "txt\t" 
 #define MSJ_SALIDA_ARCH_TXT_DESC "The dump will be made in text format by printing the registers and the memory.\n"
-
-#define MSJ_ACLARACION_AYUDA1 "To enter these arguments they must be placed in the order shown below. If you want to leave the field of number of words in default, you must put '-' in the first field, this only works in case the input is stdin."
-#define MSJ_ACLARACION_AYUDA2 " If you want the entry of instructions to be stdin you must put 'stdin' and in format '-', the same will be done with stdout. In case of placing the output or the entry in a file, the name of the file must be followed by its type. \n"
 
 #define TAB_TITULO_OP "Operation\t"
 #define TAB_TITULO_CODE "OpCode\t"

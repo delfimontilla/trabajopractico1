@@ -3,6 +3,11 @@
 
 #include <stdio.h>
 
+/*define un tipo de dato int, 
+un tipo enumerativo para las operaciones, 
+y una estructura para la Simpletron*/
+
+
 typedef int palabra_t;
 
 typedef enum opcode

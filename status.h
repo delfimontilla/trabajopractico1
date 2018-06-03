@@ -3,6 +3,10 @@
 
 #include <stdio.h>
 
+/*Se define un nuevo tipo enumerativo que se usará para conocer
+el estado de las funciones y se declara un arreglo de char 
+con los mensajes de los estados posibles*/
+
 typedef enum
 {
 	ST_OK,

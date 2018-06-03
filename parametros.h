@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+/*Declara una estructura para guardar la información de formato ingresada por línea de comando*/
+
 typedef struct parametros
 {
 	const char * i;/*argumento que indica que el programa se leera del archivo pasado como opcion*/

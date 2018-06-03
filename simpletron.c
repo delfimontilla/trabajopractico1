@@ -44,6 +44,10 @@ int main(int argc, char *argv[])
 
 	if((st=inicializar_simpletron(ptr_simpletron, cant_palabras))!=ST_OK){
 		fprintf(stderr, "%s\n", errmsg[st]);
+		if(fentrada!=NULL)
+        	fclose(fentrada);
+    	if(fsalida!=NULL)
+	   		fclose(fsalida);
    		return EXIT_FAILURE;
    	}
 
@@ -52,6 +56,10 @@ int main(int argc, char *argv[])
        		free(simpletron);
        		simpletron=NULL;
        		ptr_simpletron=NULL;
+       		if(fentrada!=NULL)
+        		fclose(fentrada);
+    		if(fsalida!=NULL)
+	   			fclose(fsalida);
        		fprintf(stderr, "%s\n", errmsg[st]);
    			return EXIT_FAILURE;
    		}
@@ -61,6 +69,10 @@ int main(int argc, char *argv[])
        	free(simpletron);
        	simpletron=NULL;
        	ptr_simpletron=NULL;
+       	if(fentrada!=NULL)
+        	fclose(fentrada);
+    	if(fsalida!=NULL)
+	   		fclose(fsalida);
        	fprintf(stderr, "%s\n", errmsg[st]);
    		return EXIT_FAILURE;
    	}
@@ -69,6 +81,10 @@ int main(int argc, char *argv[])
    		free(simpletron);
        	simpletron=NULL;
        	ptr_simpletron=NULL;
+   		if(fentrada!=NULL)
+    	    fclose(fentrada);
+    	if(fsalida!=NULL)
+	   		fclose(fsalida);
    		fprintf(stderr, "%s\n", errmsg[st]);
    		return EXIT_FAILURE;
 	}
@@ -78,6 +94,10 @@ int main(int argc, char *argv[])
        		free(simpletron);
        		simpletron=NULL;
        		ptr_simpletron=NULL;
+       		if(fentrada!=NULL)
+        		fclose(fentrada);
+    		if(fsalida!=NULL)
+	   			fclose(fsalida);
        		fprintf(stderr, "%s\n", errmsg[st]);
    			return EXIT_FAILURE;
    		} 		
@@ -87,12 +107,20 @@ int main(int argc, char *argv[])
        	free(simpletron);
        	ptr_simpletron=NULL;
        	simpletron=NULL;
+       	if(fentrada!=NULL)
+        	fclose(fentrada);
+    	if(fsalida!=NULL)
+	   		fclose(fsalida);
        	fprintf(stderr, "%s\n", errmsg[st]);
    		return EXIT_FAILURE;
    	}
 
 
    	if((st=liberar_memoria(ptr_simpletron))!=ST_OK){
+   		if(fentrada!=NULL)
+        	fclose(fentrada);
+    	if(fsalida!=NULL)
+	   		fclose(fsalida);
    		fprintf(stderr, "%s\n", errmsg[st]);
    		return EXIT_FAILURE;
 	}
@@ -107,8 +135,9 @@ int main(int argc, char *argv[])
 
 status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, size_t *cant_palabras, FILE ** fentrada, FILE ** fsalida)
  /*recibe arc y argv para realizar las validacione correspondientes a su cantidad y contenido;
- además recibe el puntero a cant_palabras (cantidad de instrucciones) y los dobles punteros 
- al archivo de entrada para poder leer los datos, y al archivo de salida para poder escribir los datos*/
+ además recibe el puntero a cant_palabras (cantidad de instrucciones) para cargarle su contenido
+ y los dobles punteros al archivo de entrada para abrirlo en caso de ser necesario,
+ y al archivo de salida para crearlo en caso de así especificarlo.*/
 {
 	char *pc;
 

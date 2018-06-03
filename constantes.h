@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+/*archivo de macros numéricas, palabras utilizadas como argumentos y bloques de mensajes de ayuda*/
+
 #define ARGC_MAX 6
 #define ARGC_MIN 2
 #define CANT_PALABRAS_DEFAULT 50
