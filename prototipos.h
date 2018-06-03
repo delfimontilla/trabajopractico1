@@ -13,15 +13,15 @@ status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, s
 status_t leer_archivo_bin(simpletron_t ** simpletron, size_t cant_palabras, FILE *fentrada);
 
 status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos, size_t cant_palabras,  FILE *fsalida);
-status_t imprimir_archivo_bin (simpletron_t *simpletron, size_t cant_palabras, FILE *fsalida);
+status_t imprimir_archivo_bin (simpletron_t *simpletron, FILE *fsalida);
 status_t liberar_memoria(simpletron_t ** simpletron);
 
 status_t ejecutar_simpletron (simpletron_t ** simpletron, size_t cant_palabras);
 status_t op_leer (simpletron_t ** simpletron);
 status_t op_escribir(simpletron_t ** simpletron);
-status_t op_cargar (simpletron_t ** simpletron, size_t cant_palabras);
+status_t op_cargar (simpletron_t ** simpletron);
 status_t op_pcargar (simpletron_t ** simpletron, size_t cant_palabras);
-status_t op_guardar (simpletron_t ** simpletron, size_t cant_palabras);
+status_t op_guardar (simpletron_t ** simpletron);
 status_t op_pguardar (simpletron_t ** simpletron, size_t cant_palabras);
 status_t op_sumar(simpletron_t ** simpletron);
 status_t op_restar (simpletron_t ** simpletron);

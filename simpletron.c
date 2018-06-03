@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 	}
 
    	if (!(strcmp(argumentos.oa,OPCION_BIN))){
-		if((st=imprimir_archivo_bin(simpletron, cant_palabras, fsalida))!=ST_OK){
+		if((st=imprimir_archivo_bin(simpletron, fsalida))!=ST_OK){
        		free(simpletron);
        		simpletron=NULL;
        		ptr_simpletron=NULL;
@@ -226,8 +226,8 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 }
 
 status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras)
-/*Esta funcion recibe un doble puntero a la estructura simpletron para poder modificar su contenido, y un size_t de cant_palabras para darle la memoria
- dinamica necesaria al vector de palabras*/	
+/*Esta funcion recibe un doble puntero a la estructura simpletron para poder modificar su contenido, 
+y un size_t de cant_palabras para darle la memoria dinamica necesaria al vector de palabras*/	
 {
 	if (!simpletron)
 		return ST_ERROR_PTR_NULO;
@@ -254,7 +254,8 @@ status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras
 }
 
 status_t leer_archivo_bin (simpletron_t ** simpletron, size_t cant_palabras, FILE *fentrada)
- /*recibe los punteros: a la estructura de simpletron para cargar las instrucciones en el vector palabras, o liberar la memoria en caso de error;
+ /*recibe el puntero doble a la estructura de simpletron para cargar las instrucciones en el vector palabras, 
+ para lo cual necesita la cantidad total de instrucciones (cant_palabras); ademas recibe el puntero
  al archivo de entrada para poder leer los datos*/
 {
 	size_t i;
@@ -276,9 +277,9 @@ status_t leer_archivo_bin (simpletron_t ** simpletron, size_t cant_palabras, FIL
 }
 
 status_t leer_archivo_txt(simpletron_t ** simpletron, parametros_t argumentos, size_t cant_palabras ,FILE *fentrada)
- /*recibe los punteros: a la estructura de los argumentos para poder acceder al valor de cant_palabras (cantidad de instrucciones),
- a la estructura de simpletron para cargar las instrucciones en el vector palabras y 
- al archivo de entrada para poder */
+ /*Recibe el puntero doble a la estructura de simpletron para cargar las instrucciones en el vector palabras,
+ la estructura de los argumentos para determinar desde donde se leeran los datos y el puntero al archivo de entrada.
+ Tambien se necesita el valor de cant_palabras (cantidad de instrucciones).*/
 {
 	int i;
 	char aux[MAX_CANT_PALABRA];
@@ -399,10 +400,9 @@ status_t imprimir_ayuda()
 
 
 status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos, size_t cant_palabras, FILE *fsalida)
- /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
- a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
- la ultima instruccion ejecutada, el ultimo opcode y operando, 
- además de la memoria de todas las palabras, en forma de matriz*/
+ /*Recibe el puntero del archivo de salida y a la de simpletron para imprimir los datos guardados en el acumulador, 
+ en el contador del programa, la ultima instruccion ejecutada, el ultimo opcode y operando, además de la lista de todas las palabras, en forma de matriz. 
+ Esto se hara en un archivo txt o por stdout teniendo en cuenta lo guardado en la estructura de los argumentos*/
 {
 	int i,l;
 
@@ -451,10 +451,9 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
     return ST_OK;
 }
 
-status_t imprimir_archivo_bin (simpletron_t *simpletron, size_t cant_palabras, FILE *fsalida)
- /*Recibe el puntero del archivo de salida, los punteros a la estructura de argumentos y 
- a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
- la ultima instruccion ejecutada, el ultimo opcode y operando, además de la memoria de todas las palabras.*/
+status_t imprimir_archivo_bin (simpletron_t *simpletron, FILE *fsalida)
+ /*Recibe el puntero del archivo de salida y el de la estructura de la simpletron para imprimir los datos guardados en ella*/
+
 {
 	fwrite(simpletron, sizeof(simpletron_t),1, fsalida);
 	return ST_OK;
@@ -478,8 +477,9 @@ status_t liberar_memoria(simpletron_t ** simpletron)
 }
 
 status_t ejecutar_simpletron (simpletron_t ** simpletron, size_t cant_palabras)
-/*Recibe el puntero a la estructura de simpletron para hacer un análisis de las instrucciones que se encuentran
-en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
+ /*Recibe el puntero a la estructura de simpletron para hacer un análisis de las instrucciones que se encuentran
+ en el vector palabras, y después se llama a una función que realiza la operación necesaria. 
+ Ademas, se valida que el operando sea una posicion de memoria existente*/
 {
 	status_t st;
 
@@ -491,9 +491,15 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 			return ST_ERROR_PALABRA_NEG;
 		}
 		else{		
-		(*simpletron)->opcode = (*simpletron)->palabras[(*simpletron)->contador_programa] /100;/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
-			(*simpletron)->operando = (*simpletron)->palabras[(*simpletron)->contador_programa] - ((*simpletron)->opcode*100);/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
-			
+			(*simpletron)->opcode = (*simpletron)->palabras[(*simpletron)->contador_programa] /100;
+			/*divido por 100 entonces como es un int borra los numeros despues de la coma y me queda el entero que quiero (ejemplo, si llega 2598 me queda 25.98 pero se guarda 25)*/
+			(*simpletron)->operando = (*simpletron)->palabras[(*simpletron)->contador_programa] - ((*simpletron)->opcode*100);
+			/*necesito los ultimos dos entonces al multiplicar opcode por 100 tengo 2500 del ejemplo entonces 2598-2500 da 98 que son los ultimos dos digitos que necesito*/
+		
+			if((*simpletron)->operando > cant_palabras)
+				return ST_ERROR_FUERA_DE_RANGO;
+
+
 			switch ((*simpletron)->opcode){
 				case (OP_LEER):
 					st=op_leer(simpletron);
@@ -504,11 +510,11 @@ en el vector palabras, y después se llama a una función que realiza la operaci
 					(*simpletron)->contador_programa++;
 					break;
 				case (OP_CARGAR):
-					st=op_cargar(simpletron,cant_palabras);
+					st=op_cargar(simpletron);
 					(*simpletron)->contador_programa++;
 					break;
 				case (OP_GUARDAR):
-					st=op_guardar(simpletron,cant_palabras);
+					st=op_guardar(simpletron);
 					(*simpletron)->contador_programa++;
 					break;
 				case (OP_PCARGAR):
@@ -589,7 +595,7 @@ status_t op_leer (simpletron_t ** simpletron)
 	printf("%s\n", MSJ_INGRESO_PALABRA);
 
 	if ((fgets(lectura,MAX_CADENA,stdin))==NULL)
-		return ST_ERROR_PALABRA_VACIA; /*la palabra ingresada es nula*/	
+		return ST_ERROR_PALABRA_VACIA;
 	
 	if((ppc=strchr(lectura,'\n'))!=NULL)
 		*ppc='\0';
@@ -614,12 +620,10 @@ status_t op_escribir(simpletron_t ** simpletron)
 	return ST_OK;
 }
 
-status_t op_cargar (simpletron_t ** simpletron, size_t cant_palabras)
+status_t op_cargar (simpletron_t ** simpletron)
 /*Carga en el acumulador (miembro de la estructura simpletron) la posicion de memoria indicada 
 por el operando(miembro de la estructura simpletron)*/
 {
-	if((*simpletron)->operando > cant_palabras)
-		return ST_ERROR_FUERA_DE_RANGO;
 	
 	(*simpletron)->acumulador = (*simpletron)->palabras[(*simpletron)->operando];
 	return ST_OK;
@@ -630,7 +634,7 @@ status_t op_pcargar (simpletron_t ** simpletron, size_t cant_palabras)
  /*Carga en el acumulador (miembro de la estructura simpletron) la posicion de memoria indicada 
  por la palabra a la que apunta el operando(miembro de la estructura simpletron)*/
 {
-	if((*simpletron)->operando > cant_palabras  || (*simpletron)->palabras[(*simpletron)->operando] > cant_palabras){
+	if((*simpletron)->palabras[(*simpletron)->operando] > cant_palabras){
 		return ST_ERROR_FUERA_DE_RANGO;
 	}
 
@@ -638,7 +642,7 @@ status_t op_pcargar (simpletron_t ** simpletron, size_t cant_palabras)
 	return ST_OK;
 }
 
-status_t op_guardar (simpletron_t ** simpletron, size_t cant_palabras)
+status_t op_guardar (simpletron_t ** simpletron)
  /*guarda en la posicion de memoria indicada por el operando(miembro de la estructura simpletron)
   lo que está en el acumulador(miembro de la estructura simpletron)*/
 {
@@ -653,7 +657,7 @@ status_t op_pguardar (simpletron_t ** simpletron, size_t cant_palabras)
  /*guarda en la posicion de memoria indicada por la palabra a la que apunta el operando (miembro de la estructura simpletron) 
  lo que esta en el acumulador(miembro de la estructura simpletron)*/
 {
-	if((*simpletron)->operando > cant_palabras || (*simpletron)->palabras[(*simpletron)->operando] > cant_palabras){
+	if((*simpletron)->palabras[(*simpletron)->operando] > cant_palabras){
 		return ST_ERROR_FUERA_DE_RANGO;
 	}
 
@@ -693,7 +697,7 @@ status_t op_multiplicar (simpletron_t ** simpletron)
 }
 
 status_t op_jmp (simpletron_t ** simpletron)
-/*salta a la posicion de memoria indicada por el operando(miembro de la estructura simpletron) menos un valor*/
+/*salta a la posicion de memoria indicada por el operando(miembro de la estructura simpletron)*/
 {
 	(*simpletron)->contador_programa = (*simpletron)->operando;
 	return ST_OK;
