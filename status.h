@@ -42,5 +42,4 @@ const char * errmsg[] = {
 	MSJ_SALIR
 };
 
-
 #endif

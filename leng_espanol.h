@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "ERROR: apertura de archivo"
 #define MSJ_ERROR_PTR_NULO "ERROR: puntero nulo"
@@ -31,13 +30,10 @@
 #define MSJ_OPCODE "opcode"
 #define MSJ_OPERANDO "operando"
 
-
 #define MSJ_BIENVENIDA "Bienvenide a le Simpletron! Por favor, ingrese su programa una instrucción (o dato) a la vez. Yo escribiré la ubicación y un signo de pregunta (?).Luego usted ingrese la palabra para esa ubicación. Ingrese -99999 para finalizar."
 
 #define MSJ_CARGA_COMPLETA "*** Carga del programa completa ***"
 #define MSJ_COMIENZO_EJECUCION "*** Comienza la ejecución del programa ***"
-
-
 
 #define MSJ_ACLARACION_AYUDA1 "Para ingresar estos argumentos se deberán colocar en el orden mostrado a continuación. En caso de querer dejar el campo de cantidad de palabras en default se deberá colocar '-' en el primer campo, esto sólo funciona en el caso de que la entrada sea por stdin."
 #define MSJ_ACLARACION_AYUDA2 "Si se quiere que la entrada de instrucciones sea por stdin se deberá colocar 'stdin' y en el formato '-', se hará lo mismo con stdout. En caso de colocar de querer la salida o la entrada en un archivo se deberá colocar el nombre del archivo seguido por su tipo.\n "

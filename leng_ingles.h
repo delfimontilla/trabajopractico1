@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-
 #define MSJ_ERROR "ERROR"
 #define MSJ_ERROR_APERTURA_ARCHIVO "ERROR: opening file"
 #define MSJ_ERROR_PTR_NULO "ERROR: null pointer"
@@ -30,7 +29,6 @@
 #define MSJ_INST "instruction"
 #define MSJ_OPCODE "opcode"
 #define MSJ_OPERANDO "operand"
-
 
 #define MSJ_BIENVENIDA "Welcome to Simpletron! Please enter your program one instruction (or data word) at a time. I will type the location number and a question mark (?). You then type the word for that location. Type the sentinel -99999 to stop entering your program."
 #define MSJ_CARGA_COMPLETA "*** Program upload complete ***"

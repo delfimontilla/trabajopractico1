@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-
 #define ARGC_MAX 6
 #define ARGC_MIN 2
 #define CANT_PALABRAS_DEFAULT 50

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
    			return EXIT_FAILURE;
    		}
    	}
-
+   	
    	else if((st=leer_archivo_txt(ptr_simpletron, argumentos, cant_palabras, fentrada))!=ST_OK){
        	free(simpletron);
        	simpletron=NULL;
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
    		return EXIT_FAILURE;
 	}
 
-   	if ((strcmp(argumentos.oa,OPCION_BIN))==0){
+   	if (!(strcmp(argumentos.oa,OPCION_BIN))){
 		if((st=imprimir_archivo_bin(simpletron, cant_palabras, fsalida))!=ST_OK){
        		free(simpletron);
        		simpletron=NULL;
@@ -159,7 +159,7 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 			}
 		}
 
-		else if (strcmp(argv[ARG_POS_FENTRADA_NOMBRE],OPCION_STDIN)==0){
+		else if (!(strcmp(argv[ARG_POS_FENTRADA_NOMBRE],OPCION_STDIN))){
 			argumentos->i=argv[ARG_POS_FENTRADA_NOMBRE];
 			argumentos->ia=ARG_VALIDO;
 		}
@@ -185,25 +185,21 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 			}
 		}	
 	
-		else if (strcmp(argv[ARG_POS_FSALIDA_NOMBRE],OPCION_STDOUT)==0){
+		else if (!(strcmp(argv[ARG_POS_FSALIDA_NOMBRE],OPCION_STDOUT))){
 			argumentos->o=argv[ARG_POS_FSALIDA_NOMBRE];
 			argumentos->oa=ARG_VALIDO;	
 		}
 		else{
 			return ST_ERROR_ARG_INV;
 		}	
-
 	}
-	
 	return ST_OK;
 }
 
-
-
-status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras){
+status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras)
 /*Esta funcion recibe un doble puntero a la estructura simpletron para poder modificar su contenido, y un size_t de cant_palabras para darle la memoria
  dinamica necesaria al vector de palabras*/	
-
+{
 	if (!simpletron)
 		return ST_ERROR_PTR_NULO;
 
@@ -236,7 +232,7 @@ status_t leer_archivo_bin (simpletron_t ** simpletron, size_t cant_palabras, FIL
 	palabra_t instruccion;
 
 	instruccion = 0;
- 	for(i=0; i<cant_palabras;i++){
+ 	for(i=0; i<cant_palabras; i++){
     	if(fread(&instruccion,sizeof(palabra_t),1,fentrada)!=1){
     		return ST_ERROR_LECTURA;
     	}
@@ -378,7 +374,7 @@ status_t imprimir_archivo_txt(simpletron_t *simpletron, parametros_t argumentos,
  a la de simpletron para imprimir los datos guardados en el acumulador, en el contador del programa, 
  la ultima instruccion ejecutada, el ultimo opcode y operando, 
  además de la memoria de todas las palabras, en forma de matriz*/
-{	
+{
 	int i,l;
 
 	if (!(strcmp(argumentos.oa,OPCION_TXT))){
