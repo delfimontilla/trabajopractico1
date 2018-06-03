@@ -201,6 +201,8 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 
 
 status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras){
+/*Esta funcion recibe un doble puntero a la estructura simpletron para poder modificar su contenido, y un size_t de cant_palabras para darle la memoria
+ dinamica necesaria al vector de palabras*/	
 
 	if (!simpletron)
 		return ST_ERROR_PTR_NULO;
