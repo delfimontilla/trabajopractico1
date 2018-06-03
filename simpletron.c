@@ -646,8 +646,6 @@ status_t op_guardar (simpletron_t ** simpletron)
  /*guarda en la posicion de memoria indicada por el operando(miembro de la estructura simpletron)
   lo que está en el acumulador(miembro de la estructura simpletron)*/
 {
-	if((*simpletron)->operando > cant_palabras)
-		return ST_ERROR_FUERA_DE_RANGO;
 
 	(*simpletron)->palabras[(*simpletron)->operando] = (*simpletron)->acumulador ;
 	return ST_OK;
