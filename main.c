@@ -200,7 +200,12 @@ status_t validar_argumentos (int argc , char *argv[], parametros_t *argumentos, 
 
 
 
-status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras){
+status_t inicializar_simpletron (simpletron_t **simpletron, size_t cant_palabras)
+/*Esta funcion recibe un doble puntero a la estructura simpletron para poder modificar su contenido, y un size_t de cant_palabras para darle la memoria
+ dinamica necesaria al vector de palabras*/
+{
+
+ 
 
 	if (!simpletron)
 		return ST_ERROR_PTR_NULO;
@@ -435,7 +440,7 @@ status_t imprimir_archivo_bin (simpletron_t *simpletron, size_t cant_palabras, F
 
 
 status_t liberar_memoria(simpletron_t ** simpletron)
-/*Recibe el puntero a la estructura de simpletron para liberar la memoria pedida*/
+/*Recibe el puntero doble a la estructura de simpletron para liberar la memoria pedida*/
 {	
 	if (simpletron!=NULL && *simpletron!=NULL){
 		free((*simpletron)->palabras);
@@ -451,7 +456,7 @@ status_t liberar_memoria(simpletron_t ** simpletron)
 }
 
 status_t ejecutar_simpletron (simpletron_t ** simpletron, size_t cant_palabras)
-/*Recibe el puntero a la estructura de simpletron para hacer un análisis de las instrucciones que se encuentran
+/*Recibe el puntero doble a la estructura de simpletron para hacer un análisis de las instrucciones que se encuentran
 en el vector palabras, y después se llama a una función que realiza la operación necesaria.*/
 {
 	status_t st;
@@ -680,3 +685,4 @@ status_t op_djnz (simpletron_t ** simpletron)
 		(*simpletron)->contador_programa++;
 	return ST_OK;
 }
+
